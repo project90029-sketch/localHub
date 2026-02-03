@@ -710,6 +710,22 @@
             margin: 5px 0;
             transition: 0.3s;
         }
+        .admin-btn {
+            display: inline-block;
+            padding: 12px 28px;
+            background-color: #0f172a;
+            color: #fff;
+            font-weight: 600;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: background-color 0.2s, transform 0.2s;
+        }
+
+        .admin-btn:hover {
+            background-color: #09249b;
+            transform: scale(1.05);
+        }
+
 
         /* Responsive */
         @media (max-width: 968px) {
@@ -972,7 +988,10 @@
             <div class="footer-grid">
                 <div class="footer-brand">
                     <h3>LocalHub</h3>
-                    <p>Connecting communities, one neighborhood at a time.</p>
+                    <p>Connecting communities, one neighborhood at a time.</p><br><br>
+                    <a href="{{ url('/admin_login') }}" class="admin-btn">
+                       Admin Login
+                    </a>
                 </div>
                 <div class="footer-section">
                     <h4>Product</h4>
