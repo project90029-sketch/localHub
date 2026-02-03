@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\AdminController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,9 +14,23 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+
+    return view('landing');
 });
 
-Route::get('/about', function () {
-    return view('about');
+// Route added for team section - commented out as requested
+// Route::get('/about', function () {
+//     return view('about');
+// });
+
+Route::get('/admin_login', function () {
+
+    return view('admin_login');
+});
+Route::post('/submit', [AdminController::class, 'login']);
+Route::get('/dashboard', function () {
+    if (!session()->has('admin_id')) {
+        return redirect('/admin_login');
+    }
+    return view('dashboard');
 });
