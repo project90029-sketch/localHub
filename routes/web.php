@@ -39,3 +39,10 @@ Route::get('/professional', function () {
     return view('professional');
 });
 
+Route::get('/professional-settings', function () {
+    return view('professional-settings');
+});
+
+Route::get('/my-services', function () {
+    return view('my-services');
+});
