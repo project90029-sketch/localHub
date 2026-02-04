@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Learn about Local Hub - Your community connection platform">
-    <title>About - Local Hub</title>
+    <meta name="description" content="Learn about LocalHub - Your community connection platform">
+    <title>About - LocalHub</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -16,145 +15,83 @@
             box-sizing: border-box;
         }
 
-        :root {
-            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            --dark-bg: #0f0f23;
-            --card-bg: rgba(255, 255, 255, 0.05);
-            --card-border: rgba(255, 255, 255, 0.1);
-            --text-primary: #ffffff;
-            --text-secondary: rgba(255, 255, 255, 0.7);
-            --text-muted: rgba(255, 255, 255, 0.5);
-            --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.3);
-            --shadow-xl: 0 30px 80px rgba(0, 0, 0, 0.4);
-        }
-
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: var(--dark-bg);
-            color: var(--text-primary);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        /* Animated Background */
-        .background-animation {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            overflow: hidden;
-        }
-
-        .gradient-orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.3;
-            animation: float 20s infinite ease-in-out;
-        }
-
-        .orb-1 {
-            width: 500px;
-            height: 500px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            top: -10%;
-            left: -10%;
-            animation-delay: 0s;
-        }
-
-        .orb-2 {
-            width: 400px;
-            height: 400px;
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            top: 50%;
-            right: -10%;
-            animation-delay: 5s;
-        }
-
-        .orb-3 {
-            width: 450px;
-            height: 450px;
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            bottom: -10%;
-            left: 30%;
-            animation-delay: 10s;
-        }
-
-        @keyframes float {
-
-            0%,
-            100% {
-                transform: translate(0, 0) scale(1);
-            }
-
-            33% {
-                transform: translate(50px, -50px) scale(1.1);
-            }
-
-            66% {
-                transform: translate(-30px, 30px) scale(0.9);
-            }
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: linear-gradient(to bottom right, #f8fafc, #dbeafe, #e0e7ff);
+            min-height: 100vh;
+            color: #0f172a;
         }
 
         /* Navigation */
-        nav {
+        .navbar {
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
+            width: 100%;
             z-index: 1000;
-            background: rgba(15, 15, 35, 0.8);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--card-border);
-            padding: 1.5rem 0;
-            transition: all 0.3s ease;
+            transition: all 0.5s ease;
         }
 
-        nav.scrolled {
-            padding: 1rem 0;
-            box-shadow: var(--shadow-lg);
+        .navbar.scrolled {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(16px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
         }
 
         .nav-container {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 0 2rem;
+            padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .logo {
-            font-size: 1.75rem;
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform: rotate(12deg);
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.4);
+        }
+
+        .logo-icon svg {
+            width: 24px;
+            height: 24px;
+            color: white;
+            transform: rotate(-12deg);
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
             font-weight: 800;
-            background: var(--primary-gradient);
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            letter-spacing: -0.5px;
-            transition: transform 0.3s ease;
-        }
-
-        .logo:hover {
-            transform: scale(1.05);
         }
 
         .nav-links {
             display: flex;
-            gap: 2.5rem;
+            gap: 2rem;
             list-style: none;
+            align-items: center;
         }
 
         .nav-links a {
-            color: var(--text-secondary);
+            color: #1e293b;
             text-decoration: none;
-            font-weight: 500;
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
+            font-weight: 600;
+            transition: color 0.3s;
             position: relative;
         }
 
@@ -165,90 +102,142 @@
             left: 0;
             width: 0;
             height: 2px;
-            background: var(--primary-gradient);
-            transition: width 0.3s ease;
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            transition: width 0.3s;
         }
 
-        .nav-links a:hover {
-            color: var(--text-primary);
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        .nav-links a.active {
-            color: var(--text-primary);
-        }
-
+        .nav-links a:hover::after,
         .nav-links a.active::after {
             width: 100%;
         }
 
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #4f46e5;
+        }
+
+        /* Animated Background Blobs */
+        .blob-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            mix-blend-mode: multiply;
+            filter: blur(64px);
+            opacity: 0.3;
+            animation: blob 7s infinite;
+        }
+
+        .blob-1 {
+            top: 5rem;
+            right: 2.5rem;
+            width: 18rem;
+            height: 18rem;
+            background: #a78bfa;
+            animation-delay: 0s;
+        }
+
+        .blob-2 {
+            top: 10rem;
+            left: 2.5rem;
+            width: 18rem;
+            height: 18rem;
+            background: #818cf8;
+            animation-delay: 2s;
+        }
+
+        .blob-3 {
+            bottom: -2rem;
+            left: 50%;
+            width: 18rem;
+            height: 18rem;
+            background: #60a5fa;
+            animation-delay: 4s;
+        }
+
+        @keyframes blob {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+            }
+            33% {
+                transform: translate(30px, -50px) scale(1.1);
+            }
+            66% {
+                transform: translate(-20px, 20px) scale(0.9);
+            }
+        }
+
         /* Hero Section */
         .hero {
-            padding: 180px 2rem 120px;
+            padding-top: 8rem;
+            padding-bottom: 3rem;
+            padding-left: 2rem;
+            padding-right: 2rem;
             text-align: center;
-            position: relative;
         }
 
         .hero h1 {
-            font-size: 4.5rem;
-            font-weight: 800;
-            margin-bottom: 1.5rem;
+            font-size: 4rem;
+            font-weight: 900;
             line-height: 1.1;
-            letter-spacing: -2px;
-            animation: fadeInUp 0.8s ease;
+            margin-bottom: 1.5rem;
+            animation: slideInUp 0.8s ease;
         }
 
-        .gradient-text {
-            background: var(--primary-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .hero p {
-            font-size: 1.35rem;
-            color: var(--text-secondary);
-            max-width: 700px;
-            margin: 0 auto 3rem;
-            line-height: 1.8;
-            animation: fadeInUp 0.8s ease 0.2s backwards;
-        }
-
-        @keyframes fadeInUp {
+        @keyframes slideInUp {
             from {
                 opacity: 0;
                 transform: translateY(30px);
             }
-
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
 
-        /* Main Content */
+        .title-gradient {
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: #475569;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.8;
+            animation: slideInUp 0.8s ease 0.2s backwards;
+        }
+
+        /* Container */
         .container {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 0 2rem 120px;
+            padding: 0 2rem 5rem;
         }
 
         /* Mission Section */
         .mission-section {
-            margin-bottom: 120px;
+            margin-bottom: 5rem;
         }
 
         .mission-card {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
+            background: white;
             border-radius: 24px;
-            padding: 4rem;
-            backdrop-filter: blur(20px);
-            box-shadow: var(--shadow-lg);
-            transition: all 0.4s ease;
+            padding: 3.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s;
             position: relative;
             overflow: hidden;
         }
@@ -259,10 +248,10 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 4px;
-            background: var(--primary-gradient);
+            height: 5px;
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
             transform: scaleX(0);
-            transition: transform 0.4s ease;
+            transition: transform 0.4s;
         }
 
         .mission-card:hover::before {
@@ -270,88 +259,95 @@
         }
 
         .mission-card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-xl);
-            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
         }
 
         .mission-card h2 {
             font-size: 2.5rem;
-            font-weight: 700;
+            font-weight: 800;
             margin-bottom: 1.5rem;
-            letter-spacing: -1px;
+            color: #0f172a;
         }
 
         .mission-card p {
             font-size: 1.15rem;
-            color: var(--text-secondary);
+            color: #475569;
             line-height: 1.9;
+            margin-bottom: 1.5rem;
         }
 
-        /* Features Grid */
-        .features-section {
-            margin-bottom: 120px;
-        }
-
+        /* Section Title */
         .section-title {
             text-align: center;
             font-size: 3rem;
-            font-weight: 800;
-            margin-bottom: 4rem;
-            letter-spacing: -1.5px;
+            font-weight: 900;
+            margin-bottom: 3rem;
+            color: #0f172a;
         }
 
+        /* Features Grid */
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2.5rem;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-bottom: 5rem;
         }
 
         .feature-card {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
+            background: white;
             border-radius: 20px;
-            padding: 3rem;
-            backdrop-filter: blur(20px);
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--primary-gradient);
-            opacity: 0;
-            transition: opacity 0.4s ease;
-        }
-
-        .feature-card:hover::before {
-            opacity: 0.05;
+            padding: 2.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s;
         }
 
         .feature-card:hover {
             transform: translateY(-8px);
-            box-shadow: var(--shadow-xl);
-            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
         }
 
         .feature-icon {
             width: 70px;
             height: 70px;
             border-radius: 16px;
-            background: var(--primary-gradient);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2rem;
+            font-size: 2.5rem;
             margin-bottom: 1.5rem;
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
-            transition: transform 0.4s ease;
+            transition: transform 0.3s;
+        }
+
+        .feature-card:nth-child(1) .feature-icon {
+            background: linear-gradient(135deg, #f59e0b, #ea580c);
+            box-shadow: 0 8px 20px rgba(245, 158, 11, 0.3);
+        }
+
+        .feature-card:nth-child(2) .feature-icon {
+            background: linear-gradient(135deg, #3b82f6, #06b6d4);
+            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+        }
+
+        .feature-card:nth-child(3) .feature-icon {
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+            box-shadow: 0 8px 20px rgba(139, 92, 246, 0.3);
+        }
+
+        .feature-card:nth-child(4) .feature-icon {
+            background: linear-gradient(135deg, #10b981, #059669);
+            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
+        }
+
+        .feature-card:nth-child(5) .feature-icon {
+            background: linear-gradient(135deg, #ec4899, #be185d);
+            box-shadow: 0 8px 20px rgba(236, 72, 153, 0.3);
+        }
+
+        .feature-card:nth-child(6) .feature-icon {
+            background: linear-gradient(135deg, #06b6d4, #0891b2);
+            box-shadow: 0 8px 20px rgba(6, 182, 212, 0.3);
         }
 
         .feature-card:hover .feature-icon {
@@ -362,268 +358,204 @@
             font-size: 1.5rem;
             font-weight: 700;
             margin-bottom: 1rem;
-            position: relative;
-            z-index: 1;
+            color: #0f172a;
         }
 
         .feature-card p {
-            color: var(--text-secondary);
-            line-height: 1.8;
-            position: relative;
-            z-index: 1;
+            color: #475569;
+            line-height: 1.7;
         }
 
         /* Stats Section */
         .stats-section {
-            margin-bottom: 120px;
-            padding: 5rem 0;
-            position: relative;
+            margin-bottom: 5rem;
+            padding: 4rem;
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            border-radius: 24px;
+            box-shadow: 0 10px 40px rgba(79, 70, 229, 0.3);
         }
 
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(4, 1fr);
             gap: 3rem;
             text-align: center;
         }
 
         .stat-item {
-            animation: fadeInUp 0.8s ease backwards;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s;
         }
 
-        .stat-item:nth-child(1) {
-            animation-delay: 0.1s;
-        }
-
-        .stat-item:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-
-        .stat-item:nth-child(3) {
-            animation-delay: 0.3s;
-        }
-
-        .stat-item:nth-child(4) {
-            animation-delay: 0.4s;
+        .stat-item.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .stat-number {
-            font-size: 4rem;
-            font-weight: 800;
-            background: var(--accent-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: white;
             margin-bottom: 0.5rem;
-            line-height: 1;
+            display: block;
         }
 
         .stat-label {
+            color: #c7d2fe;
             font-size: 1.1rem;
-            color: var(--text-secondary);
-            font-weight: 500;
+            font-weight: 600;
         }
 
         /* Team Section */
-        .team-section {
-            margin-bottom: 120px;
-        }
-
         .team-intro {
             text-align: center;
             max-width: 700px;
-            margin: 0 auto 4rem;
-            color: var(--text-secondary);
+            margin: 0 auto 3rem;
+            color: #475569;
             font-size: 1.15rem;
             line-height: 1.8;
         }
 
         .team-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2.5rem;
-            max-width: 1600px;
-            margin: 0 auto;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 2rem;
+            margin-bottom: 5rem;
         }
 
         .team-card {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 24px;
-            padding: 3rem 2.5rem;
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
             text-align: center;
-            backdrop-filter: blur(20px);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .team-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--secondary-gradient);
-            opacity: 0;
-            transition: opacity 0.4s ease;
-        }
-
-        .team-card:hover::before {
-            opacity: 0.08;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s;
         }
 
         .team-card:hover {
-            transform: translateY(-12px);
-            box-shadow: var(--shadow-xl);
-            border-color: rgba(255, 255, 255, 0.25);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
         }
 
         .team-avatar {
-            width: 130px;
-            height: 130px;
+            width: 100px;
+            height: 100px;
             border-radius: 50%;
-            background: var(--primary-gradient);
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
             margin: 0 auto 1.5rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 3.2rem;
+            font-size: 2.5rem;
             font-weight: 700;
-            box-shadow: 0 15px 50px rgba(102, 126, 234, 0.4);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            z-index: 1;
-            border: 4px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            box-shadow: 0 8px 25px rgba(79, 70, 229, 0.4);
             overflow: hidden;
+            border: 3px solid #e0e7ff;
         }
 
         .team-avatar img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            border-radius: 50%;
         }
 
         .team-name {
-            font-size: 1.6rem;
+            font-size: 1.25rem;
             font-weight: 700;
             margin-bottom: 0.5rem;
-            position: relative;
-            z-index: 1;
-            letter-spacing: -0.5px;
+            color: #0f172a;
         }
 
         .team-role {
-            color: var(--text-secondary);
-            font-size: 1.05rem;
-            margin-bottom: 1.25rem;
-            position: relative;
-            z-index: 1;
-            font-weight: 500;
-            background: var(--accent-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: #7c3aed;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
         }
 
         .team-bio {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            line-height: 1.7;
-            position: relative;
-            z-index: 1;
+            color: #64748b;
+            font-size: 0.9rem;
+            line-height: 1.6;
             margin-bottom: 1.5rem;
-            min-height: 60px;
+            min-height: 80px;
         }
 
         .team-social {
             display: flex;
             justify-content: center;
-            gap: 1rem;
-            position: relative;
-            z-index: 1;
-            margin-top: 1.5rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid var(--card-border);
+            gap: 0.75rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e2e8f0;
         }
 
         .social-link {
-            width: 45px;
-            height: 45px;
-            border-radius: 12px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--card-border);
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            background: #f1f5f9;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--text-secondary);
+            color: #64748b;
             text-decoration: none;
-            transition: all 0.3s ease;
-            font-size: 1.2rem;
+            transition: all 0.3s;
         }
 
         .social-link:hover {
             transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
         }
 
         .social-link.linkedin:hover {
-            background: linear-gradient(135deg, #0077b5 0%, #00a0dc 100%);
-            border-color: #0077b5;
+            background: #0077b5;
             color: white;
         }
 
         .social-link.github:hover {
-            background: linear-gradient(135deg, #333 0%, #24292e 100%);
-            border-color: #333;
+            background: #24292e;
             color: white;
         }
 
-        /* LinkedIn and GitHub SVG Icons */
         .social-icon {
-            width: 20px;
-            height: 20px;
+            width: 18px;
+            height: 18px;
             fill: currentColor;
         }
 
         /* CTA Section */
         .cta-section {
             text-align: center;
-            padding: 6rem 2rem;
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
+            padding: 4rem;
+            background: linear-gradient(135deg, #0f172a, #312e81);
             border-radius: 24px;
-            backdrop-filter: blur(20px);
             position: relative;
             overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
         }
 
         .cta-section::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--primary-gradient);
-            opacity: 0.05;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(79, 70, 229, 0.2), rgba(124, 58, 237, 0.2));
         }
 
         .cta-section h2 {
             font-size: 3rem;
-            font-weight: 800;
+            font-weight: 900;
+            color: white;
             margin-bottom: 1.5rem;
-            letter-spacing: -1.5px;
             position: relative;
             z-index: 1;
         }
 
         .cta-section p {
             font-size: 1.25rem;
-            color: var(--text-secondary);
-            margin-bottom: 2.5rem;
+            color: #c7d2fe;
+            margin-bottom: 2rem;
             max-width: 600px;
             margin-left: auto;
             margin-right: auto;
@@ -633,30 +565,29 @@
 
         .cta-button {
             display: inline-block;
-            padding: 1.2rem 3rem;
-            background: var(--primary-gradient);
-            color: white;
+            padding: 1rem 2.5rem;
+            background: white;
+            color: #4f46e5;
             text-decoration: none;
             border-radius: 12px;
-            font-weight: 600;
+            font-weight: 700;
             font-size: 1.1rem;
-            box-shadow: 0 10px 40px rgba(102, 126, 234, 0.4);
-            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.2);
+            transition: all 0.3s;
             position: relative;
             z-index: 1;
         }
 
         .cta-button:hover {
             transform: translateY(-3px);
-            box-shadow: 0 15px 50px rgba(102, 126, 234, 0.5);
+            box-shadow: 0 15px 40px rgba(255, 255, 255, 0.3);
         }
 
         /* Footer */
         footer {
             text-align: center;
             padding: 3rem 2rem;
-            border-top: 1px solid var(--card-border);
-            color: var(--text-muted);
+            color: #64748b;
         }
 
         footer p {
@@ -666,35 +597,52 @@
         .social-links {
             display: flex;
             justify-content: center;
-            gap: 1.5rem;
+            gap: 1rem;
             margin-top: 1.5rem;
         }
 
         .social-links a {
-            width: 45px;
-            height: 45px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
+            background: white;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--text-secondary);
             text-decoration: none;
-            transition: all 0.3s ease;
+            font-size: 1.25rem;
+            transition: all 0.3s;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
 
         .social-links a:hover {
-            background: var(--primary-gradient);
-            color: white;
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
             transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 8px 20px rgba(79, 70, 229, 0.3);
         }
 
-        /* Responsive Design */
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .team-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
         @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
             .hero h1 {
-                font-size: 3rem;
+                font-size: 2.5rem;
             }
 
             .hero p {
@@ -702,11 +650,7 @@
             }
 
             .section-title {
-                font-size: 2.25rem;
-            }
-
-            .nav-links {
-                gap: 1.5rem;
+                font-size: 2rem;
             }
 
             .features-grid,
@@ -715,78 +659,47 @@
             }
 
             .mission-card {
+                padding: 2rem;
+            }
+
+            .stats-section {
                 padding: 2.5rem;
             }
 
             .stat-number {
-                font-size: 3rem;
+                font-size: 2.5rem;
             }
 
             .cta-section h2 {
-                font-size: 2.25rem;
+                font-size: 2rem;
             }
 
-            .team-intro {
-                font-size: 1rem;
-                margin-bottom: 3rem;
+            .team-bio {
+                min-height: auto;
             }
-
-            .team-card {
-                padding: 2.5rem 2rem;
-            }
-
-            .team-avatar {
-                width: 110px;
-                height: 110px;
-                font-size: 2.8rem;
-            }
-
-            .team-name {
-                font-size: 1.4rem;
-            }
-
-            .team-role {
-                font-size: 1rem;
-            }
-        }
-
-        @media (min-width: 769px) and (max-width: 1024px) {
-            .team-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (min-width: 1025px) and (max-width: 1400px) {
-            .team-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
-
-        @media (min-width: 1401px) {
-            .team-grid {
-                grid-template-columns: repeat(5, 1fr);
-            }
-        }
-
-        /* Smooth Scroll */
-        html {
-            scroll-behavior: smooth;
         }
     </style>
 </head>
-
 <body>
     <!-- Animated Background -->
-    <div class="background-animation">
-        <div class="gradient-orb orb-1"></div>
-        <div class="gradient-orb orb-2"></div>
-        <div class="gradient-orb orb-3"></div>
+    <div class="blob-container">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
     </div>
 
     <!-- Navigation -->
-    <nav id="navbar">
+    <nav class="navbar" id="navbar">
         <div class="nav-container">
-            <div class="logo">Local Hub</div>
+            <a href="/" class="logo-container">
+                <div class="logo-icon">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                    </svg>
+                </div>
+                <span class="logo-text">LocalHub</span>
+            </a>
             <ul class="nav-links">
                 <li><a href="/">Home</a></li>
                 <li><a href="/about" class="active">About</a></li>
@@ -799,7 +712,7 @@
 
     <!-- Hero Section -->
     <section class="hero">
-        <h1>About <span class="gradient-text">Local Hub</span></h1>
+        <h1>About <span class="title-gradient">LocalHub</span></h1>
         <p>Connecting communities, empowering local businesses, and bringing neighbors together in the digital age.</p>
     </section>
 
@@ -809,14 +722,13 @@
         <section class="mission-section">
             <div class="mission-card">
                 <h2>Our Mission</h2>
-                <p>Local Hub was created with a simple yet powerful vision: to strengthen local communities by providing a platform where neighbors can connect, local businesses can thrive, and everyone can discover the hidden gems in their neighborhood. We believe that strong communities are built on meaningful connections, and technology should serve to bring people together, not apart.</p>
-                <br>
-                <p>In an increasingly digital world, we're committed to keeping the local spirit alive. Whether you're looking for a trusted service provider, want to support local businesses, or simply connect with your neighbors, Local Hub is your gateway to a more connected community.</p>
+                <p>LocalHub was created with a simple yet powerful vision: to strengthen local communities by providing a platform where neighbors can connect, local businesses can thrive, and everyone can discover the hidden gems in their neighborhood. We believe that strong communities are built on meaningful connections, and technology should serve to bring people together, not apart.</p>
+                <p>In an increasingly digital world, we're committed to keeping the local spirit alive. Whether you're looking for a trusted service provider, want to support local businesses, or simply connect with your neighbors, LocalHub is your gateway to a more connected community.</p>
             </div>
         </section>
 
         <!-- Features Section -->
-        <section class="features-section" id="features">
+        <section id="features">
             <h2 class="section-title">What We Offer</h2>
             <div class="features-grid">
                 <div class="feature-card">
@@ -856,49 +768,47 @@
         <section class="stats-section">
             <div class="stats-grid">
                 <div class="stat-item">
-                    <div class="stat-number">10K+</div>
-                    <div class="stat-label">Active Users</div>
+                    <span class="stat-number" data-target="10000">0</span>
+                    <span class="stat-label">Active Users</span>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-number">500+</div>
-                    <div class="stat-label">Local Businesses</div>
+                    <span class="stat-number" data-target="500">0</span>
+                    <span class="stat-label">Local Businesses</span>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-number">50+</div>
-                    <div class="stat-label">Communities</div>
+                    <span class="stat-number" data-target="50">0</span>
+                    <span class="stat-label">Communities</span>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-number">25K+</div>
-                    <div class="stat-label">Connections Made</div>
+                    <span class="stat-number" data-target="25000">0</span>
+                    <span class="stat-label">Connections Made</span>
                 </div>
             </div>
         </section>
 
         <!-- Team Section -->
-        <section class="team-section" id="team">
+        <section id="team">
             <h2 class="section-title">Meet Our Team</h2>
             <p class="team-intro">
                 Our passionate team is dedicated to building connections and empowering local communities.
-                Get to know the people behind Local Hub.
+                Get to know the people behind LocalHub.
             </p>
             <div class="team-grid">
                 <!-- Team Member 1 -->
                 <div class="team-card">
-                    <div class="team-avatar">
-                        <img src="{{ asset('images/team/kaushik-pal.jpg') }}" alt="Kaushik Pal">
-                    </div>
+                    <div class="team-avatar">KP</div>
                     <h3 class="team-name">Kaushik Pal</h3>
                     <p class="team-role">Founder & CEO</p>
                     <p class="team-bio">Passionate about building technology that brings communities together and empowers local businesses.</p>
                     <div class="team-social">
-                        <a href="https://linkedin.com/in/yourprofile" target="_blank" rel="noopener noreferrer" class="social-link linkedin" aria-label="LinkedIn Profile">
-                            <svg class="social-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                        <a href="#" class="social-link linkedin" aria-label="LinkedIn">
+                            <svg class="social-icon" viewBox="0 0 24 24">
+                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
                             </svg>
                         </a>
-                        <a href="https://github.com/yourusername" target="_blank" rel="noopener noreferrer" class="social-link github" aria-label="GitHub Profile">
-                            <svg class="social-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
+                        <a href="#" class="social-link github" aria-label="GitHub">
+                            <svg class="social-icon" viewBox="0 0 24 24">
+                                <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
                             </svg>
                         </a>
                     </div>
@@ -906,21 +816,19 @@
 
                 <!-- Team Member 2 -->
                 <div class="team-card">
-                    <div class="team-avatar">
-                        <img src="{{ asset('images/team/anirban-das.jpg') }}" alt="Anirban Das">
-                    </div>
+                    <div class="team-avatar">AD</div>
                     <h3 class="team-name">Anirban Das</h3>
                     <p class="team-role">Head of Product</p>
                     <p class="team-bio">Dedicated to creating user experiences that make community engagement effortless and enjoyable.</p>
                     <div class="team-social">
-                        <a href="https://linkedin.com/in/yourprofile" target="_blank" rel="noopener noreferrer" class="social-link linkedin" aria-label="LinkedIn Profile">
-                            <svg class="social-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                        <a href="#" class="social-link linkedin" aria-label="LinkedIn">
+                            <svg class="social-icon" viewBox="0 0 24 24">
+                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
                             </svg>
                         </a>
-                        <a href="https://github.com/yourusername" target="_blank" rel="noopener noreferrer" class="social-link github" aria-label="GitHub Profile">
-                            <svg class="social-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
+                        <a href="#" class="social-link github" aria-label="GitHub">
+                            <svg class="social-icon" viewBox="0 0 24 24">
+                                <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
                             </svg>
                         </a>
                     </div>
@@ -928,21 +836,19 @@
 
                 <!-- Team Member 3 -->
                 <div class="team-card">
-                    <div class="team-avatar">
-                        <img src="{{ asset('images/team/rup-das.jpg') }}" alt="Rup Das">
-                    </div>
+                    <div class="team-avatar">RD</div>
                     <h3 class="team-name">Rup Das</h3>
                     <p class="team-role">Ghugni Bikreta</p>
                     <p class="team-bio">Building bridges between neighbors and ensuring every voice in our community is heard.</p>
                     <div class="team-social">
-                        <a href="https://linkedin.com/in/yourprofile" target="_blank" rel="noopener noreferrer" class="social-link linkedin" aria-label="LinkedIn Profile">
-                            <svg class="social-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                        <a href="#" class="social-link linkedin" aria-label="LinkedIn">
+                            <svg class="social-icon" viewBox="0 0 24 24">
+                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
                             </svg>
                         </a>
-                        <a href="https://github.com/yourusername" target="_blank" rel="noopener noreferrer" class="social-link github" aria-label="GitHub Profile">
-                            <svg class="social-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
+                        <a href="#" class="social-link github" aria-label="GitHub">
+                            <svg class="social-icon" viewBox="0 0 24 24">
+                                <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
                             </svg>
                         </a>
                     </div>
@@ -950,21 +856,19 @@
 
                 <!-- Team Member 4 -->
                 <div class="team-card">
-                    <div class="team-avatar">
-                        <img src="{{ asset('images/team/ayan-ghosh.jpg') }}" alt="Ayan Ghosh">
-                    </div>
+                    <div class="team-avatar">AG</div>
                     <h3 class="team-name">Ayan Ghosh</h3>
-                    <p class="team-role"></p>
+                    <p class="team-role">Developer</p>
                     <p class="team-bio">Crafting robust and scalable solutions to power seamless community connections.</p>
                     <div class="team-social">
-                        <a href="https://linkedin.com/in/yourprofile" target="_blank" rel="noopener noreferrer" class="social-link linkedin" aria-label="LinkedIn Profile">
-                            <svg class="social-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                        <a href="#" class="social-link linkedin" aria-label="LinkedIn">
+                            <svg class="social-icon" viewBox="0 0 24 24">
+                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
                             </svg>
                         </a>
-                        <a href="https://github.com/yourusername" target="_blank" rel="noopener noreferrer" class="social-link github" aria-label="GitHub Profile">
-                            <svg class="social-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
+                        <a href="#" class="social-link github" aria-label="GitHub">
+                            <svg class="social-icon" viewBox="0 0 24 24">
+                                <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
                             </svg>
                         </a>
                     </div>
@@ -972,21 +876,19 @@
 
                 <!-- Team Member 5 -->
                 <div class="team-card">
-                    <div class="team-avatar">
-                        <img src="{{ asset('images/team/subhadip-ghosh.png') }}" alt="Subhadip Ghosh">
-                    </div>
+                    <div class="team-avatar">SG</div>
                     <h3 class="team-name">Subhadip Ghosh</h3>
                     <p class="team-role">CEO</p>
-                    <p class="team-bio">Spreading the word about Local Hub and helping communities discover the power of connection.</p>
+                    <p class="team-bio">Spreading the word about LocalHub and helping communities discover the power of connection.</p>
                     <div class="team-social">
-                        <a href="https://linkedin.com/in/yourprofile" target="_blank" rel="noopener noreferrer" class="social-link linkedin" aria-label="LinkedIn Profile">
-                            <svg class="social-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                        <a href="#" class="social-link linkedin" aria-label="LinkedIn">
+                            <svg class="social-icon" viewBox="0 0 24 24">
+                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
                             </svg>
                         </a>
-                        <a href="https://github.com/yourusername" target="_blank" rel="noopener noreferrer" class="social-link github" aria-label="GitHub Profile">
-                            <svg class="social-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
+                        <a href="#" class="social-link github" aria-label="GitHub">
+                            <svg class="social-icon" viewBox="0 0 24 24">
+                                <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
                             </svg>
                         </a>
                     </div>
@@ -996,7 +898,7 @@
 
         <!-- CTA Section -->
         <section class="cta-section" id="contact">
-            <h2>Ready to Join Your <span class="gradient-text">Local Community</span>?</h2>
+            <h2>Ready to Join Your <span style="color: #c7d2fe;">Local Community</span>?</h2>
             <p>Start connecting with your neighbors and discovering amazing local businesses today.</p>
             <a href="/" class="cta-button">Get Started Now</a>
         </section>
@@ -1004,7 +906,7 @@
 
     <!-- Footer -->
     <footer>
-        <p>&copy; 2026 Local Hub. All rights reserved.</p>
+        <p>&copy; 2026 LocalHub. All rights reserved.</p>
         <p>Built with ❤️ for local communities</p>
         <div class="social-links">
             <a href="#" aria-label="Facebook">📘</a>
@@ -1018,14 +920,59 @@
         // Navbar scroll effect
         const navbar = document.getElementById('navbar');
         window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
+            if (window.scrollY > 20) {
                 navbar.classList.add('scrolled');
             } else {
                 navbar.classList.remove('scrolled');
             }
         });
 
-        // Smooth scroll for anchor links
+        // Stats counter animation
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const stats = entry.target.querySelectorAll('.stat-item');
+                    stats.forEach((stat, index) => {
+                        setTimeout(() => {
+                            stat.classList.add('visible');
+                            const numberElement = stat.querySelector('.stat-number');
+                            const target = parseInt(numberElement.getAttribute('data-target'));
+                            animateCounter(numberElement, target);
+                        }, index * 100);
+                    });
+                    statsObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        const statsSection = document.querySelector('.stats-section');
+        if (statsSection) {
+            statsObserver.observe(statsSection);
+        }
+
+        function animateCounter(element, target) {
+            let current = 0;
+            const increment = target / 60;
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    if (target >= 1000) {
+                        element.textContent = (target / 1000).toFixed(0) + 'K+';
+                    } else {
+                        element.textContent = target + '+';
+                    }
+                    clearInterval(timer);
+                } else {
+                    if (target >= 1000) {
+                        element.textContent = (Math.floor(current / 1000)) + 'K';
+                    } else {
+                        element.textContent = Math.floor(current);
+                    }
+                }
+            }, 30);
+        }
+
+        // Smooth scroll
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -1040,5 +987,4 @@
         });
     </script>
 </body>
-
 </html>
