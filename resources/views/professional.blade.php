@@ -33,6 +33,7 @@
             z-index: 100;
             display: flex;
             align-items: center;
+            justify-content: space-between;
             padding: 0 24px;
         }
 
@@ -49,10 +50,15 @@
             font-size: 28px;
         }
 
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
         .search-bar {
-            flex: 1;
-            max-width: 500px;
-            margin: 0 32px;
+            max-width: 400px;
+            width: 400px;
             position: relative;
         }
 
@@ -174,6 +180,152 @@
         .dropdown-item i {
             width: 20px;
         }
+
+        /* Notification Dropdown */
+        .notification-dropdown {
+            position: relative;
+        }
+
+        .notification-panel {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            width: 380px;
+            margin-top: 12px;
+            display: none;
+            max-height: 500px;
+            overflow: hidden;
+            z-index: 1000;
+        }
+
+        .notification-panel.active {
+            display: block;
+        }
+
+        .notification-header {
+            padding: 16px 20px;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .notification-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .mark-all-read {
+            font-size: 13px;
+            color: #2563eb;
+            cursor: pointer;
+            background: none;
+            border: none;
+            font-weight: 500;
+        }
+
+        .mark-all-read:hover {
+            text-decoration: underline;
+        }
+
+        .notification-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .notification-item {
+            padding: 16px 20px;
+            border-bottom: 1px solid #f1f5f9;
+            cursor: pointer;
+            transition: background 0.2s;
+            display: flex;
+            gap: 12px;
+        }
+
+        .notification-item:hover {
+            background: #f8fafc;
+        }
+
+        .notification-item.unread {
+            background: #eff6ff;
+        }
+
+        .notification-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 18px;
+        }
+
+        .notification-icon.info {
+            background: #dbeafe;
+            color: #2563eb;
+        }
+
+        .notification-icon.success {
+            background: #d1fae5;
+            color: #10b981;
+        }
+
+        .notification-icon.warning {
+            background: #fef3c7;
+            color: #f59e0b;
+        }
+
+        .notification-content {
+            flex: 1;
+        }
+
+        .notification-text {
+            font-size: 14px;
+            color: #1e293b;
+            margin-bottom: 4px;
+            line-height: 1.5;
+        }
+
+        .notification-time {
+            font-size: 12px;
+            color: #94a3b8;
+        }
+
+        .notification-footer {
+            padding: 12px 20px;
+            border-top: 1px solid #e2e8f0;
+            text-align: center;
+        }
+
+        .view-all-notifications {
+            color: #2563eb;
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .view-all-notifications:hover {
+            text-decoration: underline;
+        }
+
+        .empty-notifications {
+            padding: 48px 20px;
+            text-align: center;
+            color: #94a3b8;
+        }
+
+        .empty-notifications i {
+            font-size: 48px;
+            margin-bottom: 12px;
+            opacity: 0.3;
+        }
+
 
         /* Sidebar */
         .sidebar {
@@ -648,28 +800,44 @@
             <i class="fas fa-network-wired"></i>
             <span>LocalConnect Pro</span>
         </div>
-        <div class="search-bar">
-            <i class="fas fa-search"></i>
-            <input type="text" placeholder="Search appointments, services...">
-        </div>
-        <div class="nav-icons">
-            <button class="icon-btn" onclick="showNotifications()">
-                <i class="fas fa-bell"></i>
-                <span class="badge" id="notif-count">3</span>
-            </button>
-            <button class="icon-btn" onclick="showMessages()">
-                <i class="fas fa-envelope"></i>
-                <span class="badge" id="msg-count">5</span>
-            </button>
-            <div class="profile-dropdown">
-                <button class="profile-btn" onclick="toggleDropdown()">
-                    <div class="profile-avatar" id="profile-avatar">JD</div>
-                    <i class="fas fa-chevron-down"></i>
+        <div class="nav-right">
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search appointments, services...">
+            </div>
+            <div class="nav-icons">
+                <div class="notification-dropdown">
+                    <button class="icon-btn" onclick="toggleNotifications()">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge" id="notif-count">3</span>
+                    </button>
+                    <div class="notification-panel" id="notification-panel">
+                        <div class="notification-header">
+                            <div class="notification-title">Notifications</div>
+                            <button class="mark-all-read" onclick="markAllRead()">Mark all as read</button>
+                        </div>
+                        <div class="notification-list" id="notification-list">
+                            <!-- Notifications will be loaded here -->
+                        </div>
+                        <div class="notification-footer">
+                            <a href="#" class="view-all-notifications" onclick="viewAllNotifications()">View All Notifications</a>
+                        </div>
+                    </div>
+                </div>
+                <button class="icon-btn" onclick="showMessages()">
+                    <i class="fas fa-envelope"></i>
+                    <span class="badge" id="msg-count">5</span>
                 </button>
-                <div class="dropdown-menu" id="dropdown-menu">
-                    <button class="dropdown-item" onclick="viewProfile()"><i class="fas fa-user"></i> View Profile</button>
-                    <button class="dropdown-item" onclick="openSettings()"><i class="fas fa-cog"></i> Settings</button>
-                    <button class="dropdown-item" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+                <div class="profile-dropdown">
+                    <button class="profile-btn" onclick="toggleDropdown()">
+                        <div class="profile-avatar" id="profile-avatar">JD</div>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="dropdown-menu" id="dropdown-menu">
+                        <button class="dropdown-item" onclick="viewProfile()"><i class="fas fa-user"></i> View Profile</button>
+                        <button class="dropdown-item" onclick="openSettings()"><i class="fas fa-cog"></i> Settings</button>
+                        <button class="dropdown-item" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -813,9 +981,45 @@
 
         // Initialize dashboard
         document.addEventListener('DOMContentLoaded', function() {
+            checkAuth();
+            loadProfileData();
             loadDashboardData();
             loadAppointments();
+            loadServices();
         });
+
+        // Check authentication
+        function checkAuth() {
+            if (!token) {
+                console.warn('No auth token found');
+                // Optionally redirect to login
+                // window.location.href = '/login';
+            }
+        }
+
+        // Load Profile Data
+        async function loadProfileData() {
+            try {
+                const response = await fetch(`${API_BASE}/professional/profile`, {
+                    headers: authHeaders
+                });
+
+                if (!response.ok) throw new Error('Failed to load profile');
+
+                const profile = await response.json();
+                updateProfileUI(profile);
+            } catch (error) {
+                console.error('Profile error:', error);
+            }
+        }
+
+        // Update Profile UI
+        function updateProfileUI(profile) {
+            if (profile.name) {
+                const initials = profile.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+                document.getElementById('profile-avatar').textContent = initials;
+            }
+        }
 
         // Load Dashboard Data
         async function loadDashboardData() {
@@ -830,7 +1034,34 @@
                 updateDashboard(data);
             } catch (error) {
                 console.error('Dashboard error:', error);
-                showEmptyState('appointments-container', 'No data available');
+                // Show demo data or empty state
+            }
+        }
+
+        // Load Services
+        async function loadServices() {
+            try {
+                const response = await fetch(`${API_BASE}/professional/services`, {
+                    headers: authHeaders
+                });
+
+                if (!response.ok) throw new Error('Failed to load services');
+
+                const services = await response.json();
+                updateServicesCount(services);
+            } catch (error) {
+                console.error('Services error:', error);
+            }
+        }
+
+        // Update Services Count
+        function updateServicesCount(services) {
+            if (services && services.length > 0) {
+                document.getElementById('active-services').textContent = services.length;
+                // Find most popular service (you can customize this logic)
+                if (services[0] && services[0].name) {
+                    document.getElementById('popular-service').textContent = services[0].name;
+                }
             }
         }
 
@@ -1005,49 +1236,250 @@
             alert('Reschedule feature coming soon!');
         }
 
-        function addService() {
-            alert('Add service feature');
+        // Add New Service
+        async function addService() {
+            const serviceName = prompt('Enter service name:');
+            if (!serviceName) return;
+
+            const serviceDescription = prompt('Enter service description:');
+            const servicePrice = prompt('Enter service price:');
+
+            try {
+                const response = await fetch(`${API_BASE}/professional/services`, {
+                    method: 'POST',
+                    headers: authHeaders,
+                    body: JSON.stringify({
+                        name: serviceName,
+                        description: serviceDescription,
+                        price: servicePrice
+                    })
+                });
+
+                if (response.ok) {
+                    alert('Service added successfully!');
+                    loadServices();
+                } else {
+                    alert('Failed to add service');
+                }
+            } catch (error) {
+                console.error('Error adding service:', error);
+                alert('Error adding service');
+            }
         }
 
         function viewCalendar() {
-            alert('Calendar view');
+            alert('Calendar view - Coming soon!');
         }
 
         function checkEarnings() {
-            alert('Earnings view');
+            alert('Earnings view - Coming soon!');
         }
 
-        function updateProfile() {
-            alert('Profile update');
+        // Update Profile
+        async function updateProfile() {
+            const name = prompt('Enter your name:');
+            if (!name) return;
+
+            try {
+                const response = await fetch(`${API_BASE}/professional/profile`, {
+                    method: 'PUT',
+                    headers: authHeaders,
+                    body: JSON.stringify({
+                        name
+                    })
+                });
+
+                if (response.ok) {
+                    alert('Profile updated successfully!');
+                    loadProfileData();
+                } else {
+                    alert('Failed to update profile');
+                }
+            } catch (error) {
+                console.error('Error updating profile:', error);
+                alert('Error updating profile');
+            }
         }
 
-        function viewProfile() {
-            alert('View profile');
+        // View Profile
+        async function viewProfile() {
+            try {
+                const response = await fetch(`${API_BASE}/professional/profile`, {
+                    headers: authHeaders
+                });
+
+                if (response.ok) {
+                    const profile = await response.json();
+                    alert(`Profile:\nName: ${profile.name || 'N/A'}\nEmail: ${profile.email || 'N/A'}`);
+                } else {
+                    alert('Failed to load profile');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error loading profile');
+            }
         }
 
         function openSettings() {
-            alert('Settings');
+            window.location.href = '/professional-settings';
         }
 
-        function showNotifications() {
-            alert('Notifications');
+        // Notification Panel Functions
+        function toggleNotifications() {
+            const panel = document.getElementById('notification-panel');
+            const dropdown = document.getElementById('dropdown-menu');
+
+            // Close profile dropdown if open
+            dropdown.classList.remove('active');
+
+            // Toggle notification panel
+            panel.classList.toggle('active');
+
+            // Load notifications if opening
+            if (panel.classList.contains('active')) {
+                loadNotifications();
+            }
+        }
+
+        function loadNotifications() {
+            // Sample notifications - replace with API call later
+            const notifications = [{
+                    id: 1,
+                    type: 'success',
+                    icon: 'fa-check-circle',
+                    text: 'New appointment confirmed with John Doe for Home Cleaning',
+                    time: '5 minutes ago',
+                    read: false
+                },
+                {
+                    id: 2,
+                    type: 'info',
+                    icon: 'fa-info-circle',
+                    text: 'You have a new review from Sarah Smith (5 stars)',
+                    time: '1 hour ago',
+                    read: false
+                },
+                {
+                    id: 3,
+                    type: 'warning',
+                    icon: 'fa-exclamation-triangle',
+                    text: 'Appointment reminder: Meeting with Mike Johnson in 30 minutes',
+                    time: '2 hours ago',
+                    read: false
+                },
+                {
+                    id: 4,
+                    type: 'info',
+                    icon: 'fa-calendar',
+                    text: 'Your service "Deep Cleaning" has been approved',
+                    time: '1 day ago',
+                    read: true
+                },
+                {
+                    id: 5,
+                    type: 'success',
+                    icon: 'fa-dollar-sign',
+                    text: 'Payment received: ₹2,500 from Emma Wilson',
+                    time: '2 days ago',
+                    read: true
+                }
+            ];
+
+            renderNotifications(notifications);
+            updateNotificationCount(notifications.filter(n => !n.read).length);
+        }
+
+        function renderNotifications(notifications) {
+            const container = document.getElementById('notification-list');
+
+            if (notifications.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-notifications">
+                        <i class="fas fa-bell-slash"></i>
+                        <div>No notifications</div>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = notifications.map(notif => `
+                <div class="notification-item ${notif.read ? '' : 'unread'}" onclick="markAsRead(${notif.id})">
+                    <div class="notification-icon ${notif.type}">
+                        <i class="fas ${notif.icon}"></i>
+                    </div>
+                    <div class="notification-content">
+                        <div class="notification-text">${notif.text}</div>
+                        <div class="notification-time">${notif.time}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function updateNotificationCount(count) {
+            const badge = document.getElementById('notif-count');
+            if (count > 0) {
+                badge.textContent = count;
+                badge.style.display = 'block';
+            } else {
+                badge.style.display = 'none';
+            }
+        }
+
+        function markAsRead(id) {
+            console.log('Mark notification as read:', id);
+            // API call to mark as read would go here
+            // For now, just reload notifications
+            loadNotifications();
+        }
+
+        function markAllRead() {
+            console.log('Mark all notifications as read');
+            // API call to mark all as read would go here
+            updateNotificationCount(0);
+            loadNotifications();
+        }
+
+        function viewAllNotifications() {
+            alert('View all notifications page - Coming soon!');
+            return false;
         }
 
         function showMessages() {
-            alert('Messages');
+            alert('Messages - Coming soon!');
         }
 
-        function logout() {
-            if (confirm('Are you sure you want to logout?')) {
+        // Logout
+        async function logout() {
+            if (!confirm('Are you sure you want to logout?')) return;
+
+            try {
+                const response = await fetch(`${API_BASE}/logout`, {
+                    method: 'POST',
+                    headers: authHeaders
+                });
+
+                if (response.ok) {
+                    localStorage.removeItem('auth_token');
+                    window.location.href = '/login';
+                } else {
+                    // Even if API fails, clear token and redirect
+                    localStorage.removeItem('auth_token');
+                    window.location.href = '/login';
+                }
+            } catch (error) {
+                console.error('Logout error:', error);
                 localStorage.removeItem('auth_token');
                 window.location.href = '/login';
             }
         }
 
-        // Close dropdown when clicking outside
+        // Close dropdowns when clicking outside
         document.addEventListener('click', function(e) {
             if (!e.target.closest('.profile-dropdown')) {
                 document.getElementById('dropdown-menu').classList.remove('active');
+            }
+            if (!e.target.closest('.notification-dropdown')) {
+                document.getElementById('notification-panel').classList.remove('active');
             }
         });
     </script>
