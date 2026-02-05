@@ -33,3 +33,7 @@ Route::get('/dashboard', function () {
     }
     return view('dashboard');
 });
+Route::get('/register', function () {
+    return view('user-register');
+})->name('register');
+
