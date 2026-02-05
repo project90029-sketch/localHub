@@ -788,11 +788,11 @@
             <ul class="nav-links">
                 <li><a href="#features">Features</a></li>
                 <li><a href="#how-it-works">How It Works</a></li>
-                <li><a href="#about">About</a></li>
+                <li><a href="{{ url('/about') }}">About</a></li>
             </ul>
             <div class="nav-buttons">
                 <a href="#login" class="btn btn-login">Login</a>
-                <a href="#signup" class="btn btn-primary">Get Started</a>
+                <a href="{{ url('/user-register')}}" class="btn btn-primary">Get Started</a>
             </div>
             <button class="mobile-menu-toggle">
                 <span></span>

@@ -876,7 +876,9 @@
 
                 <!-- Team Member 5 -->
                 <div class="team-card">
-                    <div class="team-avatar">SG</div>
+                    <div class="team-avatar">
+                        <img src="images\team\subhadip-ghosh.png" alt="SG">
+                    </div>
                     <h3 class="team-name">Subhadip Ghosh</h3>
                     <p class="team-role">CEO</p>
                     <p class="team-bio">Spreading the word about LocalHub and helping communities discover the power of connection.</p>
