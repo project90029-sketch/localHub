@@ -39,40 +39,29 @@ Route::get('/register', function () {
 })->name('register');
 
 Route::get('/professional', function () {
-    return view('professional');
+    return view('professional.professional');
 });
 
 Route::get('/professional-settings', function () {
-    return view('professional-settings');
+    return view('professional.professional-settings');
 });
 
 Route::get('/my-services', function () {
-    return view('my-services');
+    return view('professional.my-services');
 });
 
-
-/*Business Routes */
-
-Route::get('/business/dashboard', function () {
-    return view('business.dashboard');
+Route::get('/appointments', function () {
+    return view('professional.appointments');
 });
 
-Route::get('/business/profile', function () {
-    return view('business.profile');
+Route::get('/earnings', function () {
+    return view('professional.earnings');
 });
 
-Route::get('/business/inventory', function () {
-    return view('business.inventory');
+Route::get('/reviews', function () {
+    return view('professional.reviews');
 });
 
-Route::get('/business/orders', function () {
-    return view('business.orders');
-});
-
-Route::get('/business/analytics', function () {
-    return view('business.analytics');
-});
-
-Route::get('/business/network', function () {
-    return view('business.network');
+Route::get('/messages', function () {
+    return view('professional.messages');
 });

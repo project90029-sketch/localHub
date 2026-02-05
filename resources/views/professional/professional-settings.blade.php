@@ -262,14 +262,11 @@
     @include('components.sidebar', [
     'menuItems' => [
     ['icon' => 'th-large', 'label' => 'Dashboard Overview', 'route' => 'professional', 'active' => false],
-    ['icon' => 'briefcase', 'label' => 'My Services', 'route' => 'services', 'active' => false],
+    ['icon' => 'briefcase', 'label' => 'My Services', 'route' => 'my-services', 'active' => false],
     ['icon' => 'calendar-check', 'label' => 'Appointments', 'route' => 'appointments', 'active' => false],
-    ['icon' => 'calendar', 'label' => 'Calendar View', 'route' => 'calendar', 'active' => false],
     ['icon' => 'dollar-sign', 'label' => 'My Earnings', 'route' => 'earnings', 'active' => false],
     ['icon' => 'star', 'label' => 'Reviews & Ratings', 'route' => 'reviews', 'active' => false],
     ['icon' => 'comments', 'label' => 'Messages', 'route' => 'messages', 'active' => false],
-    ['icon' => 'users', 'label' => 'Professional Network', 'route' => 'network', 'active' => false],
-    ['icon' => 'cog', 'label' => 'Settings', 'route' => 'professional-settings', 'active' => true],
     ['icon' => 'sign-out-alt', 'label' => 'Logout', 'route' => 'logout', 'active' => false]
     ]
     ])
