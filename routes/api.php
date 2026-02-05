@@ -24,10 +24,10 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
 
-Route::middleware('auth:sanctum')->group(function(){
+Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
 
-    Route::prefix('user')->group(function(){
+    Route::prefix('user')->group(function () {
         Route::get('/profile', [UserController::class, 'profile']);
         Route::post('/profile', [UserController::class, 'updateProfile']);
         Route::post('/change-password', [UserController::class, 'changePassword']);
@@ -35,7 +35,7 @@ Route::middleware('auth:sanctum')->group(function(){
     });
 
 
-Route::middleware(['role:professional'])->group(function(){
+    Route::middleware(['role:professional'])->group(function () {
         Route::get('/professional/dashboard', [ProfessionalsController::class, 'getDashboard']);
 
         Route::get('/professional/profile', [ProfessionalsController::class, 'getProfile']);
@@ -50,5 +50,8 @@ Route::middleware(['role:professional'])->group(function(){
 
         Route::put('/professional/appointments/{id}', [ProfessionalsController::class, 'updateAppointment']);
 
-        });
+        Route::get('/professional/earnings', [ProfessionalsController::class, 'getEarnings']);
+
+        Route::get('/professional/reviews', [ProfessionalsController::class, 'getReviews']);
     });
+});

@@ -845,15 +845,12 @@
 
     <!-- Sidebar -->
     <aside class="sidebar" id="sidebar">
-        <div class="sidebar-item active" onclick="navigate('dashboard')"><i class="fas fa-th-large"></i> Dashboard Overview</div>
-        <div class="sidebar-item" onclick="navigate('services')"><i class="fas fa-briefcase"></i> My Services</div>
+        <div class="sidebar-item active" onclick="navigate('professional')"><i class="fas fa-th-large"></i> Dashboard Overview</div>
+        <div class="sidebar-item" onclick="navigate('my-services')"><i class="fas fa-briefcase"></i> My Services</div>
         <div class="sidebar-item" onclick="navigate('appointments')"><i class="fas fa-calendar-check"></i> Appointments</div>
-        <div class="sidebar-item" onclick="navigate('calendar')"><i class="fas fa-calendar"></i> Calendar View</div>
         <div class="sidebar-item" onclick="navigate('earnings')"><i class="fas fa-dollar-sign"></i> My Earnings</div>
         <div class="sidebar-item" onclick="navigate('reviews')"><i class="fas fa-star"></i> Reviews & Ratings</div>
         <div class="sidebar-item" onclick="navigate('messages')"><i class="fas fa-comments"></i> Messages</div>
-        <div class="sidebar-item" onclick="navigate('network')"><i class="fas fa-users"></i> Professional Network</div>
-        <div class="sidebar-item" onclick="navigate('settings')"><i class="fas fa-cog"></i> Settings</div>
         <div class="sidebar-item" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</div>
     </aside>
 
@@ -1084,26 +1081,32 @@
 
         // Update Dashboard with data
         function updateDashboard(data) {
-            if (data.earnings) {
-                document.getElementById('total-earnings').textContent = `₹${data.earnings.total || 0}`;
-                const change = data.earnings.change || 0;
+            // Update earnings
+            if (data.stats) {
+                const totalEarnings = data.stats.total_earnings || 0;
+                document.getElementById('total-earnings').textContent = `₹${totalEarnings.toLocaleString()}`;
+
+                // For now, show 0% change until we implement month-over-month comparison
                 const changeEl = document.getElementById('earnings-change');
-                changeEl.className = `stat-change ${change >= 0 ? 'positive' : 'negative'}`;
-                changeEl.innerHTML = `<i class="fas fa-arrow-${change >= 0 ? 'up' : 'down'}"></i> <span>${Math.abs(change)}% vs last month</span>`;
+                changeEl.className = 'stat-change positive';
+                changeEl.innerHTML = `<i class="fas fa-arrow-up"></i> <span>0% vs last month</span>`;
             }
 
-            if (data.appointments) {
-                document.getElementById('upcoming-count').textContent = data.appointments.upcoming || 0;
+            // Update appointments count
+            if (data.stats) {
+                document.getElementById('upcoming-count').textContent = data.stats.upcoming_appointments || 0;
             }
 
-            if (data.rating) {
-                document.getElementById('avg-rating').textContent = data.rating.average || '0.0';
-                renderStars(data.rating.average || 0);
-            }
+            // Update rating (placeholder for now)
+            document.getElementById('avg-rating').textContent = '0.0';
+            renderStars(0);
 
-            if (data.services) {
-                document.getElementById('active-services').textContent = data.services.active || 0;
-                document.getElementById('popular-service').textContent = data.services.popular || '-';
+            // Update active services
+            if (data.stats) {
+                document.getElementById('active-services').textContent = data.stats.active_services || 0;
+                if (data.stats.popular_service) {
+                    document.getElementById('popular-service').textContent = data.stats.popular_service;
+                }
             }
         }
 
@@ -1112,6 +1115,17 @@
             const container = document.getElementById('appointments-container');
 
             if (!appointments || appointments.length === 0) {
+                showEmptyState('appointments-container', 'No upcoming appointments');
+                return;
+            }
+
+            // Filter for upcoming appointments only
+            const upcomingAppointments = appointments.filter(apt => {
+                const aptTime = new Date(apt.appointment_time);
+                return aptTime > new Date() && apt.status !== 'cancelled';
+            }).slice(0, 5); // Show only first 5
+
+            if (upcomingAppointments.length === 0) {
                 showEmptyState('appointments-container', 'No upcoming appointments');
                 return;
             }
@@ -1128,21 +1142,25 @@
                         </tr>
                     </thead>
                     <tbody>
-                        ${appointments.map(apt => `
+                        ${upcomingAppointments.map(apt => `
                             <tr>
                                 <td>
                                     <div class="client-info">
-                                        <div class="client-avatar">${getInitials(apt.client_name)}</div>
-                                        <div class="client-name">${apt.client_name}</div>
+                                        <div class="client-avatar">${getInitials(apt.user?.name || 'Client')}</div>
+                                        <div class="client-name">${apt.user?.name || 'Client'}</div>
                                     </div>
                                 </td>
-                                <td>${apt.service_type}</td>
-                                <td>${formatDateTime(apt.date_time)}</td>
+                                <td>${apt.service?.name || 'Service'}</td>
+                                <td>${formatDateTime(apt.appointment_time)}</td>
                                 <td><span class="status-badge ${apt.status.toLowerCase()}">${apt.status}</span></td>
                                 <td>
                                     <div class="action-btns">
-                                        <button class="btn btn-primary" onclick="confirmAppointment(${apt.id})">Confirm</button>
-                                        <button class="btn btn-outline" onclick="rescheduleAppointment(${apt.id})">Reschedule</button>
+                                        ${apt.status === 'pending' ? `
+                                            <button class="btn btn-primary" onclick="confirmAppointment(${apt.id})">Confirm</button>
+                                            <button class="btn btn-outline" onclick="rescheduleAppointment(${apt.id})">Reschedule</button>
+                                        ` : `
+                                            <button class="btn btn-outline" onclick="viewAppointmentDetails(${apt.id})">View Details</button>
+                                        `}
                                     </div>
                                 </td>
                             </tr>
@@ -1460,17 +1478,101 @@
 
                 if (response.ok) {
                     localStorage.removeItem('auth_token');
-                    window.location.href = '/login';
+                    window.location.href = '/';
                 } else {
                     // Even if API fails, clear token and redirect
                     localStorage.removeItem('auth_token');
-                    window.location.href = '/login';
+                    window.location.href = '/';
                 }
             } catch (error) {
                 console.error('Logout error:', error);
                 localStorage.removeItem('auth_token');
-                window.location.href = '/login';
+                window.location.href = '/';
             }
+        }
+
+        // Navigate to different pages
+        function navigate(route) {
+            console.log('Navigate to:', route);
+            window.location.href = `/${route}`;
+        }
+
+        // Toggle sidebar for mobile
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('active');
+        }
+
+        // Toggle notifications panel
+        function toggleNotifications() {
+            const panel = document.getElementById('notification-panel');
+            const dropdown = document.getElementById('dropdown-menu');
+            dropdown.classList.remove('active');
+            panel.classList.toggle('active');
+        }
+
+        // Toggle profile dropdown
+        function toggleDropdown() {
+            const dropdown = document.getElementById('dropdown-menu');
+            const notifPanel = document.getElementById('notification-panel');
+            notifPanel.classList.remove('active');
+            dropdown.classList.toggle('active');
+        }
+
+        // Mark all notifications as read
+        function markAllRead() {
+            document.getElementById('notif-count').style.display = 'none';
+            alert('All notifications marked as read');
+        }
+
+        // View all notifications
+        function viewAllNotifications() {
+            alert('View all notifications - Coming soon!');
+            return false;
+        }
+
+        // Show messages
+        function showMessages() {
+            alert('Messages - Coming soon!');
+        }
+
+        // View profile
+        function viewProfile() {
+            window.location.href = '/profile';
+        }
+
+        // Open settings
+        function openSettings() {
+            window.location.href = '/professional-settings';
+        }
+
+        // Toggle professional status (online/offline)
+        function toggleStatus() {
+            const toggle = document.getElementById('status-toggle');
+            const statusText = document.getElementById('status-text');
+            toggle.classList.toggle('active');
+
+            if (toggle.classList.contains('active')) {
+                statusText.textContent = 'Online';
+            } else {
+                statusText.textContent = 'Offline';
+            }
+        }
+
+        // Quick action functions
+        function addService() {
+            window.location.href = '/my-services';
+        }
+
+        function viewCalendar() {
+            window.location.href = '/calendar';
+        }
+
+        function checkEarnings() {
+            window.location.href = '/earnings';
+        }
+
+        function updateProfile() {
+            window.location.href = '/professional-settings';
         }
 
         // Close dropdowns when clicking outside

@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('services', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('professional_id')->constrained('users')->onDelete('cascade');
+            $table->string('name');
+            $table->text('description')->nullable();
+            $table->decimal('price', 10, 2);
+            $table->integer('duration')->nullable()->comment('Duration in minutes');
+            $table->string('category')->nullable();
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
     }

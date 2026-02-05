@@ -115,7 +115,7 @@
     }
 
     function openSettings() {
-        window.location.href = '/settings';
+        window.location.href = '/professional-settings';
     }
 
     function showMessages() {
@@ -133,7 +133,7 @@
             console.error('Logout error:', error);
         } finally {
             localStorage.removeItem('auth_token');
-            window.location.href = '/login';
+            window.location.href = '/';
         }
     }
 

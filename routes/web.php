@@ -36,13 +36,29 @@ Route::get('/dashboard', function () {
 });
 
 Route::get('/professional', function () {
-    return view('professional');
+    return view('professional.professional');
 });
 
 Route::get('/professional-settings', function () {
-    return view('professional-settings');
+    return view('professional.professional-settings');
 });
 
 Route::get('/my-services', function () {
-    return view('my-services');
+    return view('professional.my-services');
+});
+
+Route::get('/appointments', function () {
+    return view('professional.appointments');
+});
+
+Route::get('/earnings', function () {
+    return view('professional.earnings');
+});
+
+Route::get('/reviews', function () {
+    return view('professional.reviews');
+});
+
+Route::get('/messages', function () {
+    return view('professional.messages');
 });
