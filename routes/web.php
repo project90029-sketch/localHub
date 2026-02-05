@@ -46,3 +46,30 @@ Route::get('/professional-settings', function () {
 Route::get('/my-services', function () {
     return view('my-services');
 });
+
+
+/*Business Routes */
+
+Route::get('/business/dashboard', function () {
+    return view('business.dashboard');
+});
+
+Route::get('/business/profile', function () {
+    return view('business.profile');
+});
+
+Route::get('/business/inventory', function () {
+    return view('business.inventory');
+});
+
+Route::get('/business/orders', function () {
+    return view('business.orders');
+});
+
+Route::get('/business/analytics', function () {
+    return view('business.analytics');
+});
+
+Route::get('/business/network', function () {
+    return view('business.network');
+});
