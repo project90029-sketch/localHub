@@ -32,7 +32,7 @@ Route::get('/dashboard', function () {
     if (!session()->has('admin_id')) {
         return redirect('/admin_login');
     }
-    return view('dashboard');
+    return view('dashboardKoushik.blade');
 });
 Route::get('/register', function () {
     return view('user-register');
