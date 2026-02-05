@@ -792,7 +792,7 @@
             </ul>
             <div class="nav-buttons">
                 <a href="#login" class="btn btn-login">Login</a>
-                <a href="#signup" class="btn btn-primary">Get Started</a>
+                <a href="/register" class="btn btn-primary">Get Started</a>
             </div>
             <button class="mobile-menu-toggle">
                 <span></span>

@@ -10,30 +10,42 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    public function register(Request $request)
+   public function register(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:8|confirmed',
-            'user_type' => 'required|in:resident,professional,business',
+            'name'          => 'required|string|max:255',
+            'email'         => 'required|email|unique:users,email',
+            'password'      => 'required|min:8|confirmed',
+            'user_type'     => 'required|in:resident,professional,business',
+            'phone'         => 'required|digits:10|unique:users,phone',
+            'aadhaar'       => 'required|digits:12|unique:users,aadhaar',
+            'city'          => 'required|string|max:255',
+            'profile_image' => 'required|image|mimes:jpg,jpeg,png|max:2048',
         ]);
+
+        // ---------- IMAGE UPLOAD ----------
+        $image = $request->file('profile_image');
+        $imageName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
+        $image->move(public_path('uploads/profiles'), $imageName);
+        // ----------------------------------
 
         $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'user_type' => $request->user_type,
+            'name'          => $request->name,
+            'email'         => $request->email,
+            'password'      => Hash::make($request->password), // ✅ bcrypt hash
+            'user_type'     => $request->user_type,
+            'phone'         => $request->phone,
+            'aadhaar'       => $request->aadhaar,
+            'city'          => $request->city,
+            'profile_image' => $imageName,
         ]);
-
-        $token = $user->createToken('api-token')->plainTextToken;
 
         return response()->json([
             'message' => 'User registered successfully',
-            'token' => $token,
-            'user' => $user
+            'user'    => $user
         ], 201);
     }
+
 
 
 

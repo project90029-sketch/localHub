@@ -34,15 +34,7 @@ Route::get('/dashboard', function () {
     }
     return view('dashboard');
 });
+Route::get('/register', function () {
+    return view('user-register');
+})->name('register');
 
-Route::get('/professional', function () {
-    return view('professional');
-});
-
-Route::get('/professional-settings', function () {
-    return view('professional-settings');
-});
-
-Route::get('/my-services', function () {
-    return view('my-services');
-});
