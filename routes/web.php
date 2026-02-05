@@ -13,19 +13,20 @@ use App\Http\Controllers\AdminController;
 |
 */
 
-Route::get('/', function () {    
+Route::get('/', function () {
 
     return view('landing');
 });
-Route::get('/admin_login', function () {    
 
-    return view('admin_login');
-});
-
+// Route added for team section - commented out as requested
 Route::get('/about', function () {
     return view('about');
 });
 
+Route::get('/admin_login', function () {
+
+    return view('admin_login');
+});
 Route::post('/submit', [AdminController::class, 'login']);
 Route::get('/dashboard', function () {
     if (!session()->has('admin_id')) {
