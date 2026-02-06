@@ -27,6 +27,12 @@ Route::get('/admin_login', function () {
 
     return view('admin_login');
 });
+
+/*Login */
+Route::get('/login', function () {
+    return view('login');
+})->name('login');
+
 Route::post('/submit', [AdminController::class, 'login']);
 Route::get('/dashboard', function () {
     if (!session()->has('admin_id')) {
@@ -38,13 +44,15 @@ Route::get('/register', function () {
     return view('user-register');
 })->name('register');
 
+
+//professional
 Route::get('/professional', function () {
     return view('professional.professional');
-});
+})->name('professional.dashboard');
 
 Route::get('/professional-settings', function () {
     return view('professional.professional-settings');
-});
+})->name('professional');
 
 Route::get('/my-services', function () {
     return view('professional.my-services');
@@ -65,3 +73,34 @@ Route::get('/reviews', function () {
 Route::get('/messages', function () {
     return view('professional.messages');
 });
+
+
+
+Route::get('/business/dashboard', function () {
+    return view('business.businessDashboard');
+})->name('business.businessDashboard');
+
+Route::get('/business/profile', function () {
+    return view('business.profile');
+});
+
+Route::get('/business/inventory', function () {
+    return view('business.inventory');
+});
+
+Route::get('/business/orders', function () {
+    return view('business.orders');
+});
+
+Route::get('/business/analytics', function () {
+    return view('business.analytics');
+});
+
+Route::get('/business/network', function () {
+    return view('business.network');
+});
+
+
+/* Route::get('/resident/dashboard', function () {
+    return view('resident.dashboard');
+})->name('resident.dashboard'); */

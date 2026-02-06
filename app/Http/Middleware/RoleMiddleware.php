@@ -15,6 +15,15 @@ class RoleMiddleware
      */
     public function handle(Request $request, Closure $next, ...$roles)
     {
+            //check if user is authenticated
+             if (!$request->user()) {
+            return response()->json([
+                'message' => 'Unauthorized'
+            ], 401);
+        }
+
+
+         //check if user has the required role
         if(!in_array($request->user()->user_type, $roles)){
             return response()->json([
                 'message' => 'Unauthorized access'

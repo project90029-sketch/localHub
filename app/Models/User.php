@@ -46,4 +46,45 @@ class User extends Authenticatable
     {
         return $this->hasOne (\App\Models\ProfessionalProfile::class);
     }
+    // Services (as a professional)
+    public function services()
+    {
+        return $this->hasMany(Service::class, 'professional_id');
+    }
+
+    // Appointments (as a client)
+    public function appointments()
+    {
+        return $this->hasMany(Appointment::class, 'user_id');
+    }
+
+    // Appointments (as a professional)
+    public function professionalAppointments()
+    {
+        return $this->hasMany(Appointment::class, 'professional_id');
+    }
+
+    /**
+     * Check if user is a professional
+     */
+    public function isProfessional()
+    {
+        return $this->user_type === 'professional';
+    }
+
+    /**
+     * Check if user is a business
+     */
+    public function isBusiness()
+    {
+        return $this->user_type === 'business';
+    }
+
+    /**
+     * Check if user is a resident
+     */
+    public function isResident()
+    {
+        return $this->user_type === 'resident';
+    }
 }
