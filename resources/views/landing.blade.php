@@ -791,7 +791,7 @@
                 <li><a href="#about">About</a></li>
             </ul>
             <div class="nav-buttons">
-                <a href="#login" class="btn btn-login">Login</a>
+                <a href="/login" class="btn btn-login">Login</a>
                 <a href="/register" class="btn btn-primary">Get Started</a>
             </div>
             <button class="mobile-menu-toggle">

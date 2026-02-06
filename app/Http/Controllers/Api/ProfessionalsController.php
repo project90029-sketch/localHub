@@ -8,14 +8,20 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\ProfessionalProfile;
 use App\Models\Service;
 use App\Models\Appointment;
+use App\Models\User;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class ProfessionalsController extends Controller
 {
     /*Dashboard*/
     public function getDashboard(Request $request)
     {
+        try{
         $user = $request->user();
-        $profile = $user->professionalProfile;
+        
+        // FIX 1: Corrected syntax - removed :: and used where() properly
+        $profile = ProfessionalProfile::where('user_id', $user->id)->first();
 
         // Get services count
         $servicesCount = Service::where('professional_id', $user->id)->count();
@@ -44,6 +50,34 @@ class ProfessionalsController extends Controller
             ->orderBy('appointments_count', 'desc')
             ->first();
 
+        // FIX 2: Added upcoming appointments data for dashboard
+        $upcomingAppointmentsData = Appointment::where('professional_id', $user->id)
+            ->where('appointment_time', '>', now())
+            ->where('status', '!=', 'cancelled')
+            ->with(['user', 'service'])
+            ->orderBy('appointment_time', 'asc')
+            ->limit(10)
+            ->get()
+            ->map(function ($appointment) {
+                return [
+                    'id' => $appointment->id,
+                    'client_name' => $appointment->user->name ?? 'Client',
+                    'service_name' => $appointment->service->name ?? 'Service',
+                    'appointment_time' => $appointment->appointment_time,
+                    'status' => $appointment->status,
+                    'total_price' => $appointment->total_price,
+                    'notes' => $appointment->notes,
+                    'user' => [
+                        'name' => $appointment->user->name ?? 'Client',
+                        'email' => $appointment->user->email ?? ''
+                    ],
+                    'service' => [
+                        'name' => $appointment->service->name ?? 'Service',
+                        'price' => $appointment->service->price ?? 0
+                    ]
+                ];
+            });
+
         return response()->json([
             'user' => [
                 'id' => $user->id,
@@ -59,28 +93,90 @@ class ProfessionalsController extends Controller
                 'pending_appointments' => $pendingAppointments,
                 'total_earnings' => $totalEarnings,
                 'popular_service' => $popularService ? $popularService->name : null,
-            ]
+            ],
+            // FIX 3: Added additional data needed by frontend
+            'earnings' => [
+                'total' => $totalEarnings ?? 0,
+                'available' => $totalEarnings ?? 0,
+                'pending' => 0
+            ],
+            'appointments' => [
+                'total' => $totalAppointments,
+                'upcoming' => $upcomingAppointments,
+                'data' => $upcomingAppointmentsData
+            ],
+            'rating' => [
+                'average' => 0,
+                'total' => 0,
+                'breakdown' => [
+                    '5' => 0,
+                    '4' => 0,
+                    '3' => 0,
+                    '2' => 0,
+                    '1' => 0
+                ]
+            ],
+            'reviews' => [],
+            'messages' => [],
+            'transactions' => []
         ]);
+        }catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Error loading dashboard',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
-
 
     public function getProfile(Request $request)
     {
-        $profile = $request->user()->professionalProfile;
+        try{
+        $user = $request->user();
+        $profile = $user->professionalProfile;
 
         if (!$profile) {
-            return response()->json([
-                'message' => 'Professional profile not found'
-            ], 404);
+            // FIX 4: Create empty profile if doesn't exist instead of returning 404
+            $profile = ProfessionalProfile::create([
+                'user_id' => $user->id,
+                'bio' => '',
+                'specialization' => '',
+                'experience_years' => 0,
+                'qualifications' => '',
+                'hourly_rate' => 0,
+                'consultation_fee' => 0,
+                'services_offered' => [],
+                'availability' => [],
+                'is_verified' => false
+            ]);
         }
-        return response()->json($profile);
-    }
 
+        // FIX 5: Return formatted response with user data
+        return response()->json([
+            'name' => $user->name,
+            'email' => $user->email,
+            'phone' => $user->phone ?? '',
+            'bio' => $profile->bio,
+            'specialization' => $profile->specialization,
+            'experience_years' => $profile->experience_years,
+            'qualifications' => $profile->qualifications,
+            'hourly_rate' => $profile->hourly_rate,
+            'consultation_fee' => $profile->consultation_fee,
+            'services_offered' => $profile->services_offered,
+            'availability' => $profile->availability,
+            'is_verified' => $profile->is_verified
+        ]);
+        }catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Error loading profile',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
 
     /*profile update */
     public function updateProfile(Request $request)
     {
-
+        try{
         $request->validate([
             'bio' => 'nullable|string',
             'specialization' => 'nullable|string',
@@ -88,12 +184,27 @@ class ProfessionalsController extends Controller
             'qualifications' => 'nullable|string',
             'hourly_rate' => 'nullable|numeric',
             'consultation_fee' => 'nullable|numeric',
-            'services_offered' => 'nullable|string',
-            'availability' => 'nullable|string',
+            'services_offered' => 'nullable|array', // FIX 6: Changed from string to array
+            'availability' => 'nullable|array', // FIX 6: Changed from string to array
+            // FIX 7: Added user fields
+            'name' => 'nullable|string',
+            'phone' => 'nullable|string',
         ]);
 
+        $user = $request->user();
+
+        // FIX 8: Update user basic info
+        if ($request->has('name')) {
+            $user->name = $request->name;
+        }
+        if ($request->has('phone')) {
+            $user->phone = $request->phone;
+        }
+        $user->save();
+
+        // Update professional profile
         $profile = ProfessionalProfile::updateOrCreate(
-            ['user_id' => $request->user()->id],
+            ['user_id' => $user->id],
             $request->only([
                 'bio',
                 'specialization',
@@ -105,21 +216,28 @@ class ProfessionalsController extends Controller
                 'availability'
             ])
         );
+
         return response()->json([
             'message' => 'Profile updated successfully',
             'profile' => $profile
         ]);
+        }catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Error updating profile',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
-
-
 
     public function addService(Request $request)
     {
+        try{
         $request->validate([
             'name' => 'required|string',
             'description' => 'nullable|string',
             'price' => 'required|numeric',
             'duration' => 'nullable|integer',
+            'category' => 'nullable|string', // FIX 9: Added category validation
         ]);
 
         $service = Service::create([
@@ -128,6 +246,7 @@ class ProfessionalsController extends Controller
             'description' => $request->description,
             'price' => $request->price,
             'duration' => $request->duration,
+            'category' => $request->category, // FIX 10: Added category
             'is_active' => true,
         ]);
 
@@ -135,24 +254,163 @@ class ProfessionalsController extends Controller
             'message' => 'Service added successfully',
             'service' => $service
         ], 201);
+        }catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Error adding service',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
+    // FIX 11: Added missing getService method
+    public function getService(Request $request, $id)
+    {
+        try{
+        $service = Service::where('professional_id', $request->user()->id)
+            ->where('id', $id)
+            ->first();
+
+        if (!$service) {
+            return response()->json([
+                'message' => 'Service not found'
+            ], 404);
+        }
+
+        return response()->json([
+            'id' => $service->id,
+            'name' => $service->name,
+            'description' => $service->description,
+            'price' => $service->price,
+            'duration' => $service->duration,
+            'category' => $service->category,
+            'is_active' => $service->is_active,
+            'status' => $service->is_active ? 'active' : 'inactive'
+        ]);
+        }catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Error getting service',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    // FIX 12: Added missing updateService method
+    public function updateService(Request $request, $id)
+    {
+     try{   
+        $service = Service::where('professional_id', $request->user()->id)
+            ->where('id', $id)
+            ->first();
+
+        if (!$service) {
+            return response()->json([
+                'message' => 'Service not found'
+            ], 404);
+        }
+
+        $request->validate([
+            'name' => 'sometimes|string',
+            'description' => 'sometimes|string',
+            'price' => 'sometimes|numeric',
+            'duration' => 'sometimes|integer',
+            'category' => 'sometimes|string',
+            'is_active' => 'sometimes|boolean',
+            'status' => 'sometimes|string|in:active,inactive,paused'
+        ]);
+
+        // Update fields
+        if ($request->has('name')) $service->name = $request->name;
+        if ($request->has('description')) $service->description = $request->description;
+        if ($request->has('price')) $service->price = $request->price;
+        if ($request->has('duration')) $service->duration = $request->duration;
+        if ($request->has('category')) $service->category = $request->category;
+        if ($request->has('is_active')) $service->is_active = $request->is_active;
+        if ($request->has('status')) {
+            $service->is_active = $request->status === 'active';
+        }
+
+        $service->save();
+
+        return response()->json([
+            'message' => 'Service updated successfully',
+            'service' => $service
+        ]);
+     }catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Error updating service',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    // FIX 13: Added missing deleteService method
+    public function deleteService(Request $request, $id)
+    {
+        try{
+        $service = Service::where('professional_id', $request->user()->id)
+            ->where('id', $id)
+            ->first();
+
+        if (!$service) {
+            return response()->json([
+                'message' => 'Service not found'
+            ], 404);
+        }
+
+        $service->delete();
+
+        return response()->json([
+            'message' => 'Service deleted successfully'
+        ]);
+        }catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Error deleting service',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
 
     /*Get appointment*/
     public function getAppointment(Request $request)
     {
+        try{
         $appointments = Appointment::where('professional_id', $request->user()->id)
             ->with(['user', 'service'])
             ->orderBy('appointment_time', 'desc')
-            ->get();
+            ->get()
+            // FIX 14: Format appointments for frontend
+            ->map(function ($appointment) {
+                return [
+                    'id' => $appointment->id,
+                    'client_name' => $appointment->user->name ?? 'Client',
+                    'service_name' => $appointment->service->name ?? 'Service',
+                    'date' => $appointment->appointment_time->format('M d, Y'),
+                    'time' => $appointment->appointment_time->format('h:i A'),
+                    'price' => $appointment->total_price,
+                    'status' => $appointment->status,
+                    'notes' => $appointment->notes,
+                    'location' => 'N/A',
+                    'appointment_time' => $appointment->appointment_time
+                ];
+            });
 
         return response()->json($appointments);
+        }catch(\Exception $e) {
+            return response()->json([
+                'message' => 'Error loading appointments',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
     public function updateAppointment(Request $request, $id)
     {
+
+      try{
+        // FIX 15: Fixed validation - removed spaces in status values
         $request->validate([
-            'status' => 'required|in:pending, accepted, rejected, completed'
+            'status' => 'required|in:pending,confirmed,cancelled,completed',
+            'notes' => 'nullable|string'
         ]);
 
         $appointment = Appointment::where('professional_id', $request->user()->id)
@@ -166,29 +424,60 @@ class ProfessionalsController extends Controller
         }
 
         $appointment->status = $request->status;
+        if ($request->has('notes')) {
+            $appointment->notes = $request->notes;
+        }
         $appointment->save();
-
 
         return response()->json([
             'message' => 'Appointment updated successfully',
             'appointment' => $appointment
         ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Error updating appointment',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
     /*List Services*/
     public function listService(Request $request)
     {
+        try{
         $services = Service::where('professional_id', $request->user()->id)
             ->withCount('appointments')
             ->orderBy('created_at', 'desc')
-            ->get();
-
+            ->get()
+            // FIX 16: Format services for frontend
+            ->map(function ($service) {
+                return [
+                    'id' => $service->id,
+                    'name' => $service->name,
+                    'description' => $service->description,
+                    'price' => $service->price,
+                    'duration' => $service->duration,
+                    'category' => $service->category,
+                    'is_active' => $service->is_active,
+                    'status' => $service->is_active ? 'active' : 'inactive',
+                    'bookings' => $service->appointments_count,
+                    'rating' => 0,
+                    'created_at' => $service->created_at
+                ];
+            });
         return response()->json($services);
+        }catch(\Exception $e) {
+            return response()->json([
+                'message' => 'Error loading services',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
     /*Get Earnings*/
     public function getEarnings(Request $request)
     {
+      try {
         $user = $request->user();
 
         // Total earnings from completed appointments
@@ -216,6 +505,11 @@ class ProfessionalsController extends Controller
             $percentageChange = (($thisMonthEarnings - $lastMonthEarnings) / $lastMonthEarnings) * 100;
         }
 
+        // FIX 17: Added pending payments
+        $pendingPayments = Appointment::where('professional_id', $user->id)
+            ->where('status', 'confirmed')
+            ->sum('total_price');
+
         // Recent earnings (last 10 completed appointments)
         $recentEarnings = Appointment::where('professional_id', $user->id)
             ->where('status', 'completed')
@@ -225,21 +519,29 @@ class ProfessionalsController extends Controller
             ->get();
 
         return response()->json([
-            'total_earnings' => $totalEarnings,
-            'this_month' => $thisMonthEarnings,
-            'last_month' => $lastMonthEarnings,
+            'total_earnings' => $totalEarnings ?? 0,
+            'this_month' => $thisMonthEarnings ?? 0,
+            'last_month' => $lastMonthEarnings ?? 0,
             'percentage_change' => round($percentageChange, 2),
+            'pending_payments' => $pendingPayments ?? 0,
+            'available_balance' => ($totalEarnings - $pendingPayments) ?? 0,
             'recent_earnings' => $recentEarnings
         ]);
+
+      }catch(\Exception $e){
+        return response()->json([
+            'message' => 'Error loading earnings',
+            'error' => $e->getMessage()
+        ],500);
+      }
     }
 
     /*Get Reviews*/
     public function getReviews(Request $request)
     {
         // For now, return mock data since we don't have a reviews table yet
-        // You can create a reviews table and model later
         return response()->json([
-            'average_rating' => 4.5,
+            'average_rating' => 0,
             'total_reviews' => 0,
             'reviews' => []
         ]);

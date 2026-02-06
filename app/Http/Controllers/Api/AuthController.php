@@ -69,11 +69,21 @@ class AuthController extends Controller
         $user->tokens()->delete();
 
         $token = $user->createToken('api-token')->plainTextToken;
+         
+        $redirectUrl = match ($user->user_type)
+        {
+            'professional' => '/professional',
+            'business' => '/business/dashboard',
+            'resident' => '/resident/dashboard',
+            default=> '/'
+        };
 
         return response()->json([
             'message' => 'Login successful',
             'token' => $token,
-            'user' => $user
+            'user' => $user,
+            'user_type'=> $user->user_type,
+            'redirect_url' => $redirectUrl
         ],200);
     }
 

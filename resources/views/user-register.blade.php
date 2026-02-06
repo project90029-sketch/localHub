@@ -748,7 +748,7 @@
             </div>
 
             <!-- Registration Form -->
-            <form  class="register-form" id="registerForm" novalidate>
+            <form  class="register-form" id="registerForm" enctype="multipart/form-data" novalidate>
                 
                 <!-- Step 1: Personal Info -->
                 <div class="form-step active" data-step="1">
@@ -995,8 +995,8 @@
     let currentStep = 1;
     const totalSteps = 3;
 
-    const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
-
+    /* const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+ */
     /* ---------------- PHOTO PREVIEW ---------------- */
 
     function handlePhotoUpload(event) {
@@ -1135,7 +1135,7 @@
             const res = await fetch('/api/register', {
                 method: 'POST',
                 headers: {
-                    'X-CSRF-TOKEN': csrfToken
+                    'Accept': 'application/json'
                 },
                 body: fd
             });
@@ -1144,7 +1144,16 @@
             submitBtn.classList.remove('loading');
 
             if (!res.ok) {
-                showAlert(Object.values(data.errors)[0][0], 'error');
+                /* 
+                 */
+                if (data.errors) {
+                    const firstError = Object.values(data.errors)[0][0];
+                    showAlert(firstError, 'error');
+                } else if (data.message) {
+                    showAlert(data.message, 'error');
+                } else {
+                    showAlert('Registration failed', 'error');
+                }
                 return;
             }
 

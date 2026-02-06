@@ -36,22 +36,37 @@ Route::middleware('auth:sanctum')->group(function () {
 
 
     Route::middleware(['role:professional'])->group(function () {
+
+    //Dashboard
         Route::get('/professional/dashboard', [ProfessionalsController::class, 'getDashboard']);
 
+    //profile
         Route::get('/professional/profile', [ProfessionalsController::class, 'getProfile']);
 
         Route::put('/professional/profile', [ProfessionalsController::class, 'updateProfile']);
 
+
+        //SERVICES
         Route::get('/professional/services', [ProfessionalsController::class, 'listService']);
 
         Route::post('/professional/services', [ProfessionalsController::class, 'addService']);
+  
+        Route::get('/professional/services/{id}', [ProfessionalsController::class, 'getService']);
 
+        Route::put('/professional/services/{id}', [ProfessionalsController::class, 'updateService']);
+
+        Route::delete('/professional/services/{id}', [ProfessionalsController::class, 'deleteService']);
+
+
+        //Appointments
         Route::get('/professional/appointments', [ProfessionalsController::class, 'getAppointment']);
 
         Route::put('/professional/appointments/{id}', [ProfessionalsController::class, 'updateAppointment']);
 
+        //Earnings
         Route::get('/professional/earnings', [ProfessionalsController::class, 'getEarnings']);
 
+        //Reviews
         Route::get('/professional/reviews', [ProfessionalsController::class, 'getReviews']);
     });
 });
