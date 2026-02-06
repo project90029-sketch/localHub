@@ -546,4 +546,16 @@ class ProfessionalsController extends Controller
             'reviews' => []
         ]);
     }
+
+    public function getNotifications(Request $request)
+{
+    // Return empty array for now, you can add real notifications later
+    return response()->json([]);
+}
+
+public function getMessages(Request $request)
+{
+    // Return empty array for now, you can add real messages later
+    return response()->json([]);
+}
 }

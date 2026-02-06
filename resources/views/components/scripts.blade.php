@@ -136,6 +136,27 @@
             window.location.href = '/';
         }
     }
+            // In components/scripts.blade.php, add:
+        async function loadUserAvatar() {
+            try {
+                const response = await fetch(`${API_BASE}/user/profile`, {
+                    headers: authHeaders
+                });
+                const data = await response.json();
+                
+                if (data.user && data.user.profile_image_url) {
+                    const avatars = document.querySelectorAll('.profile-avatar');
+                    avatars.forEach(avatar => {
+                        avatar.style.backgroundImage = `url('${data.user.profile_image_url}')`;
+                        avatar.style.backgroundSize = 'cover';
+                        avatar.textContent = '';
+                    });
+                }
+            } catch (error) {
+                console.error('Error loading avatar:', error);
+            }
+        }
+
 
     // Close dropdowns when clicking outside
     document.addEventListener('click', function(e) {
@@ -146,4 +167,6 @@
             document.getElementById('notification-panel').classList.remove('active');
         }
     });
+
+     document.addEventListener('DOMContentLoaded', loadUserAvatar);
 </script>
