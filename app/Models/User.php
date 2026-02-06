@@ -40,7 +40,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed', 
     ];
+    
+    protected $appends = ['profile_image_url'];
 
+    
 
     public function professionalProfile()
     {
@@ -86,5 +89,13 @@ class User extends Authenticatable
     public function isResident()
     {
         return $this->user_type === 'resident';
+    }
+
+    public function getProfileImageUrlAttribute()
+    {
+        if ($this->profile_image) {
+            return asset('storage/profiles/' . $this->profile_image);
+        }
+        return null;
     }
 }

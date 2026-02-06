@@ -68,5 +68,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
         //Reviews
         Route::get('/professional/reviews', [ProfessionalsController::class, 'getReviews']);
+
+        Route::get('/professional/notifications', [ProfessionalsController::class, 'getNotifications']);
+        Route::get('/professional/messages', [ProfessionalsController::class, 'getMessages']);
     });
 });

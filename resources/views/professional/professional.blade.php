@@ -964,6 +964,54 @@
         </div>
     </main>
 
+<div class="modal" id="profile-completion-modal" style="display: none;">
+    <div class="modal-content" style="max-width: 600px; background: white; padding: 2rem; border-radius: 12px;">
+        <h2>Complete Your Professional Profile</h2>
+        <p style="color: #64748b; margin-bottom: 2rem;">Please complete your profile to start receiving bookings</p>
+        
+        <form id="complete-profile-form">
+            <div class="form-group">
+                <label class="form-label">Professional Title *</label>
+                <input type="text" class="form-input" id="professional-title" 
+                       placeholder="e.g., Certified Plumber" required>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Specialization *</label>
+                <input type="text" class="form-input" id="specialization" 
+                       placeholder="e.g., Plumbing" required>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Years of Experience *</label>
+                <input type="number" class="form-input" id="experience" 
+                       placeholder="5" min="0" required>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Qualifications</label>
+                <textarea class="form-textarea" id="qualifications" 
+                          placeholder="Certifications, degrees, training..."></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Professional Bio *</label>
+                <textarea class="form-textarea" id="bio" 
+                          placeholder="Tell clients about your expertise..." required></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Hourly Rate (₹)</label>
+                <input type="number" class="form-input" id="hourly-rate" 
+                       placeholder="500" min="0">
+            </div>
+            
+            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">
+                Save & Continue
+            </button>
+        </form>
+    </div>
+</div>
     <script>
         // API Configuration
         const API_BASE = '/api';
@@ -979,6 +1027,8 @@
         // Initialize dashboard
         document.addEventListener('DOMContentLoaded', function() {
             checkAuth();
+            loadUserProfileImage();
+            checkProfileCompletion();
             loadProfileData();
             loadDashboardData();
             loadAppointments();
@@ -1018,6 +1068,74 @@
             }
         }
 
+        // Check if profile is complete on page load
+async function checkProfileCompletion() {
+    try {
+        const response = await fetch(`${API_BASE}/professional/profile`, {
+            headers: authHeaders
+        });
+        
+        const profile = await response.json();
+        
+        // If bio is empty, profile is incomplete
+        if (!profile.bio || profile.bio.trim() === '') {
+            showProfileCompletionModal();
+        }
+    } catch (error) {
+        console.error('Error checking profile:', error);
+    }
+}
+
+function showProfileCompletionModal() {
+    const modal = document.getElementById('profile-completion-modal');
+    modal.style.display = 'flex';
+    modal.style.position = 'fixed';
+    modal.style.top = '0';
+    modal.style.left = '0';
+    modal.style.right = '0';
+    modal.style.bottom = '0';
+    modal.style.background = 'rgba(0,0,0,0.5)';
+    modal.style.alignItems = 'center';
+    modal.style.justifyContent = 'center';
+    modal.style.zIndex = '9999';
+}
+
+// Handle profile completion form submission
+document.getElementById('complete-profile-form')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const data = {
+        specialization: document.getElementById('specialization').value,
+        experience_years: parseInt(document.getElementById('experience').value),
+        qualifications: document.getElementById('qualifications').value,
+        bio: document.getElementById('bio').value,
+        hourly_rate: parseFloat(document.getElementById('hourly-rate').value) || 0
+    };
+    
+    try {
+        const response = await fetch(`${API_BASE}/professional/profile`, {
+            method: 'PUT',
+            headers: authHeaders,
+            body: JSON.stringify(data)
+        });
+        
+        if (response.ok) {
+            document.getElementById('profile-completion-modal').style.display = 'none';
+            alert('Profile completed successfully!');
+            loadDashboardData();
+        } else {
+            alert('Failed to update profile');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Error updating profile');
+    }
+});
+
+
+
+    
+   
         // Load Dashboard Data
         async function loadDashboardData() {
             try {
@@ -1078,6 +1196,32 @@
                 showEmptyState('appointments-container', 'No appointments found');
             }
         }
+        
+        // In professional.blade.php, add this function:
+async function loadUserProfileImage() {
+    try {
+        const response = await fetch(`${API_BASE}/user/profile`, {
+            headers: authHeaders
+        });
+        
+        if (!response.ok) throw new Error('Failed to load profile');
+        
+        const data = await response.json();
+        const user = data.user;
+        
+        if (user.profile_image) {
+            // Show actual image
+            const avatar = document.getElementById('profile-avatar');
+            const imageUrl = `/uploads/profiles/${user.profile_image}`;
+            avatar.style.backgroundImage = `url('${imageUrl}')`;
+            avatar.style.backgroundSize = 'cover';
+            avatar.style.backgroundPosition = 'center';
+            avatar.textContent = '';
+        }
+    } catch (error) {
+        console.error('Error loading profile image:', error);
+    }
+}
 
         // Update Dashboard with data
         function updateDashboard(data) {

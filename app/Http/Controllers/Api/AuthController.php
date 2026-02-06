@@ -38,6 +38,7 @@ class AuthController extends Controller
             'aadhaar'       => $request->aadhaar,
             'city'          => $request->city,
             'profile_image' => $imageName,
+            'profile_image_url' => asset('uploads/profiles/' . $imageName),
         ]);
 
         return response()->json([

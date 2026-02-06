@@ -104,3 +104,8 @@ Route::get('/business/network', function () {
 /* Route::get('/resident/dashboard', function () {
     return view('resident.dashboard');
 })->name('resident.dashboard'); */
+
+// Profile page
+Route::get('/profile', function () {
+    return view('profile');
+})->name('profile');
