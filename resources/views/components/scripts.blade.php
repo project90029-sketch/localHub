@@ -33,42 +33,51 @@
         }
     }
 
-    function loadNotifications() {
-        const notifications = [{
-                id: 1,
-                type: 'success',
-                icon: 'fa-check-circle',
-                text: 'New appointment confirmed with John Doe',
-                time: '5 minutes ago',
-                read: false
-            },
-            {
-                id: 2,
-                type: 'info',
-                icon: 'fa-info-circle',
-                text: 'You have a new review (5 stars)',
-                time: '1 hour ago',
-                read: false
-            },
-            {
-                id: 3,
-                type: 'warning',
-                icon: 'fa-exclamation-triangle',
-                text: 'Appointment reminder in 30 minutes',
-                time: '2 hours ago',
-                read: false
-            }
-        ];
-        renderNotifications(notifications);
-        updateNotificationCount(notifications.filter(n => !n.read).length);
+    // Load notifications - Updated to return empty array by default
+    async function loadNotifications() {
+        try {
+            // Fetch notifications (returns empty array for now)
+            const notifications = await fetchNotifications();
+            renderNotifications(notifications);
+            updateNotificationCount(notifications.filter(n => !n.read).length);
+        } catch (error) {
+            console.error('Error loading notifications:', error);
+            renderNotifications([]);
+            updateNotificationCount(0);
+        }
+    }
+
+    // Fetch notifications from API
+    async function fetchNotifications() {
+        try {
+            // TODO: Replace with actual API call when backend is ready
+            // const response = await fetch(`${API_BASE}/professional/notifications`, {
+            //     headers: authHeaders
+            // });
+            // if (!response.ok) throw new Error('Failed to load notifications');
+            // return await response.json();
+
+            // For now, return empty array (no notifications)
+            return [];
+        } catch (error) {
+            console.error('Error fetching notifications:', error);
+            return [];
+        }
     }
 
     function renderNotifications(notifications) {
         const container = document.getElementById('notification-list');
-        if (notifications.length === 0) {
-            container.innerHTML = '<div class="empty-notifications"><i class="fas fa-bell-slash"></i><div>No notifications</div></div>';
+
+        if (!notifications || notifications.length === 0) {
+            container.innerHTML = `
+                <div class="empty-notifications">
+                    <i class="fas fa-bell-slash"></i>
+                    <div>No notifications</div>
+                </div>
+            `;
             return;
         }
+
         container.innerHTML = notifications.map(notif => `
             <div class="notification-item ${notif.read ? '' : 'unread'}" onclick="markAsRead(${notif.id})">
                 <div class="notification-icon ${notif.type}"><i class="fas ${notif.icon}"></i></div>
@@ -91,11 +100,14 @@
     }
 
     function markAsRead(id) {
+        // TODO: API call to mark as read
         console.log('Mark notification as read:', id);
         loadNotifications();
     }
 
     function markAllRead() {
+        // TODO: API call to mark all as read
+        console.log('Mark all notifications as read');
         updateNotificationCount(0);
         loadNotifications();
     }
@@ -118,9 +130,6 @@
         window.location.href = '/professional-settings';
     }
 
-    function showMessages() {
-        alert('Messages - Coming soon!');
-    }
 
     async function logout() {
         if (!confirm('Are you sure you want to logout?')) return;
@@ -136,26 +145,50 @@
             window.location.href = '/';
         }
     }
-            // In components/scripts.blade.php, add:
-        async function loadUserAvatar() {
-            try {
-                const response = await fetch(`${API_BASE}/user/profile`, {
-                    headers: authHeaders
-                });
-                const data = await response.json();
-                
-                if (data.user && data.user.profile_image_url) {
-                    const avatars = document.querySelectorAll('.profile-avatar');
-                    avatars.forEach(avatar => {
-                        avatar.style.backgroundImage = `url('${data.user.profile_image_url}')`;
-                        avatar.style.backgroundSize = 'cover';
-                        avatar.textContent = '';
-                    });
-                }
-            } catch (error) {
-                console.error('Error loading avatar:', error);
+    // Load user profile image - Enhanced with better error handling
+    async function loadUserAvatar() {
+        try {
+            const response = await fetch(`${API_BASE}/user/profile`, {
+                headers: authHeaders
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to load user profile');
+            }
+
+            const data = await response.json();
+            const user = data.user || data;
+            const avatar = document.getElementById('profile-avatar');
+
+            if (!avatar) return; // Avatar element not found
+
+            if (user.profile_image) {
+                // Show actual image from database
+                const imageUrl = `/uploads/profiles/${user.profile_image}`;
+                avatar.style.backgroundImage = `url('${imageUrl}')`;
+                avatar.style.backgroundSize = 'cover';
+                avatar.style.backgroundPosition = 'center';
+                avatar.textContent = ''; // Clear any text content
+            } else {
+                // If no profile image, show a default user icon
+                avatar.innerHTML = '<i class="fas fa-user"></i>';
+                avatar.style.backgroundImage = 'none';
+                avatar.style.display = 'flex';
+                avatar.style.alignItems = 'center';
+                avatar.style.justifyContent = 'center';
+                avatar.style.fontSize = '20px';
+                avatar.style.color = '#2563eb';
+            }
+        } catch (error) {
+            console.error('Error loading user avatar:', error);
+            // Show default icon on error
+            const avatar = document.getElementById('profile-avatar');
+            if (avatar) {
+                avatar.innerHTML = '<i class="fas fa-user"></i>';
+                avatar.style.backgroundImage = 'none';
             }
         }
+    }
 
 
     // Close dropdowns when clicking outside
@@ -168,5 +201,12 @@
         }
     });
 
-     document.addEventListener('DOMContentLoaded', loadUserAvatar);
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        loadUserAvatar();
+        // Load notification count without opening panel
+        fetchNotifications().then(notifications => {
+            updateNotificationCount(notifications.filter(n => !n.read).length);
+        });
+    });
 </script>

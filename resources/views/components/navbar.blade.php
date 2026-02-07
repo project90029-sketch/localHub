@@ -14,7 +14,7 @@
             <div class="notification-dropdown">
                 <button class="icon-btn" onclick="toggleNotifications()">
                     <i class="fas fa-bell"></i>
-                    <span class="badge" id="notif-count">3</span>
+                    <span class="badge" id="notif-count" style="display: none;">0</span>
                 </button>
                 <div class="notification-panel" id="notification-panel">
                     <div class="notification-header">
@@ -29,13 +29,9 @@
                     </div>
                 </div>
             </div>
-            <button class="icon-btn" onclick="showMessages()">
-                <i class="fas fa-envelope"></i>
-                <span class="badge" id="msg-count">5</span>
-            </button>
             <div class="profile-dropdown">
                 <button class="profile-btn" onclick="toggleDropdown()">
-                    <div class="profile-avatar" id="profile-avatar">{{ $userInitials ?? 'JD' }}</div>
+                    <div class="profile-avatar" id="profile-avatar"></div>
                     <i class="fas fa-chevron-down"></i>
                 </button>
                 <div class="dropdown-menu" id="dropdown-menu">
