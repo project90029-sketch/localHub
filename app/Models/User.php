@@ -43,7 +43,10 @@ class User extends Authenticatable
     
     protected $appends = ['profile_image_url'];
 
-    
+    public function residentProfile()
+    {
+        return $this->hasOne(\App\Models\ResidentProfile::class);
+    }
 
     public function professionalProfile()
     {
