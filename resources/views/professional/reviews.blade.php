@@ -285,6 +285,8 @@
         </div>
     </main>
 
+    @include('components.profile-modal')
+
     @include('components.scripts')
 
     <script>
