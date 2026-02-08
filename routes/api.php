@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ProfessionalsController;
+use App\Http\Controllers\Api\ResidentController;
 use App\Http\Controllers\Api\UserController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
@@ -71,5 +72,10 @@ Route::middleware('auth:sanctum')->group(function () {
 
         Route::get('/professional/notifications', [ProfessionalsController::class, 'getNotifications']);
         Route::get('/professional/messages', [ProfessionalsController::class, 'getMessages']);
+    });
+
+    Route::middleware('role:resident')->group(function (){
+        Route::get('/resident/profile', [ResidentController::class, 'profile']);
+        Route::put('/resident/profile', [ResidentController::class, 'updateProfile']);
     });
 });

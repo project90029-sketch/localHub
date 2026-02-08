@@ -66,6 +66,12 @@ class AuthController extends Controller
         }
 
         $user = User::where('email', $request->email)->first();
+        
+        session([
+            'user_id' => $user->id,
+            'role' => $user->user_type,
+            'name' => $user->name,
+        ]);
 
         $user->tokens()->delete();
 

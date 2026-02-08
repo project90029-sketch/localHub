@@ -109,3 +109,30 @@ Route::get('/business/network', function () {
 Route::get('/profile', function () {
     return view('profile');
 })->name('profile');
+
+
+
+
+Route::prefix('resident')->group(function () {
+
+    Route::get('/dashboard', function () {
+        return view('resident.dashboard');
+    })->name('resident.dashboard');
+
+    Route::get('/services', function () {
+        return view('resident.services');
+    })->name('resident.services');
+
+    Route::get('/bookings', function () {
+        return view('resident.bookings');
+    })->name('resident.bookings');
+
+    Route::get('/profile', function () {
+        return view('resident.profile');
+    })->name('resident.profile');
+
+    Route::get('/messages', function () {
+        return view('resident.messages');
+    })->name('resident.messages');
+
+});
