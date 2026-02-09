@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Business\ProductController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -34,12 +36,13 @@ Route::get('/login', function () {
 })->name('login');
 
 Route::post('/submit', [AdminController::class, 'login']);
-Route::get('/dashboard', function () {
-    if (!session()->has('admin_id')) {
-        return redirect('/admin_login');
-    }
-    return view('dashboardKoushik');
-});
+
+// Route::get('/dashboard', function () {
+//     if (!session()->has('admin_id')) {
+//         return redirect('/admin_login');
+//     }
+//     return view('dashboardKoushik');
+// });
 Route::get('/register', function () {
     return view('user-register');
 })->name('register');
@@ -76,17 +79,16 @@ Route::get('/messages', function () {
 
 
 
-Route::get('/business/dashboard', function () {
-    return view('business.businessDashboard');
-})->name('business.businessDashboard');
+Route::get('/business/dashboard', [ProductController::class, 'dashboard'])
+    ->name('business.businessDashboard');
 
 Route::get('/business/profile', function () {
     return view('business.profile');
 });
 
-Route::get('/business/inventory', function () {
-    return view('business.inventory');
-});
+
+Route::post('/products/store', [ProductController::class, 'store']);
+
 
 Route::get('/business/orders', function () {
     return view('business.orders');
@@ -109,3 +111,6 @@ Route::get('/business/network', function () {
 Route::get('/profile', function () {
     return view('profile');
 })->name('profile');
+
+Route::get('/dashboard', [AdminController::class, 'dashboard'])
+    ->middleware('admin.session');

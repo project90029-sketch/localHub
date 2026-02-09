@@ -98,4 +98,9 @@ class User extends Authenticatable
         }
         return null;
     }
+    public function enterprise()
+    {
+        return $this->hasOne(Enterprise::class);
+    }
+
 }
