@@ -43,7 +43,10 @@ class User extends Authenticatable
     
     protected $appends = ['profile_image_url'];
 
-    
+    public function residentProfile()
+    {
+        return $this->hasOne(\App\Models\ResidentProfile::class);
+    }
 
     public function professionalProfile()
     {
@@ -98,4 +101,9 @@ class User extends Authenticatable
         }
         return null;
     }
+    public function enterprise()
+    {
+        return $this->hasOne(Enterprise::class);
+    }
+
 }
