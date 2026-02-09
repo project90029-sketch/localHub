@@ -1026,7 +1026,7 @@
                             12%
                         </div>
                     </div>
-                    <div class="stat-number">10,429</div>
+                    <div class="stat-number">{{ $totalUsers }}</div>
                     <div class="stat-label">Total Users</div>
                 </div>
 
@@ -1040,8 +1040,8 @@
                             8%
                         </div>
                     </div>
-                    <div class="stat-number">542</div>
-                    <div class="stat-label">Active Businesses</div>
+                        <div class="stat-number">{{ $verifiedBusinesses }}</div>
+                        <div class="stat-label">Active Businesses</div>
                 </div>
 
                 <div class="stat-card">
@@ -1054,8 +1054,8 @@
                             15%
                         </div>
                     </div>
-                    <div class="stat-number">5,287</div>
-                    <div class="stat-label">Products Listed</div>
+                        <div class="stat-number">{{ $totalProducts }}</div>                    
+                        <div class="stat-label">Products Listed</div>
                 </div>
 
                 <div class="stat-card">
@@ -1191,112 +1191,43 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach($recentUsers as $user)
                             <tr>
                                 <td>
                                     <div class="user-cell">
-                                        <div class="user-avatar-small">JD</div>
+                                        <div class="user-avatar-small">
+                                            {{ strtoupper(substr($user->name, 0, 2)) }}
+                                        </div>
                                         <div class="user-details">
-                                            <div class="user-name-td">John Doe</div>
-                                            <div class="user-email">Regular User</div>
+                                            <div class="user-name-td">{{ $user->name }}</div>
+                                            <div class="user-email">{{ ucfirst($user->role_type) }}</div>
                                         </div>
                                     </div>
                                 </td>
-                                <td>john.doe@example.com</td>
-                                <td>Durgapur, WB</td>
-                                <td><span class="badge active">Active</span></td>
-                                <td>Jan 15, 2026</td>
+
+                                <td>{{ $user->email }}</td>
+
+                                <td>{{ $user->city ?? '—' }}</td>
+
+                                <td>
+                                    <span class="badge {{ $user->status }}">
+                                        {{ ucfirst($user->status) }}
+                                    </span>
+                                </td>
+
+                                <td>{{ $user->created_at->format('M d, Y') }}</td>
+
                                 <td>
                                     <div class="table-actions">
-                                        <button class="icon-btn view" title="View">
-                                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-                                            </svg>
-                                        </button>
-                                        <button class="icon-btn edit" title="Edit">
-                                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
-                                            </svg>
-                                        </button>
-                                        <button class="icon-btn delete" title="Delete">
-                                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-                                            </svg>
-                                        </button>
+                                        <button class="icon-btn view" title="View">👁</button>
+                                        <button class="icon-btn edit" title="Edit">✏️</button>
+                                        <button class="icon-btn delete" title="Delete">🗑</button>
                                     </div>
                                 </td>
                             </tr>
-                            <tr>
-                                <td>
-                                    <div class="user-cell">
-                                        <div class="user-avatar-small">SM</div>
-                                        <div class="user-details">
-                                            <div class="user-name-td">Sarah Miller</div>
-                                            <div class="user-email">Regular User</div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>sarah.m@example.com</td>
-                                <td>Kolkata, WB</td>
-                                <td><span class="badge active">Active</span></td>
-                                <td>Jan 18, 2026</td>
-                                <td>
-                                    <div class="table-actions">
-                                        <button class="icon-btn view" title="View">
-                                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-                                            </svg>
-                                        </button>
-                                        <button class="icon-btn edit" title="Edit">
-                                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
-                                            </svg>
-                                        </button>
-                                        <button class="icon-btn delete" title="Delete">
-                                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-                                            </svg>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="user-cell">
-                                        <div class="user-avatar-small">RK</div>
-                                        <div class="user-details">
-                                            <div class="user-name-td">Raj Kumar</div>
-                                            <div class="user-email">Regular User</div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>raj.kumar@example.com</td>
-                                <td>Asansol, WB</td>
-                                <td><span class="badge pending">Pending</span></td>
-                                <td>Jan 25, 2026</td>
-                                <td>
-                                    <div class="table-actions">
-                                        <button class="icon-btn view" title="View">
-                                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-                                            </svg>
-                                        </button>
-                                        <button class="icon-btn edit" title="Edit">
-                                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
-                                            </svg>
-                                        </button>
-                                        <button class="icon-btn delete" title="Delete">
-                                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-                                            </svg>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
+                            @endforeach
                         </tbody>
+
                     </table>
                 </div>
             </div>
@@ -1324,112 +1255,41 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>
-                                    <div class="user-cell">
-                                        <div class="user-avatar-small">🏪</div>
-                                        <div class="user-details">
-                                            <div class="user-name-td">Fresh Mart</div>
-                                            <div class="user-email">Grocery Store</div>
+                                @foreach($businesses as $biz)
+                                <tr>
+                                    <td>
+                                        <div class="user-cell">
+                                            <div class="user-avatar-small">🏪</div>
+                                            <div class="user-details">
+                                                <div class="user-name-td">{{ $biz->company_name }}</div>
+                                                <div class="user-email">{{ $biz->industry_type }}</div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </td>
-                                <td>Amit Sharma</td>
-                                <td>Food & Beverages</td>
-                                <td><span class="badge verified">Verified</span></td>
-                                <td>124</td>
-                                <td>
-                                    <div class="table-actions">
-                                        <button class="icon-btn view" title="View">
-                                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-                                            </svg>
-                                        </button>
-                                        <button class="icon-btn edit" title="Edit">
-                                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
-                                            </svg>
-                                        </button>
-                                        <button class="icon-btn delete" title="Delete">
-                                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-                                            </svg>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="user-cell">
-                                        <div class="user-avatar-small">👗</div>
-                                        <div class="user-details">
-                                            <div class="user-name-td">Style Hub</div>
-                                            <div class="user-email">Fashion Store</div>
+                                    </td>
+
+                                    <td>{{ $biz->user->name ?? '—' }}</td>
+
+                                    <td>{{ $biz->industry_type }}</td>
+
+                                    <td>
+                                        <span class="badge {{ $biz->status === 'verified' ? 'verified' : 'pending' }}">
+                                            {{ ucfirst($biz->status) }}
+                                        </span>
+                                    </td>
+
+                                    <td>{{ $biz->products_count }}</td>
+
+                                    <td>
+                                        <div class="table-actions">
+                                            <button class="icon-btn view">👁</button>
+                                            <button class="icon-btn edit">✏️</button>
+                                            <button class="icon-btn delete">🗑</button>
                                         </div>
-                                    </div>
-                                </td>
-                                <td>Priya Gupta</td>
-                                <td>Fashion & Apparel</td>
-                                <td><span class="badge verified">Verified</span></td>
-                                <td>89</td>
-                                <td>
-                                    <div class="table-actions">
-                                        <button class="icon-btn view" title="View">
-                                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-                                            </svg>
-                                        </button>
-                                        <button class="icon-btn edit" title="Edit">
-                                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
-                                            </svg>
-                                        </button>
-                                        <button class="icon-btn delete" title="Delete">
-                                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-                                            </svg>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="user-cell">
-                                        <div class="user-avatar-small">📱</div>
-                                        <div class="user-details">
-                                            <div class="user-name-td">Tech Solutions</div>
-                                            <div class="user-email">Electronics</div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>Vikram Singh</td>
-                                <td>Electronics</td>
-                                <td><span class="badge pending">Pending</span></td>
-                                <td>45</td>
-                                <td>
-                                    <div class="table-actions">
-                                        <button class="icon-btn view" title="View">
-                                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-                                            </svg>
-                                        </button>
-                                        <button class="icon-btn edit" title="Edit">
-                                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
-                                            </svg>
-                                        </button>
-                                        <button class="icon-btn delete" title="Delete">
-                                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-                                            </svg>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
+                                    </td>
+                                </tr>
+                                @endforeach
                         </tbody>
+
                     </table>
                 </div>
             </div>
@@ -1457,77 +1317,41 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach($products as $product)
                             <tr>
                                 <td>
                                     <div class="user-cell">
-                                        <div class="user-avatar-small">🍎</div>
+                                        <div class="user-avatar-small">📦</div>
                                         <div class="user-details">
-                                            <div class="user-name-td">Fresh Apples</div>
-                                            <div class="user-email">Organic, 1kg</div>
+                                            <div class="user-name-td">{{ $product->name }}</div>
+                                            <div class="user-email">{{ $product->category ?? '—' }}</div>
                                         </div>
                                     </div>
                                 </td>
-                                <td>Fresh Mart</td>
-                                <td>Fruits</td>
-                                <td>₹120</td>
-                                <td><span class="badge active">In Stock</span></td>
+
+                                <td>{{ $product->enterprise->company_name ?? '—' }}</td>
+
+                                <td>{{ $product->category ?? '—' }}</td>
+
+                                <td>₹{{ $product->price }}</td>
+
+                                <td>
+                                    <span class="badge {{ $product->stock > 0 ? 'active' : 'inactive' }}">
+                                        {{ $product->stock > 0 ? 'In Stock' : 'Out of Stock' }}
+                                    </span>
+                                </td>
+
                                 <td>
                                     <div class="table-actions">
-                                        <button class="icon-btn view" title="View">
-                                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-                                            </svg>
-                                        </button>
-                                        <button class="icon-btn edit" title="Edit">
-                                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
-                                            </svg>
-                                        </button>
-                                        <button class="icon-btn delete" title="Delete">
-                                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-                                            </svg>
-                                        </button>
+                                        <button class="icon-btn view">👁</button>
+                                        <button class="icon-btn edit">✏️</button>
+                                        <button class="icon-btn delete">🗑</button>
                                     </div>
                                 </td>
                             </tr>
-                            <tr>
-                                <td>
-                                    <div class="user-cell">
-                                        <div class="user-avatar-small">👕</div>
-                                        <div class="user-details">
-                                            <div class="user-name-td">Cotton T-Shirt</div>
-                                            <div class="user-email">Size: M, L, XL</div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>Style Hub</td>
-                                <td>Fashion</td>
-                                <td>₹499</td>
-                                <td><span class="badge active">In Stock</span></td>
-                                <td>
-                                    <div class="table-actions">
-                                        <button class="icon-btn view" title="View">
-                                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-                                            </svg>
-                                        </button>
-                                        <button class="icon-btn edit" title="Edit">
-                                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
-                                            </svg>
-                                        </button>
-                                        <button class="icon-btn delete" title="Delete">
-                                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-                                            </svg>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
+                            @endforeach
                         </tbody>
+
                     </table>
                 </div>
             </div>

@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Admin;
+use App\Models\User;
+use App\Models\Enterprise;
+use App\Models\Product;
 
 class AdminController extends Controller
 {
@@ -33,4 +36,38 @@ class AdminController extends Controller
         // 5. Redirect to dashboard
         return redirect('/dashboard');
     }
+
+    public function dashboard()
+    {
+        // Stats
+        $totalUsers = User::count();
+        $verifiedBusinesses = Enterprise::where('status', 'verified')->count();
+        $totalProducts = Product::count();
+
+        // Recent users
+        $recentUsers = User::latest()->limit(5)->get();
+
+        // Businesses
+        $businesses = Enterprise::with('user')
+            ->withCount('products')
+            ->latest()
+            ->limit(10)
+            ->get();
+
+        // Products
+        $products = Product::with('enterprise')
+            ->latest()
+            ->limit(10)
+            ->get();
+
+        return view('dashboardKoushik', compact(
+            'totalUsers',
+            'verifiedBusinesses',
+            'totalProducts',
+            'recentUsers',
+            'businesses',
+            'products'
+        ));
+    }
+
 }
