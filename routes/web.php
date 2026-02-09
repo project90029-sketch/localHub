@@ -116,23 +116,23 @@ Route::get('/profile', function () {
 Route::prefix('resident')->group(function () {
 
     Route::get('/dashboard', function () {
-        return view('resident.dashboard');
+        return view('resident.resident_dashboard');
     })->name('resident.dashboard');
 
     Route::get('/services', function () {
-        return view('resident.services');
+        return view('resident.resident_services');
     })->name('resident.services');
 
     Route::get('/bookings', function () {
-        return view('resident.bookings');
+        return view('resident.resident_bookings');
     })->name('resident.bookings');
 
     Route::get('/profile', function () {
-        return view('resident.profile');
+        return view('resident.resident_profile');
     })->name('resident.profile');
 
     Route::get('/messages', function () {
-        return view('resident.messages');
+        return view('resident.resident_messages');
     })->name('resident.messages');
 
 });
