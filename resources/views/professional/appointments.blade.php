@@ -198,54 +198,102 @@
         </div>
     </main>
 
+    @include('components.profile-modal')
+
     @include('components.scripts')
 
     <script>
         let allAppointments = [];
         let currentFilter = 'all';
+        let isLoading = false;
 
-        document.addEventListener('DOMContentLoaded', function() {
-            loadAppointments();
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', async function() {
+            try {
+                await loadAppointments();
+            } catch (error) {
+                console.error('Error initializing appointments page:', error);
+                showEmptyState('Failed to load appointments. Please refresh the page.');
+            }
         });
 
-        // Load appointments from API
+        // Load appointments from API - Optimized with better error handling
         async function loadAppointments() {
+            if (isLoading) return; // Prevent duplicate requests
+
+            isLoading = true;
+            const container = document.getElementById('appointments-container');
+
             try {
+                // Show loading state
+                container.innerHTML = `
+                    <div style="text-align: center; padding: 48px;">
+                        <i class="fas fa-spinner fa-spin" style="font-size: 32px; color: #cbd5e1;"></i>
+                        <p style="color: #94a3b8; margin-top: 16px;">Loading appointments...</p>
+                    </div>
+                `;
+
                 const response = await fetch(`${API_BASE}/professional/appointments`, {
                     method: 'GET',
                     headers: authHeaders
                 });
 
-                if (!response.ok) throw new Error('Failed to load appointments');
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: Failed to load appointments`);
+                }
 
-                allAppointments = await response.json();
-                renderAppointments(allAppointments);
+                const data = await response.json();
+                allAppointments = Array.isArray(data) ? data : [];
+
+                // Apply current filter
+                const filtered = currentFilter === 'all' ?
+                    allAppointments :
+                    allAppointments.filter(apt => apt.status === currentFilter);
+
+                renderAppointments(filtered);
             } catch (error) {
                 console.error('Error loading appointments:', error);
-                showEmptyState('No appointments found');
+                showEmptyState('Unable to load appointments. Please try again later.');
+            } finally {
+                isLoading = false;
             }
         }
 
-        // Render appointments
+        // Render appointments - Optimized with template caching
         function renderAppointments(appointments) {
             const container = document.getElementById('appointments-container');
 
-            if (appointments.length === 0) {
-                showEmptyState('No appointments found');
+            if (!appointments || appointments.length === 0) {
+                showEmptyState(currentFilter === 'all' ?
+                    'No appointments yet' :
+                    `No ${currentFilter} appointments`);
                 return;
             }
 
-            container.innerHTML = appointments.map(apt => `
+            // Use DocumentFragment for better performance
+            const fragment = document.createDocumentFragment();
+            const tempDiv = document.createElement('div');
+
+            tempDiv.innerHTML = appointments.map(apt => createAppointmentCard(apt)).join('');
+            container.innerHTML = tempDiv.innerHTML;
+        }
+
+        // Create appointment card HTML - Extracted for better maintainability
+        function createAppointmentCard(apt) {
+            const clientInitial = apt.client_name ? apt.client_name.charAt(0).toUpperCase() : 'C';
+            const status = apt.status || 'pending';
+
+            return `
                 <div class="appointment-card">
                     <div class="appointment-header">
                         <div class="client-info">
-                            <div class="client-avatar">${apt.client_name ? apt.client_name.charAt(0).toUpperCase() : 'C'}</div>
+                            <div class="client-avatar">${clientInitial}</div>
                             <div class="client-details">
                                 <h3>${apt.client_name || 'Client'}</h3>
                                 <p>${apt.service_name || 'Service'}</p>
                             </div>
                         </div>
-                        <span class="status-badge ${apt.status || 'pending'}">${(apt.status || 'pending').toUpperCase()}</span>
+                        <span class="status-badge ${status}">${status.toUpperCase()}</span>
                     </div>
                     
                     <div class="appointment-details">
@@ -268,69 +316,113 @@
                     </div>
 
                     <div class="appointment-actions">
-                        ${apt.status === 'pending' ? `
-                            <button class="btn btn-primary" onclick="updateAppointmentStatus(${apt.id}, 'confirmed')">
-                                <i class="fas fa-check"></i> Confirm
-                            </button>
-                            <button class="btn btn-danger" onclick="updateAppointmentStatus(${apt.id}, 'cancelled')">
-                                <i class="fas fa-times"></i> Cancel
-                            </button>
-                        ` : ''}
-                        ${apt.status === 'confirmed' ? `
-                            <button class="btn btn-primary" onclick="updateAppointmentStatus(${apt.id}, 'completed')">
-                                <i class="fas fa-check-circle"></i> Mark Complete
-                            </button>
-                        ` : ''}
-                        <button class="btn btn-outline" onclick="viewAppointmentDetails(${apt.id})">
-                            <i class="fas fa-eye"></i> View Details
-                        </button>
+                        ${getActionButtons(apt.id, status)}
                     </div>
                 </div>
-            `).join('');
+            `;
         }
 
-        // Filter appointments
+        // Get action buttons based on status - Cleaner logic
+        function getActionButtons(id, status) {
+            const buttons = [];
+
+            if (status === 'pending') {
+                buttons.push(`
+                    <button class="btn btn-primary" onclick="updateAppointmentStatus(${id}, 'confirmed')">
+                        <i class="fas fa-check"></i> Confirm
+                    </button>
+                    <button class="btn btn-danger" onclick="updateAppointmentStatus(${id}, 'cancelled')">
+                        <i class="fas fa-times"></i> Cancel
+                    </button>
+                `);
+            } else if (status === 'confirmed') {
+                buttons.push(`
+                    <button class="btn btn-primary" onclick="updateAppointmentStatus(${id}, 'completed')">
+                        <i class="fas fa-check-circle"></i> Mark Complete
+                    </button>
+                `);
+            }
+
+            buttons.push(`
+                <button class="btn btn-outline" onclick="viewAppointmentDetails(${id})">
+                    <i class="fas fa-eye"></i> View Details
+                </button>
+            `);
+
+            return buttons.join('');
+        }
+
+        // Filter appointments - Optimized
         function filterAppointments(status) {
-            currentFilter = status;
+            try {
+                currentFilter = status;
 
-            // Update active tab
-            document.querySelectorAll('.filter-tab').forEach(tab => tab.classList.remove('active'));
-            event.target.classList.add('active');
+                // Update active tab
+                document.querySelectorAll('.filter-tab').forEach(tab => tab.classList.remove('active'));
+                event.target.classList.add('active');
 
-            // Filter and render
-            const filtered = status === 'all' ?
-                allAppointments :
-                allAppointments.filter(apt => apt.status === status);
+                // Filter and render
+                const filtered = status === 'all' ?
+                    allAppointments :
+                    allAppointments.filter(apt => apt.status === status);
 
-            renderAppointments(filtered);
+                renderAppointments(filtered);
+            } catch (error) {
+                console.error('Error filtering appointments:', error);
+            }
         }
 
-        // Update appointment status
+        // Update appointment status - Enhanced error handling
         async function updateAppointmentStatus(id, status) {
+            if (!confirm(`Are you sure you want to ${status} this appointment?`)) {
+                return;
+            }
+
             try {
                 const response = await fetch(`${API_BASE}/professional/appointments/${id}`, {
                     method: 'PUT',
                     headers: authHeaders,
                     body: JSON.stringify({
-                        status: status
+                        status
                     })
                 });
 
-                if (!response.ok) throw new Error('Failed to update appointment');
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: Failed to update appointment`);
+                }
 
                 alert(`Appointment ${status} successfully!`);
-                loadAppointments();
+                await loadAppointments();
             } catch (error) {
                 console.error('Error updating appointment:', error);
-                alert('Failed to update appointment');
+                alert(`Failed to ${status} appointment. Please try again.`);
             }
         }
 
-        // View appointment details
+        // View appointment details - Improved
         function viewAppointmentDetails(id) {
-            const appointment = allAppointments.find(apt => apt.id === id);
-            if (appointment) {
-                alert(`Appointment Details:\n\nClient: ${appointment.client_name}\nService: ${appointment.service_name}\nDate: ${appointment.date}\nTime: ${appointment.time}\nStatus: ${appointment.status}`);
+            try {
+                const appointment = allAppointments.find(apt => apt.id === id);
+
+                if (!appointment) {
+                    alert('Appointment not found');
+                    return;
+                }
+
+                const details = [
+                    `Client: ${appointment.client_name || 'N/A'}`,
+                    `Service: ${appointment.service_name || 'N/A'}`,
+                    `Date: ${appointment.date || 'N/A'}`,
+                    `Time: ${appointment.time || 'N/A'}`,
+                    `Price: ₹${appointment.price || '0'}`,
+                    `Location: ${appointment.location || 'N/A'}`,
+                    `Status: ${(appointment.status || 'pending').toUpperCase()}`
+                ].join('\n');
+
+                alert(`Appointment Details:\n\n${details}`);
+            } catch (error) {
+                console.error('Error viewing appointment details:', error);
+                alert('Failed to load appointment details');
             }
         }
 

@@ -809,7 +809,7 @@
                 <div class="notification-dropdown">
                     <button class="icon-btn" onclick="toggleNotifications()">
                         <i class="fas fa-bell"></i>
-                        <span class="badge" id="notif-count">3</span>
+                        <span class="badge" id="notif-count" style="display: none;">0</span>
                     </button>
                     <div class="notification-panel" id="notification-panel">
                         <div class="notification-header">
@@ -824,13 +824,9 @@
                         </div>
                     </div>
                 </div>
-                <button class="icon-btn" onclick="showMessages()">
-                    <i class="fas fa-envelope"></i>
-                    <span class="badge" id="msg-count">5</span>
-                </button>
                 <div class="profile-dropdown">
                     <button class="profile-btn" onclick="toggleDropdown()">
-                        <div class="profile-avatar" id="profile-avatar">JD</div>
+                        <div class="profile-avatar" id="profile-avatar"></div>
                         <i class="fas fa-chevron-down"></i>
                     </button>
                     <div class="dropdown-menu" id="dropdown-menu">
@@ -964,54 +960,153 @@
         </div>
     </main>
 
-<div class="modal" id="profile-completion-modal" style="display: none;">
-    <div class="modal-content" style="max-width: 600px; background: white; padding: 2rem; border-radius: 12px;">
-        <h2>Complete Your Professional Profile</h2>
-        <p style="color: #64748b; margin-bottom: 2rem;">Please complete your profile to start receiving bookings</p>
-        
-        <form id="complete-profile-form">
-            <div class="form-group">
-                <label class="form-label">Professional Title *</label>
-                <input type="text" class="form-input" id="professional-title" 
-                       placeholder="e.g., Certified Plumber" required>
-            </div>
-            
-            <div class="form-group">
-                <label class="form-label">Specialization *</label>
-                <input type="text" class="form-input" id="specialization" 
-                       placeholder="e.g., Plumbing" required>
-            </div>
-            
-            <div class="form-group">
-                <label class="form-label">Years of Experience *</label>
-                <input type="number" class="form-input" id="experience" 
-                       placeholder="5" min="0" required>
-            </div>
-            
-            <div class="form-group">
-                <label class="form-label">Qualifications</label>
-                <textarea class="form-textarea" id="qualifications" 
-                          placeholder="Certifications, degrees, training..."></textarea>
-            </div>
-            
-            <div class="form-group">
-                <label class="form-label">Professional Bio *</label>
-                <textarea class="form-textarea" id="bio" 
-                          placeholder="Tell clients about your expertise..." required></textarea>
-            </div>
-            
-            <div class="form-group">
-                <label class="form-label">Hourly Rate (₹)</label>
-                <input type="number" class="form-input" id="hourly-rate" 
-                       placeholder="500" min="0">
-            </div>
-            
-            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">
-                Save & Continue
-            </button>
-        </form>
+    <div class="modal" id="profile-completion-modal" style="display: none;">
+        <div class="modal-content" style="max-width: 600px; background: white; padding: 2rem; border-radius: 12px;">
+            <h2>Complete Your Professional Profile</h2>
+            <p style="color: #64748b; margin-bottom: 2rem;">Please complete your profile to start receiving bookings</p>
+
+            <form id="complete-profile-form">
+                <div class="form-group">
+                    <label class="form-label">Professional Title *</label>
+                    <input type="text" class="form-input" id="professional-title"
+                        placeholder="e.g., Certified Plumber" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Specialization *</label>
+                    <input type="text" class="form-input" id="specialization"
+                        placeholder="e.g., Plumbing" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Years of Experience *</label>
+                    <input type="number" class="form-input" id="experience"
+                        placeholder="5" min="0" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Qualifications</label>
+                    <textarea class="form-textarea" id="qualifications"
+                        placeholder="Certifications, degrees, training..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Professional Bio *</label>
+                    <textarea class="form-textarea" id="bio"
+                        placeholder="Tell clients about your expertise..." required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Hourly Rate (₹)</label>
+                    <input type="number" class="form-input" id="hourly-rate"
+                        placeholder="500" min="0">
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">
+                    Save & Continue
+                </button>
+            </form>
+        </div>
     </div>
-</div>
+
+    <!-- Profile View Modal -->
+    <div class="modal" id="profile-view-modal" style="display: none;">
+        <div class="modal-content" style="max-width: 700px; background: white; padding: 0; border-radius: 16px; overflow: hidden;">
+            <!-- Modal Header -->
+            <div style="background: linear-gradient(135deg, #2563eb, #7c3aed); padding: 2rem; color: white; position: relative;">
+                <button onclick="closeProfileModal()" style="position: absolute; top: 1rem; right: 1rem; background: rgba(255,255,255,0.2); border: none; color: white; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center;">
+                    <i class="fas fa-times"></i>
+                </button>
+                <div style="display: flex; align-items: center; gap: 1.5rem;">
+                    <div id="modal-profile-image" style="width: 80px; height: 80px; border-radius: 50%; background: white; display: flex; align-items: center; justify-content: center; font-size: 32px; font-weight: 600; color: #2563eb; background-size: cover; background-position: center;">
+                        <i class="fas fa-user" style="color: #2563eb;"></i>
+                    </div>
+                    <div>
+                        <h2 id="modal-profile-name" style="margin: 0; font-size: 24px;">Loading...</h2>
+                        <p id="modal-profile-specialization" style="margin: 0.5rem 0 0 0; opacity: 0.9; font-size: 14px;">Professional</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Body -->
+            <div style="padding: 2rem;">
+                <!-- Contact Information -->
+                <div style="margin-bottom: 2rem;">
+                    <h3 style="font-size: 16px; font-weight: 600; color: #1e293b; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                        <i class="fas fa-address-card" style="color: #2563eb;"></i>
+                        Contact Information
+                    </h3>
+                    <div style="display: grid; gap: 0.75rem;">
+                        <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem; background: #f8fafc; border-radius: 8px;">
+                            <i class="fas fa-envelope" style="color: #64748b; width: 20px;"></i>
+                            <div>
+                                <div style="font-size: 12px; color: #64748b;">Email</div>
+                                <div id="modal-profile-email" style="font-size: 14px; color: #1e293b; font-weight: 500;">-</div>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem; background: #f8fafc; border-radius: 8px;">
+                            <i class="fas fa-phone" style="color: #64748b; width: 20px;"></i>
+                            <div>
+                                <div style="font-size: 12px; color: #64748b;">Phone</div>
+                                <div id="modal-profile-phone" style="font-size: 14px; color: #1e293b; font-weight: 500;">-</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Professional Information -->
+                <div style="margin-bottom: 2rem;">
+                    <h3 style="font-size: 16px; font-weight: 600; color: #1e293b; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                        <i class="fas fa-briefcase" style="color: #2563eb;"></i>
+                        Professional Details
+                    </h3>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+                        <div style="padding: 0.75rem; background: #f8fafc; border-radius: 8px;">
+                            <div style="font-size: 12px; color: #64748b; margin-bottom: 0.25rem;">Experience</div>
+                            <div id="modal-profile-experience" style="font-size: 16px; color: #1e293b; font-weight: 600;">-</div>
+                        </div>
+                        <div style="padding: 0.75rem; background: #f8fafc; border-radius: 8px;">
+                            <div style="font-size: 12px; color: #64748b; margin-bottom: 0.25rem;">Hourly Rate</div>
+                            <div id="modal-profile-rate" style="font-size: 16px; color: #1e293b; font-weight: 600;">-</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Qualifications -->
+                <div id="qualifications-section" style="margin-bottom: 2rem; display: none;">
+                    <h3 style="font-size: 16px; font-weight: 600; color: #1e293b; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                        <i class="fas fa-certificate" style="color: #2563eb;"></i>
+                        Qualifications
+                    </h3>
+                    <div id="modal-profile-qualifications" style="padding: 1rem; background: #f8fafc; border-radius: 8px; color: #475569; font-size: 14px; line-height: 1.6;">
+                        -
+                    </div>
+                </div>
+
+                <!-- Bio -->
+                <div id="bio-section" style="margin-bottom: 1rem; display: none;">
+                    <h3 style="font-size: 16px; font-weight: 600; color: #1e293b; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                        <i class="fas fa-user-circle" style="color: #2563eb;"></i>
+                        About
+                    </h3>
+                    <div id="modal-profile-bio" style="padding: 1rem; background: #f8fafc; border-radius: 8px; color: #475569; font-size: 14px; line-height: 1.6;">
+                        -
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                    <button onclick="openSettings()" class="btn btn-primary" style="flex: 1; padding: 0.75rem; background: #2563eb; color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                        <i class="fas fa-edit"></i>
+                        Edit Profile
+                    </button>
+                    <button onclick="closeProfileModal()" class="btn btn-outline" style="flex: 1; padding: 0.75rem; background: white; color: #64748b; border: 1px solid #e2e8f0; border-radius: 8px; font-weight: 600; cursor: pointer;">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
     <script>
         // API Configuration
         const API_BASE = '/api';
@@ -1024,15 +1119,23 @@
             'Accept': 'application/json'
         };
 
-        // Initialize dashboard
-        document.addEventListener('DOMContentLoaded', function() {
-            checkAuth();
-            loadUserProfileImage();
-            checkProfileCompletion();
-            loadProfileData();
-            loadDashboardData();
-            loadAppointments();
-            loadServices();
+        // Initialize dashboard - Optimized to reduce API calls
+        document.addEventListener('DOMContentLoaded', async function() {
+            try {
+                checkAuth();
+                // Load critical data in parallel for faster page load
+                await Promise.all([
+                    loadUserProfileImage(),
+                    loadProfileAndCheck(), // Combined profile load + completion check
+                    loadDashboardData(),
+                    loadNotificationCount()
+                ]);
+                // Load non-critical data after
+                loadAppointments();
+                loadServices();
+            } catch (error) {
+                console.error('Error initializing dashboard:', error);
+            }
         });
 
         // Check authentication
@@ -1044,8 +1147,8 @@
             }
         }
 
-        // Load Profile Data
-        async function loadProfileData() {
+        // Combined Profile Load and Completion Check - Optimized to use single API call
+        async function loadProfileAndCheck() {
             try {
                 const response = await fetch(`${API_BASE}/professional/profile`, {
                     headers: authHeaders
@@ -1054,88 +1157,64 @@
                 if (!response.ok) throw new Error('Failed to load profile');
 
                 const profile = await response.json();
-                updateProfileUI(profile);
+
+                // Check if bio is empty, profile is incomplete
+                if (!profile.bio || profile.bio.trim() === '') {
+                    showProfileCompletionModal();
+                }
             } catch (error) {
-                console.error('Profile error:', error);
+                console.error('Error loading profile:', error);
             }
         }
 
-        // Update Profile UI
-        function updateProfileUI(profile) {
-            if (profile.name) {
-                const initials = profile.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
-                document.getElementById('profile-avatar').textContent = initials;
+        function showProfileCompletionModal() {
+            const modal = document.getElementById('profile-completion-modal');
+            modal.style.display = 'flex';
+            modal.style.position = 'fixed';
+            modal.style.top = '0';
+            modal.style.left = '0';
+            modal.style.right = '0';
+            modal.style.bottom = '0';
+            modal.style.background = 'rgba(0,0,0,0.5)';
+            modal.style.alignItems = 'center';
+            modal.style.justifyContent = 'center';
+            modal.style.zIndex = '9999';
+        }
+
+        // Handle profile completion form submission
+        document.getElementById('complete-profile-form')?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const data = {
+                specialization: document.getElementById('specialization').value,
+                experience_years: parseInt(document.getElementById('experience').value),
+                qualifications: document.getElementById('qualifications').value,
+                bio: document.getElementById('bio').value,
+                hourly_rate: parseFloat(document.getElementById('hourly-rate').value) || 0
+            };
+
+            try {
+                const response = await fetch(`${API_BASE}/professional/profile`, {
+                    method: 'PUT',
+                    headers: authHeaders,
+                    body: JSON.stringify(data)
+                });
+
+                if (!response.ok) throw new Error('Failed to update profile');
+
+                document.getElementById('profile-completion-modal').style.display = 'none';
+                alert('Profile completed successfully!');
+                await loadDashboardData();
+            } catch (error) {
+                console.error('Error updating profile:', error);
+                alert('Error updating profile. Please try again.');
             }
-        }
-
-        // Check if profile is complete on page load
-async function checkProfileCompletion() {
-    try {
-        const response = await fetch(`${API_BASE}/professional/profile`, {
-            headers: authHeaders
         });
-        
-        const profile = await response.json();
-        
-        // If bio is empty, profile is incomplete
-        if (!profile.bio || profile.bio.trim() === '') {
-            showProfileCompletionModal();
-        }
-    } catch (error) {
-        console.error('Error checking profile:', error);
-    }
-}
-
-function showProfileCompletionModal() {
-    const modal = document.getElementById('profile-completion-modal');
-    modal.style.display = 'flex';
-    modal.style.position = 'fixed';
-    modal.style.top = '0';
-    modal.style.left = '0';
-    modal.style.right = '0';
-    modal.style.bottom = '0';
-    modal.style.background = 'rgba(0,0,0,0.5)';
-    modal.style.alignItems = 'center';
-    modal.style.justifyContent = 'center';
-    modal.style.zIndex = '9999';
-}
-
-// Handle profile completion form submission
-document.getElementById('complete-profile-form')?.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    
-    const data = {
-        specialization: document.getElementById('specialization').value,
-        experience_years: parseInt(document.getElementById('experience').value),
-        qualifications: document.getElementById('qualifications').value,
-        bio: document.getElementById('bio').value,
-        hourly_rate: parseFloat(document.getElementById('hourly-rate').value) || 0
-    };
-    
-    try {
-        const response = await fetch(`${API_BASE}/professional/profile`, {
-            method: 'PUT',
-            headers: authHeaders,
-            body: JSON.stringify(data)
-        });
-        
-        if (response.ok) {
-            document.getElementById('profile-completion-modal').style.display = 'none';
-            alert('Profile completed successfully!');
-            loadDashboardData();
-        } else {
-            alert('Failed to update profile');
-        }
-    } catch (error) {
-        console.error('Error:', error);
-        alert('Error updating profile');
-    }
-});
 
 
 
-    
-   
+
+
         // Load Dashboard Data
         async function loadDashboardData() {
             try {
@@ -1196,32 +1275,44 @@ document.getElementById('complete-profile-form')?.addEventListener('submit', asy
                 showEmptyState('appointments-container', 'No appointments found');
             }
         }
-        
+
         // In professional.blade.php, add this function:
-async function loadUserProfileImage() {
-    try {
-        const response = await fetch(`${API_BASE}/user/profile`, {
-            headers: authHeaders
-        });
-        
-        if (!response.ok) throw new Error('Failed to load profile');
-        
-        const data = await response.json();
-        const user = data.user;
-        
-        if (user.profile_image) {
-            // Show actual image
-            const avatar = document.getElementById('profile-avatar');
-            const imageUrl = `/uploads/profiles/${user.profile_image}`;
-            avatar.style.backgroundImage = `url('${imageUrl}')`;
-            avatar.style.backgroundSize = 'cover';
-            avatar.style.backgroundPosition = 'center';
-            avatar.textContent = '';
+        async function loadUserProfileImage() {
+            try {
+                const response = await fetch(`${API_BASE}/user/profile`, {
+                    headers: authHeaders
+                });
+
+                if (!response.ok) throw new Error('Failed to load profile');
+
+                const data = await response.json();
+                const user = data.user;
+
+                const avatar = document.getElementById('profile-avatar');
+
+                if (user.profile_image) {
+                    // Show actual image from database
+                    const imageUrl = `/uploads/profiles/${user.profile_image}`;
+                    avatar.style.backgroundImage = `url('${imageUrl}')`;
+                    avatar.style.backgroundSize = 'cover';
+                    avatar.style.backgroundPosition = 'center';
+                    avatar.textContent = ''; // Clear any text content
+                } else {
+                    // If no profile image, show a default user icon instead of initials
+                    avatar.innerHTML = '<i class="fas fa-user"></i>';
+                    avatar.style.backgroundImage = 'none';
+                    avatar.style.display = 'flex';
+                    avatar.style.alignItems = 'center';
+                    avatar.style.justifyContent = 'center';
+                }
+            } catch (error) {
+                console.error('Error loading profile image:', error);
+                // On error, show default user icon
+                const avatar = document.getElementById('profile-avatar');
+                avatar.innerHTML = '<i class="fas fa-user"></i>';
+                avatar.style.backgroundImage = 'none';
+            }
         }
-    } catch (error) {
-        console.error('Error loading profile image:', error);
-    }
-}
 
         // Update Dashboard with data
         function updateDashboard(data) {
@@ -1463,23 +1554,96 @@ async function loadUserProfileImage() {
             }
         }
 
-        // View Profile
+        // View Profile - Updated to show real-time data
         async function viewProfile() {
             try {
-                const response = await fetch(`${API_BASE}/professional/profile`, {
+                // Show modal with loading state
+                const modal = document.getElementById('profile-view-modal');
+                modal.style.display = 'flex';
+                modal.style.position = 'fixed';
+                modal.style.top = '0';
+                modal.style.left = '0';
+                modal.style.right = '0';
+                modal.style.bottom = '0';
+                modal.style.background = 'rgba(0,0,0,0.5)';
+                modal.style.alignItems = 'center';
+                modal.style.justifyContent = 'center';
+                modal.style.zIndex = '9999';
+
+                // Fetch user profile data
+                const userResponse = await fetch(`${API_BASE}/user/profile`, {
                     headers: authHeaders
                 });
 
-                if (response.ok) {
-                    const profile = await response.json();
-                    alert(`Profile:\nName: ${profile.name || 'N/A'}\nEmail: ${profile.email || 'N/A'}`);
-                } else {
-                    alert('Failed to load profile');
+                // Fetch professional profile data
+                const professionalResponse = await fetch(`${API_BASE}/professional/profile`, {
+                    headers: authHeaders
+                });
+
+                if (!userResponse.ok || !professionalResponse.ok) {
+                    throw new Error('Failed to load profile data');
                 }
+
+                const userData = await userResponse.json();
+                const professionalData = await professionalResponse.json();
+
+                const user = userData.user || userData;
+                const professional = professionalData;
+
+                // Update modal with real data
+                document.getElementById('modal-profile-name').textContent = user.name || 'N/A';
+                document.getElementById('modal-profile-email').textContent = user.email || 'N/A';
+                document.getElementById('modal-profile-phone').textContent = user.phone || 'Not provided';
+                document.getElementById('modal-profile-specialization').textContent = professional.specialization || 'Professional';
+
+                // Experience
+                const experience = professional.experience_years;
+                document.getElementById('modal-profile-experience').textContent = experience ? `${experience} years` : 'Not specified';
+
+                // Hourly Rate
+                const rate = professional.hourly_rate;
+                document.getElementById('modal-profile-rate').textContent = rate ? `₹${rate}/hr` : 'Not set';
+
+                // Qualifications
+                const qualificationsSection = document.getElementById('qualifications-section');
+                const qualificationsEl = document.getElementById('modal-profile-qualifications');
+                if (professional.qualifications && professional.qualifications.trim()) {
+                    qualificationsEl.textContent = professional.qualifications;
+                    qualificationsSection.style.display = 'block';
+                } else {
+                    qualificationsSection.style.display = 'none';
+                }
+
+                // Bio
+                const bioSection = document.getElementById('bio-section');
+                const bioEl = document.getElementById('modal-profile-bio');
+                if (professional.bio && professional.bio.trim()) {
+                    bioEl.textContent = professional.bio;
+                    bioSection.style.display = 'block';
+                } else {
+                    bioSection.style.display = 'none';
+                }
+
+                // Profile Image
+                const modalImage = document.getElementById('modal-profile-image');
+                if (user.profile_image) {
+                    const imageUrl = `/uploads/profiles/${user.profile_image}`;
+                    modalImage.style.backgroundImage = `url('${imageUrl}')`;
+                    modalImage.innerHTML = '';
+                } else {
+                    modalImage.style.backgroundImage = 'none';
+                    modalImage.innerHTML = '<i class="fas fa-user" style="color: #2563eb;"></i>';
+                }
+
             } catch (error) {
-                console.error('Error:', error);
-                alert('Error loading profile');
+                console.error('Error loading profile:', error);
+                alert('Error loading profile data. Please try again.');
+                closeProfileModal();
             }
+        }
+
+        function closeProfileModal() {
+            document.getElementById('profile-view-modal').style.display = 'none';
         }
 
         function openSettings() {
@@ -1503,9 +1667,55 @@ async function loadUserProfileImage() {
             }
         }
 
-        function loadNotifications() {
-            // Sample notifications - replace with API call later
-            const notifications = [{
+        // Toggle profile dropdown
+        function toggleDropdown() {
+            const dropdown = document.getElementById('dropdown-menu');
+            const notifPanel = document.getElementById('notification-panel');
+
+            // Close notification panel if open
+            notifPanel.classList.remove('active');
+
+            // Toggle dropdown
+            dropdown.classList.toggle('active');
+        }
+
+
+        // Load notification count on page load (without opening panel)
+        async function loadNotificationCount() {
+            try {
+                // TODO: Replace with actual API call when backend is ready
+                // const response = await fetch(`${API_BASE}/professional/notifications/count`, {
+                //     headers: authHeaders
+                // });
+                // const data = await response.json();
+                // updateNotificationCount(data.unread_count || 0);
+
+                // For now, fetch all notifications to get count
+                const notifications = await fetchNotifications();
+                const unreadCount = notifications.filter(n => !n.read).length;
+                updateNotificationCount(unreadCount);
+            } catch (error) {
+                console.error('Error loading notification count:', error);
+                updateNotificationCount(0);
+            }
+        }
+
+        // Fetch notifications from API or return empty array
+        async function fetchNotifications() {
+            try {
+                // TODO: Replace with actual API call when backend is ready
+                // const response = await fetch(`${API_BASE}/professional/notifications`, {
+                //     headers: authHeaders
+                // });
+                // if (!response.ok) throw new Error('Failed to load notifications');
+                // return await response.json();
+
+                // For now, return empty array (no notifications)
+                // You can uncomment the sample data below for testing
+                return [];
+
+                /* Sample data for testing:
+                return [{
                     id: 1,
                     type: 'success',
                     icon: 'fa-check-circle',
@@ -1528,25 +1738,16 @@ async function loadUserProfileImage() {
                     text: 'Appointment reminder: Meeting with Mike Johnson in 30 minutes',
                     time: '2 hours ago',
                     read: false
-                },
-                {
-                    id: 4,
-                    type: 'info',
-                    icon: 'fa-calendar',
-                    text: 'Your service "Deep Cleaning" has been approved',
-                    time: '1 day ago',
-                    read: true
-                },
-                {
-                    id: 5,
-                    type: 'success',
-                    icon: 'fa-dollar-sign',
-                    text: 'Payment received: ₹2,500 from Emma Wilson',
-                    time: '2 days ago',
-                    read: true
-                }
-            ];
+                }];
+                */
+            } catch (error) {
+                console.error('Error fetching notifications:', error);
+                return [];
+            }
+        }
 
+        async function loadNotifications() {
+            const notifications = await fetchNotifications();
             renderNotifications(notifications);
             updateNotificationCount(notifications.filter(n => !n.read).length);
         }
@@ -1637,7 +1838,6 @@ async function loadUserProfileImage() {
 
         // Navigate to different pages
         function navigate(route) {
-            console.log('Navigate to:', route);
             window.location.href = `/${route}`;
         }
 
@@ -1646,77 +1846,29 @@ async function loadUserProfileImage() {
             document.getElementById('sidebar').classList.toggle('active');
         }
 
-        // Toggle notifications panel
-        function toggleNotifications() {
-            const panel = document.getElementById('notification-panel');
-            const dropdown = document.getElementById('dropdown-menu');
-            dropdown.classList.remove('active');
-            panel.classList.toggle('active');
-        }
-
-        // Toggle profile dropdown
-        function toggleDropdown() {
-            const dropdown = document.getElementById('dropdown-menu');
-            const notifPanel = document.getElementById('notification-panel');
-            notifPanel.classList.remove('active');
-            dropdown.classList.toggle('active');
-        }
-
-        // Mark all notifications as read
-        function markAllRead() {
-            document.getElementById('notif-count').style.display = 'none';
-            alert('All notifications marked as read');
-        }
-
-        // View all notifications
-        function viewAllNotifications() {
-            alert('View all notifications - Coming soon!');
-            return false;
-        }
-
-        // Show messages
-        function showMessages() {
-            alert('Messages - Coming soon!');
-        }
-
-        // View profile
-        function viewProfile() {
-            window.location.href = '/profile';
-        }
-
-        // Open settings
-        function openSettings() {
-            window.location.href = '/professional-settings';
-        }
-
         // Toggle professional status (online/offline)
         function toggleStatus() {
             const toggle = document.getElementById('status-toggle');
             const statusText = document.getElementById('status-text');
             toggle.classList.toggle('active');
-
-            if (toggle.classList.contains('active')) {
-                statusText.textContent = 'Online';
-            } else {
-                statusText.textContent = 'Offline';
-            }
+            statusText.textContent = toggle.classList.contains('active') ? 'Online' : 'Offline';
         }
 
         // Quick action functions
         function addService() {
-            window.location.href = '/my-services';
+            navigate('my-services');
         }
 
         function viewCalendar() {
-            window.location.href = '/calendar';
+            navigate('calendar');
         }
 
         function checkEarnings() {
-            window.location.href = '/earnings';
+            navigate('earnings');
         }
 
         function updateProfile() {
-            window.location.href = '/professional-settings';
+            navigate('professional-settings');
         }
 
         // Close dropdowns when clicking outside
