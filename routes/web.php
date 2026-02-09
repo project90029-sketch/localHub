@@ -80,22 +80,18 @@ Route::get('/messages', function () {
 
 // ========== B2B COMMUNITY ROUTES (NEW - SEPARATE PREFIX) ==========
 
-<<<<<<< HEAD
 // B2B Home/Welcome Page
 Route::get('/b2b-welcome', function () {
     return view('welcome'); // Your welcome.blade.php
 })->name('b2b.welcome');
-=======
 Route::get('/business/dashboard', [ProductController::class, 'dashboard'])
     ->name('business.businessDashboard');
->>>>>>> a6b729af6c40dbf57cf314414c58974e6aadfa31
 
 // B2B Login Page (different from your existing /login)
 Route::get('/b2b-login', function () {
     return view('login'); // Your login.blade.php (B2B version)
 })->name('b2b.login');
 
-<<<<<<< HEAD
 // B2B Login Action
 Route::post('/b2b-login-action', function () {
     // Store user in session
@@ -109,11 +105,9 @@ Route::post('/b2b-login-action', function () {
     
     return redirect('/b2b-dashboard')->with('success', 'Login successful!');
 })->name('b2b.login.action');
-=======
 
 Route::post('/products/store', [ProductController::class, 'store']);
 
->>>>>>> a6b729af6c40dbf57cf314414c58974e6aadfa31
 
 // B2B Registration Page (different from your existing /register)
 Route::get('/b2b-register', function () {
@@ -180,7 +174,7 @@ Route::get('/b2b-dashboard', function () {
     return view('index', compact('user')); // Your index.blade.php (dashboard)
 })->name('b2b.dashboard');
 
-<<<<<<< HEAD
+
 // B2B Profile Page (protected)
 Route::get('/b2b-profile', function () {
     // Check if B2B user is logged in
@@ -230,12 +224,35 @@ Route::post('/b2b-profile-update', function () {
     
     return redirect('/b2b-profile')->with('success', 'Profile updated!');
 })->name('b2b.profile.update');
-=======
+
 // Profile page
 Route::get('/profile', function () {
     return view('profile');
 })->name('profile');
 
-Route::get('/dashboard', [AdminController::class, 'dashboard'])
-    ->middleware('admin.session');
->>>>>>> a6b729af6c40dbf57cf314414c58974e6aadfa31
+
+
+
+Route::prefix('resident')->group(function () {
+
+    Route::get('/dashboard', function () {
+        return view('resident.resident_dashboard');
+    })->name('resident.dashboard');
+
+    Route::get('/services', function () {
+        return view('resident.resident_services');
+    })->name('resident.resident_services');
+
+    Route::get('/bookings', function () {
+        return view('resident.resident_bookings');
+    })->name('resident.bookings');
+
+    Route::get('/profile', function () {
+        return view('resident.resident_profile');
+    })->name('resident.profile');
+
+    Route::get('/messages', function () {
+        return view('resident.resident_messages');
+    })->name('resident.messages');
+
+});

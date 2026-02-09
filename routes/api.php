@@ -6,9 +6,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ProfessionalsController;
 use App\Http\Controllers\Api\ResidentController;
 use App\Http\Controllers\Api\UserController;
-use App\Http\Controllers\Api\EnterpriseController;
 
-use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,7 +35,9 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/profile/photo', [UserController::class, 'uploadPhoto']);
     });
 
+    Route::get('/search/professionals', [ResidentController::class, 'searchProfessionals']);
 
+    
     Route::middleware(['role:professional'])->group(function () {
 
     //Dashboard
@@ -76,15 +76,13 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/professional/messages', [ProfessionalsController::class, 'getMessages']);
     });
 
-    Route::middleware('auth:sanctum')->post(
-    '/enterprise/register',
-    [EnterpriseController::class, 'store']
-    );
-    
-    Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/enterprise', [EnterpriseController::class, 'show']);
-    Route::get('/admin/enterprises', [EnterpriseController::class, 'index']);
+    Route::middleware('role:resident')->group(function (){
+        Route::get('/resident/profile', [ResidentController::class, 'profile']);
+        Route::put('/resident/profile', [ResidentController::class, 'updateProfile']);
+
+        // Appointments/Bookings
+        Route::get('/resident/appointments', [ResidentController::class, 'getAppointments']);
+        Route::post('/resident/appointments', [ResidentController::class, 'createAppointment']);
+        Route::put('/resident/appointments/{id}/cancel', [ResidentController::class, 'cancelAppointment']);
     });
-
-
 });
