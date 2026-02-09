@@ -417,6 +417,10 @@
         </div>
     </div>
 
+
+    <!-- Include profile modal component -->
+    @include('components.profile-modal')
+
     <!-- Include common scripts component -->
     @include('components.scripts')
 

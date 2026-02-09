@@ -122,8 +122,104 @@
         window.location.href = `/${route}`;
     }
 
-    function viewProfile() {
-        window.location.href = '/profile';
+    // View Profile - Shows real-time data in modal
+    async function viewProfile() {
+        try {
+            // Show modal with loading state
+            const modal = document.getElementById('profile-view-modal');
+            if (!modal) {
+                console.error('Profile modal not found');
+                return;
+            }
+
+            modal.style.display = 'flex';
+            modal.style.position = 'fixed';
+            modal.style.top = '0';
+            modal.style.left = '0';
+            modal.style.right = '0';
+            modal.style.bottom = '0';
+            modal.style.background = 'rgba(0,0,0,0.5)';
+            modal.style.alignItems = 'center';
+            modal.style.justifyContent = 'center';
+            modal.style.zIndex = '9999';
+
+            // Fetch user profile data
+            const userResponse = await fetch(`${API_BASE}/user/profile`, {
+                headers: authHeaders
+            });
+
+            // Fetch professional profile data
+            const professionalResponse = await fetch(`${API_BASE}/professional/profile`, {
+                headers: authHeaders
+            });
+
+            if (!userResponse.ok || !professionalResponse.ok) {
+                throw new Error('Failed to load profile data');
+            }
+
+            const userData = await userResponse.json();
+            const professionalData = await professionalResponse.json();
+
+            const user = userData.user || userData;
+            const professional = professionalData;
+
+            // Update modal with real data
+            document.getElementById('modal-profile-name').textContent = user.name || 'N/A';
+            document.getElementById('modal-profile-email').textContent = user.email || 'N/A';
+            document.getElementById('modal-profile-phone').textContent = user.phone || 'Not provided';
+            document.getElementById('modal-profile-specialization').textContent = professional.specialization || 'Professional';
+
+            // Experience
+            const experience = professional.experience_years;
+            document.getElementById('modal-profile-experience').textContent = experience ? `${experience} years` : 'Not specified';
+
+            // Hourly Rate
+            const rate = professional.hourly_rate;
+            document.getElementById('modal-profile-rate').textContent = rate ? `₹${rate}/hr` : 'Not set';
+
+            // Qualifications
+            const qualificationsSection = document.getElementById('qualifications-section');
+            const qualificationsEl = document.getElementById('modal-profile-qualifications');
+            if (professional.qualifications && professional.qualifications.trim()) {
+                qualificationsEl.textContent = professional.qualifications;
+                qualificationsSection.style.display = 'block';
+            } else {
+                qualificationsSection.style.display = 'none';
+            }
+
+            // Bio
+            const bioSection = document.getElementById('bio-section');
+            const bioEl = document.getElementById('modal-profile-bio');
+            if (professional.bio && professional.bio.trim()) {
+                bioEl.textContent = professional.bio;
+                bioSection.style.display = 'block';
+            } else {
+                bioSection.style.display = 'none';
+            }
+
+            // Profile Image
+            const modalImage = document.getElementById('modal-profile-image');
+            if (user.profile_image) {
+                const imageUrl = `/uploads/profiles/${user.profile_image}`;
+                modalImage.style.backgroundImage = `url('${imageUrl}')`;
+                modalImage.innerHTML = '';
+            } else {
+                modalImage.style.backgroundImage = 'none';
+                modalImage.innerHTML = '<i class="fas fa-user" style="color: #2563eb;"></i>';
+            }
+
+        } catch (error) {
+            console.error('Error loading profile:', error);
+            alert('Error loading profile data. Please try again.');
+            closeProfileModal();
+        }
+    }
+
+    function closeProfileModal() {
+        const modal = document.getElementById('profile-view-modal');
+        if (modal) {
+            modal.style.display = 'none';
+        }
     }
 
     function openSettings() {
