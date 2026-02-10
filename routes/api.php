@@ -76,6 +76,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/professional/messages', [ProfessionalsController::class, 'getMessages']);
     });
 
+    Route::get('/professional/services', [ProfessionalsController::class, 'getServicesForBooking']);
+
     Route::middleware('role:resident')->group(function (){
         Route::get('/resident/profile', [ResidentController::class, 'profile']);
         Route::put('/resident/profile', [ResidentController::class, 'updateProfile']);

@@ -198,6 +198,11 @@
             background: #f1f5f9;
         }
 
+        .btn-sm {
+            padding: 8px 16px;
+            font-size: 13px;
+        }
+
         .professionals-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -210,7 +215,6 @@
             padding: 24px;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
             transition: all 0.2s;
-            cursor: pointer;
         }
 
         .professional-card:hover {
@@ -300,18 +304,153 @@
             gap: 8px;
         }
 
-        .btn-sm {
-            padding: 8px 16px;
-            font-size: 13px;
+        /* Modal Styles */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
         }
 
-        .empty-state {
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: white;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: modalSlideIn 0.3s ease-out;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            padding: 24px;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .modal-close {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #f1f5f9;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .modal-close:hover {
+            background: #e2e8f0;
+        }
+
+        .modal-body {
+            padding: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: #475569;
+            margin-bottom: 8px;
+        }
+
+        .form-label.required::after {
+            content: '*';
+            color: #ef4444;
+            margin-left: 4px;
+        }
+
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .form-textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        .price-display {
+            background: #eff6ff;
+            border: 1px solid #2563eb;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 20px;
+        }
+
+        .price-label {
+            font-size: 13px;
+            color: #64748b;
+            margin-bottom: 4px;
+        }
+
+        .price-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #2563eb;
+        }
+
+        .modal-footer {
+            padding: 20px 24px;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+        }
+
+        .empty-state, .loading {
             text-align: center;
             padding: 64px 24px;
             color: #94a3b8;
         }
 
-        .empty-state i {
+        .empty-state i, .loading i {
             font-size: 64px;
             margin-bottom: 20px;
             opacity: 0.3;
@@ -321,16 +460,6 @@
             font-size: 20px;
             font-weight: 600;
             margin-bottom: 8px;
-            color: #64748b;
-        }
-
-        .empty-state p {
-            font-size: 15px;
-        }
-
-        .loading {
-            text-align: center;
-            padding: 48px;
             color: #64748b;
         }
 
@@ -364,6 +493,11 @@
 
             .search-box {
                 flex-direction: column;
+            }
+
+            .modal {
+                width: 95%;
+                max-height: 95vh;
             }
         }
     </style>
@@ -438,6 +572,75 @@
         </div>
     </main>
 
+    <!-- Booking Modal -->
+    <div class="modal-overlay" id="booking-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title">Book Appointment</h2>
+                <button class="modal-close" onclick="closeBookingModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="booking-form" onsubmit="submitBooking(event)">
+                <div class="modal-body">
+                    <!-- Professional Info -->
+                    <div style="background: #f8fafc; padding: 16px; border-radius: 8px; margin-bottom: 24px;">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <div style="width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, #2563eb, #7c3aed); display: flex; align-items: center; justify-content: center; color: white; font-weight: 600;" id="modal-pro-avatar">P</div>
+                            <div>
+                                <div style="font-weight: 600; margin-bottom: 2px;" id="modal-pro-name">Professional Name</div>
+                                <div style="font-size: 13px; color: #64748b;" id="modal-pro-specialization">Specialization</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Service Selection (if professional has services) -->
+                    <div class="form-group" id="service-group" style="display: none;">
+                        <label class="form-label">Select Service</label>
+                        <select class="form-select" id="service_id" name="service_id">
+                            <option value="">Choose a service...</option>
+                        </select>
+                    </div>
+
+                    <!-- Date & Time -->
+                    <div class="form-group">
+                        <label class="form-label required">Appointment Date</label>
+                        <input type="date" class="form-input" id="appointment_date" name="appointment_date" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label required">Appointment Time</label>
+                        <input type="time" class="form-input" id="appointment_time" name="appointment_time" required>
+                    </div>
+
+                    <!-- Notes -->
+                    <div class="form-group">
+                        <label class="form-label">Additional Notes</label>
+                        <textarea class="form-textarea" id="notes" name="notes" placeholder="Any specific requirements or details..."></textarea>
+                    </div>
+
+                    <!-- Price Display -->
+                    <div class="price-display" id="price-display" style="display: none;">
+                        <div class="price-label">Total Amount</div>
+                        <div class="price-value" id="total-price">₹0</div>
+                    </div>
+
+                    <input type="hidden" id="professional_id" name="professional_id">
+                    <input type="hidden" id="total_price_hidden" name="total_price">
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" onclick="closeBookingModal()" class="btn btn-outline">
+                        Cancel
+                    </button>
+                    <button type="submit" class="btn btn-primary" id="submit-btn">
+                        <i class="fas fa-check"></i> Confirm Booking
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script>
         const API_BASE = '/api';
         const token = localStorage.getItem('auth_token');
@@ -451,6 +654,8 @@
             'Authorization': `Bearer ${token}`,
             'Accept': 'application/json'
         };
+
+        let currentProfessional = null;
 
         // Load user data
         async function loadUserData() {
@@ -591,7 +796,7 @@
                     ${profile.bio ? `<div class="pro-bio">${profile.bio}</div>` : ''}
 
                     <div class="pro-actions">
-                        <button onclick="bookProfessional(${professional.id})" class="btn btn-primary btn-sm" style="flex: 1;">
+                        <button onclick='bookProfessional(${JSON.stringify(professional)})' class="btn btn-primary btn-sm" style="flex: 1;">
                             <i class="fas fa-calendar-plus"></i> Book Now
                         </button>
                         <button onclick="viewProfile(${professional.id})" class="btn btn-outline btn-sm">
@@ -627,16 +832,146 @@
             }
         }
 
-        // Book professional
-        function bookProfessional(professionalId) {
-            alert(`Booking functionality coming soon! Professional ID: ${professionalId}`);
-            // TODO: Redirect to booking page or open booking modal
+        // Book professional - Open modal
+        async function bookProfessional(professional) {
+            currentProfessional = professional;
+            const profile = professional.professional_profile || {};
+
+            // Update modal info
+            const initials = professional.name ? 
+                professional.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) : 
+                'P';
+            
+            document.getElementById('modal-pro-avatar').textContent = initials;
+            document.getElementById('modal-pro-name').textContent = professional.name || 'Professional';
+            document.getElementById('modal-pro-specialization').textContent = profile.specialization || 'Service Provider';
+            document.getElementById('professional_id').value = professional.id;
+
+            // Set minimum date to tomorrow
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            document.getElementById('appointment_date').min = tomorrow.toISOString().split('T')[0];
+
+            // Load professional's services
+            await loadProfessionalServices(professional.id);
+
+            // Show default price if available
+            if (profile.hourly_rate || profile.consultation_fee) {
+                const price = profile.hourly_rate || profile.consultation_fee;
+                document.getElementById('total-price').textContent = `₹${price}`;
+                document.getElementById('total_price_hidden').value = price;
+                document.getElementById('price-display').style.display = 'block';
+            } else {
+                document.getElementById('price-display').style.display = 'none';
+            }
+
+            // Show modal
+            document.getElementById('booking-modal').classList.add('active');
+        }
+
+        // Load professional's services
+        async function loadProfessionalServices(professionalId) {
+            try {
+                const response = await fetch(`${API_BASE}/professional/services?professional_id=${professionalId}`, {
+                    headers: authHeaders
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    const services = data.services || data.data || [];
+
+                    if (services.length > 0) {
+                        const serviceSelect = document.getElementById('service_id');
+                        serviceSelect.innerHTML = '<option value="">Choose a service...</option>';
+                        
+                        services.forEach(service => {
+                            const option = document.createElement('option');
+                            option.value = service.id;
+                            option.textContent = `${service.name} - ₹${service.price}`;
+                            option.setAttribute('data-price', service.price);
+                            serviceSelect.appendChild(option);
+                        });
+
+                        document.getElementById('service-group').style.display = 'block';
+
+                        // Update price when service changes
+                        serviceSelect.addEventListener('change', function() {
+                            const selectedOption = this.options[this.selectedIndex];
+                            if (selectedOption.value) {
+                                const price = selectedOption.getAttribute('data-price');
+                                document.getElementById('total-price').textContent = `₹${price}`;
+                                document.getElementById('total_price_hidden').value = price;
+                                document.getElementById('price-display').style.display = 'block';
+                            }
+                        });
+                    } else {
+                        document.getElementById('service-group').style.display = 'none';
+                    }
+                }
+            } catch (error) {
+                console.error('Error loading services:', error);
+                document.getElementById('service-group').style.display = 'none';
+            }
+        }
+
+        // Close modal
+        function closeBookingModal() {
+            document.getElementById('booking-modal').classList.remove('active');
+            document.getElementById('booking-form').reset();
+        }
+
+        // Submit booking
+        async function submitBooking(event) {
+            event.preventDefault();
+
+            const submitBtn = document.getElementById('submit-btn');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Booking...';
+
+            const formData = {
+                professional_id: parseInt(document.getElementById('professional_id').value),
+                service_id: document.getElementById('service_id').value ? parseInt(document.getElementById('service_id').value) : null,
+                appointment_time: `${document.getElementById('appointment_date').value} ${document.getElementById('appointment_time').value}`,
+                notes: document.getElementById('notes').value,
+                total_price: document.getElementById('total_price_hidden').value || null
+            };
+
+            console.log('📤 Booking data:', formData);
+
+            try {
+                const response = await fetch(`${API_BASE}/resident/appointments`, {
+                    method: 'POST',
+                    headers: authHeaders,
+                    body: JSON.stringify(formData)
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.message || 'Failed to create booking');
+                }
+
+                console.log('✅ Booking created:', data);
+
+                // Success!
+                alert('Appointment booked successfully! 🎉');
+                closeBookingModal();
+                
+                // Redirect to bookings page
+                window.location.href = '/resident/bookings';
+
+            } catch (error) {
+                console.error('❌ Booking error:', error);
+                alert('Failed to create booking: ' + error.message);
+                
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fas fa-check"></i> Confirm Booking';
+            }
         }
 
         // View profile
         function viewProfile(professionalId) {
             alert(`Profile view coming soon! Professional ID: ${professionalId}`);
-            // TODO: Open professional profile modal or page
         }
 
         // Logout
@@ -661,6 +996,13 @@
         document.addEventListener('DOMContentLoaded', function() {
             loadUserData();
             resetSearch();
+
+            // Close modal when clicking outside
+            document.getElementById('booking-modal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeBookingModal();
+                }
+            });
         });
     </script>
 </body>

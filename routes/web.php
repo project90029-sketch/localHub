@@ -240,8 +240,8 @@ Route::prefix('resident')->group(function () {
     })->name('resident.dashboard');
 
     Route::get('/services', function () {
-        return view('resident.resident_services');
-    })->name('resident.resident_services');
+        return view('resident.resident_services_with_booking');
+    })->name('resident.resident_services_with_booking');
 
     Route::get('/bookings', function () {
         return view('resident.resident_bookings');
