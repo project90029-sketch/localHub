@@ -772,22 +772,120 @@
             }
         }
 
-        /* Empty State */
-        .empty-state {
-            text-align: center;
-            padding: 48px 24px;
-            color: #94a3b8;
+        /* Message Center Specific Styles */
+        .message-center-wrapper {
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 24px;
+            height: calc(100vh - 200px);
+            margin-top: 20px;
         }
 
-        .empty-state i {
-            font-size: 64px;
-            margin-bottom: 16px;
-            opacity: 0.3;
+        .conv-list-panel {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
         }
 
-        .empty-state-text {
-            font-size: 16px;
-            font-weight: 500;
+        .conv-item {
+            padding: 16px 20px;
+            border-bottom: 1px solid #f1f5f9;
+            cursor: pointer;
+            display: flex;
+            gap: 12px;
+            transition: all 0.2s;
+        }
+
+        .conv-item:hover {
+            background: #f8fafc;
+        }
+
+        .conv-item.active {
+            background: #eff6ff;
+            border-left: 4px solid #2563eb;
+        }
+
+        .conv-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .conv-type-badge {
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-top: 4px;
+            display: inline-block;
+        }
+
+        .type-resident {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .type-business {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .type-support {
+            background: #f1f5f9;
+            color: #475569;
+        }
+
+        .chat-panel {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .chat-msgs-area {
+            flex: 1;
+            overflow-y: auto;
+            padding: 24px;
+            background: #f8fafc;
+        }
+
+        .msg-bubble {
+            max-width: 70%;
+            margin-bottom: 12px;
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .msg-sent {
+            background: #2563eb;
+            color: white;
+            align-self: flex-end;
+            margin-left: auto;
+        }
+
+        .msg-received {
+            background: white;
+            color: #1e293b;
+            align-self: flex-start;
+        }
+
+        .chat-input-box {
+            padding: 20px;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            gap: 12px;
         }
 
         /* Modal Styles */
@@ -1056,7 +1154,8 @@
                             <!-- Notifications will be loaded here -->
                         </div>
                         <div class="notification-footer">
-                            <a href="#" class="view-all-notifications" onclick="viewAllNotifications()">View All Notifications</a>
+                            <a href="#" class="view-all-notifications" onclick="viewAllNotifications()">View All
+                                Notifications</a>
                         </div>
                     </div>
                 </div>
@@ -1066,9 +1165,12 @@
                         <i class="fas fa-chevron-down"></i>
                     </button>
                     <div class="dropdown-menu" id="dropdown-menu">
-                        <button class="dropdown-item" onclick="viewProfile()"><i class="fas fa-user"></i> View Profile</button>
-                        <button class="dropdown-item" onclick="openSettings()"><i class="fas fa-cog"></i> Settings</button>
-                        <button class="dropdown-item" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+                        <button class="dropdown-item" onclick="viewProfile()"><i class="fas fa-user"></i> View
+                            Profile</button>
+                        <button class="dropdown-item" onclick="openSettings()"><i class="fas fa-cog"></i>
+                            Settings</button>
+                        <button class="dropdown-item" onclick="logout()"><i class="fas fa-sign-out-alt"></i>
+                            Logout</button>
                     </div>
                 </div>
             </div>
@@ -1076,13 +1178,19 @@
     </nav>
 
     <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-item active" onclick="switchDashboardSection('professional')"><i
+                class="fas fa-th-large"></i> Dashboard
+            Overview</div>
     <!-- <aside class="sidebar" id="sidebar">
         <div class="sidebar-item active" onclick="navigate('professional')"><i class="fas fa-th-large"></i> Dashboard Overview</div>
         <div class="sidebar-item" onclick="navigate('my-services')"><i class="fas fa-briefcase"></i> My Services</div>
-        <div class="sidebar-item" onclick="navigate('appointments')"><i class="fas fa-calendar-check"></i> Appointments</div>
+        <div class="sidebar-item" onclick="navigate('appointments')"><i class="fas fa-calendar-check"></i> Appointments
+        </div>
         <div class="sidebar-item" onclick="navigate('earnings')"><i class="fas fa-dollar-sign"></i> My Earnings</div>
         <div class="sidebar-item" onclick="navigate('reviews')"><i class="fas fa-star"></i> Reviews & Ratings</div>
-        <div class="sidebar-item" onclick="navigate('messages')"><i class="fas fa-comments"></i> Messages</div>
+        <div class="sidebar-item" onclick="switchDashboardSection('messages')"><i class="fas fa-comments"></i> Messages</div>
+        <div class="sidebar-item" onclick="switchDashboardSection('help')"><i class="fas fa-question-circle"></i> Help & Support</div>
         <div class="sidebar-item" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</div>
     </aside> -->
    <aside class="sidebar" id="sidebar">
@@ -1113,109 +1221,203 @@
 </aside>
     <!-- Main Content -->
     <main class="main-content">
-        <!-- Status Toggle -->
-        <div class="status-toggle">
-            <div class="toggle-switch" id="status-toggle" onclick="toggleStatus()">
-                <div class="toggle-slider"></div>
+        <!-- Dashboard Overview Section -->
+        <div id="dashboard-section">
+            <!-- Status Toggle -->
+            <div class="status-toggle">
+                <div class="toggle-switch" id="status-toggle" onclick="toggleStatus()">
+                    <div class="toggle-slider"></div>
+                </div>
+                <div>
+                    <strong id="status-text">Offline</strong>
+                    <div style="font-size: 13px; color: #64748b;">Toggle your availability</div>
+                </div>
             </div>
-            <div>
-                <strong id="status-text">Offline</strong>
-                <div style="font-size: 13px; color: #64748b;">Toggle your availability</div>
+
+            <!-- Statistics Cards -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div>
+                            <div class="stat-label">Total Earnings</div>
+                            <div class="stat-value" id="total-earnings">₹0</div>
+                            <div class="stat-change positive" id="earnings-change">
+                                <i class="fas fa-arrow-up"></i> <span>0% vs last month</span>
+                            </div>
+                        </div>
+                        <div class="stat-icon green"><i class="fas fa-rupee-sign"></i></div>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div>
+                            <div class="stat-label">Upcoming Appointments</div>
+                            <div class="stat-value" id="upcoming-count">0</div>
+                            <a href="#" class="view-all">View All</a>
+                        </div>
+                        <div class="stat-icon blue"><i class="fas fa-calendar-check"></i></div>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div>
+                            <div class="stat-label">Average Rating</div>
+                            <div class="stat-value" id="avg-rating">0.0</div>
+                            <div class="stars" id="rating-stars">★★★★★</div>
+                        </div>
+                        <div class="stat-icon purple"><i class="fas fa-star"></i></div>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div>
+                            <div class="stat-label">Active Services</div>
+                            <div class="stat-value" id="active-services">0</div>
+                            <div style="font-size: 13px; color: #64748b;" id="popular-service">-</div>
+                        </div>
+                        <div class="stat-icon orange"><i class="fas fa-briefcase"></i></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Upcoming Appointments -->
+            <div class="section">
+                <div class="section-header">
+                    <h2 class="section-title">Upcoming Appointments</h2>
+                    <a href="#" class="view-all">View All</a>
+                </div>
+                <div id="appointments-container">
+                    <div class="skeleton" style="height: 200px;"></div>
+                </div>
+            </div>
+
+            <!-- Recent Reviews -->
+            <div class="section">
+                <div class="section-header">
+                    <h2 class="section-title">Recent Reviews</h2>
+                    <a href="#" class="view-all">View All</a>
+                </div>
+                <div id="reviews-container">
+                    <div class="skeleton" style="height: 150px;"></div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="section">
+                <div class="section-header">
+                    <h2 class="section-title">Quick Actions</h2>
+                </div>
+                <div class="quick-actions">
+                    <div class="quick-action" onclick="addService()">
+                        <i class="fas fa-plus-circle"></i>
+                        <div class="quick-action-label">Add New Service</div>
+                    </div>
+                    <div class="quick-action" onclick="viewCalendar()">
+                        <i class="fas fa-calendar-alt"></i>
+                        <div class="quick-action-label">View Calendar</div>
+                    </div>
+                    <div class="quick-action" onclick="checkEarnings()">
+                        <i class="fas fa-chart-line"></i>
+                        <div class="quick-action-label">View Earnings</div>
+                    </div>
+                    <div class="quick-action" onclick="updateProfile()">
+                        <i class="fas fa-user-edit"></i>
+                        <div class="quick-action-label">Update Profile</div>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- Statistics Cards -->
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-header">
-                    <div>
-                        <div class="stat-label">Total Earnings</div>
-                        <div class="stat-value" id="total-earnings">₹0</div>
-                        <div class="stat-change positive" id="earnings-change">
-                            <i class="fas fa-arrow-up"></i> <span>0% vs last month</span>
+        <!-- Message Center Section (Hidden by Default) -->
+        <div id="messages-section" style="display: none;">
+            <div class="section-header">
+                <h2 class="section-title">Message Center</h2>
+            </div>
+
+            <div class="message-center-wrapper">
+                <!-- Conversations -->
+                <div class="conv-list-panel">
+                    <div style="padding: 20px; border-bottom: 1px solid #e2e8f0;">
+                        <div class="search-bar" style="width: 100%;">
+                            <i class="fas fa-search"></i>
+                            <input type="text" placeholder="Search chats..." id="conv-search">
                         </div>
                     </div>
-                    <div class="stat-icon green"><i class="fas fa-rupee-sign"></i></div>
-                </div>
-            </div>
-
-            <div class="stat-card">
-                <div class="stat-header">
-                    <div>
-                        <div class="stat-label">Upcoming Appointments</div>
-                        <div class="stat-value" id="upcoming-count">0</div>
-                        <a href="#" class="view-all">View All</a>
+                    <div id="conversation-list-items" style="overflow-y: auto; flex: 1;">
+                        <!-- Real Conversations populated by JS -->
+                        <div class="empty-state" style="padding: 40px; text-align: center; color: #64748b;">
+                            <i class="fas fa-spinner fa-spin" style="font-size: 24px; margin-bottom: 12px;"></i>
+                            <div>Loading conversations...</div>
+                        </div>
                     </div>
-                    <div class="stat-icon blue"><i class="fas fa-calendar-check"></i></div>
                 </div>
-            </div>
 
-            <div class="stat-card">
-                <div class="stat-header">
-                    <div>
-                        <div class="stat-label">Average Rating</div>
-                        <div class="stat-value" id="avg-rating">0.0</div>
-                        <div class="stars" id="rating-stars">★★★★★</div>
+                <!-- Chat Area -->
+                <div class="chat-panel">
+                    <div id="chat-header"
+                        style="padding: 16px 24px; border-bottom: 1px solid #e2e8f0; display: flex; align-items: center; gap: 12px;">
+                        <div class="conv-avatar" id="active-chat-avatar"
+                            style="background: #2563eb; width: 36px; height: 36px;">AR</div>
+                        <div>
+                            <strong id="active-chat-name">Aaryan Sharma</strong>
+                            <div id="active-chat-type" style="font-size: 12px; color: #64748b;">Resident</div>
+                        </div>
                     </div>
-                    <div class="stat-icon purple"><i class="fas fa-star"></i></div>
-                </div>
-            </div>
 
-            <div class="stat-card">
-                <div class="stat-header">
-                    <div>
-                        <div class="stat-label">Active Services</div>
-                        <div class="stat-value" id="active-services">0</div>
-                        <div style="font-size: 13px; color: #64748b;" id="popular-service">-</div>
+                    <div class="chat-msgs-area" id="chat-messages-display">
+                        <div class="msg-bubble msg-received">Hi, I wanted to confirm if the plumbing maintenance check
+                            is still scheduled for Tuesday at 2 PM?</div>
+                        <div class="msg-bubble msg-sent">Yes, Aaryan! I'll be there on time.</div>
+                        <div class="msg-bubble msg-received">Great, thanks! Let me know if anything changes.</div>
                     </div>
-                    <div class="stat-icon orange"><i class="fas fa-briefcase"></i></div>
+
+                    <div class="chat-input-box">
+                        <input type="text" class="form-input" placeholder="Type your message..." style="flex: 1;"
+                            id="msg-input-field">
+                        <button class="btn btn-primary" onclick="handleSendMessage()"><i
+                                class="fas fa-paper-plane"></i></button>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Upcoming Appointments -->
-        <div class="section">
+        <!-- Help & Support Section (Hidden by Default) -->
+        <div id="help-section" style="display: none;">
             <div class="section-header">
-                <h2 class="section-title">Upcoming Appointments</h2>
-                <a href="#" class="view-all">View All</a>
+                <h2 class="section-title">Help & Support</h2>
             </div>
-            <div id="appointments-container">
-                <div class="skeleton" style="height: 200px;"></div>
-            </div>
-        </div>
+            
+            <div class="help-grid" style="display: grid; grid-template-columns: 1fr 350px; gap: 24px;">
+                <!-- Help Content (The "Help Bar") -->
+                <div class="help-content-panel">
+                    <div class="section" style="margin-bottom: 24px;">
+                        <h3 style="margin-bottom: 16px; font-size: 18px;">Common Questions</h3>
+                        <div class="faq-list">
+                            <details style="margin-bottom: 12px; padding: 12px; border: 1px solid #e2e8f0; border-radius: 8px; cursor: pointer;">
+                                <summary style="font-weight: 600; color: #1e293b;">How do I update my service rates?</summary>
+                                <p style="margin-top: 10px; color: #64748b; font-size: 14px;">You can update your rates in the Settings -> Profile section. Hourly rates are applied to new bookings.</p>
+                            </details>
+                            <details style="margin-bottom: 12px; padding: 12px; border: 1px solid #e2e8f0; border-radius: 8px; cursor: pointer;">
+                                <summary style="font-weight: 600; color: #1e293b;">When do I get paid?</summary>
+                                <p style="margin-top: 10px; color: #64748b; font-size: 14px;">Payments are typically processed within 3-5 business days after the appointment is marked as completed.</p>
+                            </details>
+                            <details style="margin-bottom: 12px; padding: 12px; border: 1px solid #e2e8f0; border-radius: 8px; cursor: pointer;">
+                                <summary style="font-weight: 600; color: #1e293b;">How to cancel an appointment?</summary>
+                                <p style="margin-top: 10px; color: #64748b; font-size: 14px;">Locate the appointment in your dashboard and click "Cancel". Please note our 24-hour cancellation policy.</p>
+                            </details>
+                        </div>
+                    </div>
+                </div>
 
-        <!-- Recent Reviews -->
-        <div class="section">
-            <div class="section-header">
-                <h2 class="section-title">Recent Reviews</h2>
-                <a href="#" class="view-all">View All</a>
-            </div>
-            <div id="reviews-container">
-                <div class="skeleton" style="height: 150px;"></div>
-            </div>
-        </div>
-
-        <!-- Quick Actions -->
-        <div class="section">
-            <div class="section-header">
-                <h2 class="section-title">Quick Actions</h2>
-            </div>
-            <div class="quick-actions">
-                <div class="quick-action" onclick="addService()">
-                    <i class="fas fa-plus-circle"></i>
-                    <div class="quick-action-label">Add New Service</div>
-                </div>
-                <div class="quick-action" onclick="viewCalendar()">
-                    <i class="fas fa-calendar-alt"></i>
-                    <div class="quick-action-label">View Calendar</div>
-                </div>
-                <div class="quick-action" onclick="checkEarnings()">
-                    <i class="fas fa-chart-line"></i>
-                    <div class="quick-action-label">View Earnings</div>
-                </div>
-                <div class="quick-action" onclick="updateProfile()">
-                    <i class="fas fa-user-edit"></i>
-                    <div class="quick-action-label">Update Profile</div>
+                <!-- Contact Form Section -->
+                <div class="contact-panel">
+                    <div class="section-header" style="margin-bottom: 16px;">
+                        <h3 class="section-title">Contact Support</h3>
+                    </div>
+                    <x-contact-form />
                 </div>
             </div>
         </div>
@@ -1229,20 +1431,18 @@
             <form id="complete-profile-form">
                 <div class="form-group">
                     <label class="form-label">Professional Title *</label>
-                    <input type="text" class="form-input" id="professional-title"
-                        placeholder="e.g., Certified Plumber" required>
+                    <input type="text" class="form-input" id="professional-title" placeholder="e.g., Certified Plumber"
+                        required>
                 </div>
 
                 <div class="form-group">
                     <label class="form-label">Specialization *</label>
-                    <input type="text" class="form-input" id="specialization"
-                        placeholder="e.g., Plumbing" required>
+                    <input type="text" class="form-input" id="specialization" placeholder="e.g., Plumbing" required>
                 </div>
 
                 <div class="form-group">
                     <label class="form-label">Years of Experience *</label>
-                    <input type="number" class="form-input" id="experience"
-                        placeholder="5" min="0" required>
+                    <input type="number" class="form-input" id="experience" placeholder="5" min="0" required>
                 </div>
 
                 <div class="form-group">
@@ -1253,14 +1453,13 @@
 
                 <div class="form-group">
                     <label class="form-label">Professional Bio *</label>
-                    <textarea class="form-textarea" id="bio"
-                        placeholder="Tell clients about your expertise..." required></textarea>
+                    <textarea class="form-textarea" id="bio" placeholder="Tell clients about your expertise..."
+                        required></textarea>
                 </div>
 
                 <div class="form-group">
                     <label class="form-label">Hourly Rate (₹)</label>
-                    <input type="number" class="form-input" id="hourly-rate"
-                        placeholder="500" min="0">
+                    <input type="number" class="form-input" id="hourly-rate" placeholder="500" min="0">
                 </div>
 
                 <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">
@@ -1272,19 +1471,24 @@
 
     <!-- Profile View Modal -->
     <div class="modal" id="profile-view-modal" style="display: none;">
-        <div class="modal-content" style="max-width: 700px; background: white; padding: 0; border-radius: 16px; overflow: hidden;">
+        <div class="modal-content"
+            style="max-width: 700px; background: white; padding: 0; border-radius: 16px; overflow: hidden;">
             <!-- Modal Header -->
-            <div style="background: linear-gradient(135deg, #2563eb, #7c3aed); padding: 2rem; color: white; position: relative;">
-                <button onclick="closeProfileModal()" style="position: absolute; top: 1rem; right: 1rem; background: rgba(255,255,255,0.2); border: none; color: white; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center;">
+            <div
+                style="background: linear-gradient(135deg, #2563eb, #7c3aed); padding: 2rem; color: white; position: relative;">
+                <button onclick="closeProfileModal()"
+                    style="position: absolute; top: 1rem; right: 1rem; background: rgba(255,255,255,0.2); border: none; color: white; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center;">
                     <i class="fas fa-times"></i>
                 </button>
                 <div style="display: flex; align-items: center; gap: 1.5rem;">
-                    <div id="modal-profile-image" style="width: 80px; height: 80px; border-radius: 50%; background: white; display: flex; align-items: center; justify-content: center; font-size: 32px; font-weight: 600; color: #2563eb; background-size: cover; background-position: center;">
+                    <div id="modal-profile-image"
+                        style="width: 80px; height: 80px; border-radius: 50%; background: white; display: flex; align-items: center; justify-content: center; font-size: 32px; font-weight: 600; color: #2563eb; background-size: cover; background-position: center;">
                         <i class="fas fa-user" style="color: #2563eb;"></i>
                     </div>
                     <div>
                         <h2 id="modal-profile-name" style="margin: 0; font-size: 24px;">Loading...</h2>
-                        <p id="modal-profile-specialization" style="margin: 0.5rem 0 0 0; opacity: 0.9; font-size: 14px;">Professional</p>
+                        <p id="modal-profile-specialization"
+                            style="margin: 0.5rem 0 0 0; opacity: 0.9; font-size: 14px;">Professional</p>
                     </div>
                 </div>
             </div>
@@ -1293,23 +1497,28 @@
             <div style="padding: 2rem;">
                 <!-- Contact Information -->
                 <div style="margin-bottom: 2rem;">
-                    <h3 style="font-size: 16px; font-weight: 600; color: #1e293b; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                    <h3
+                        style="font-size: 16px; font-weight: 600; color: #1e293b; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
                         <i class="fas fa-address-card" style="color: #2563eb;"></i>
                         Contact Information
                     </h3>
                     <div style="display: grid; gap: 0.75rem;">
-                        <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem; background: #f8fafc; border-radius: 8px;">
+                        <div
+                            style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem; background: #f8fafc; border-radius: 8px;">
                             <i class="fas fa-envelope" style="color: #64748b; width: 20px;"></i>
                             <div>
                                 <div style="font-size: 12px; color: #64748b;">Email</div>
-                                <div id="modal-profile-email" style="font-size: 14px; color: #1e293b; font-weight: 500;">-</div>
+                                <div id="modal-profile-email"
+                                    style="font-size: 14px; color: #1e293b; font-weight: 500;">-</div>
                             </div>
                         </div>
-                        <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem; background: #f8fafc; border-radius: 8px;">
+                        <div
+                            style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem; background: #f8fafc; border-radius: 8px;">
                             <i class="fas fa-phone" style="color: #64748b; width: 20px;"></i>
                             <div>
                                 <div style="font-size: 12px; color: #64748b;">Phone</div>
-                                <div id="modal-profile-phone" style="font-size: 14px; color: #1e293b; font-weight: 500;">-</div>
+                                <div id="modal-profile-phone"
+                                    style="font-size: 14px; color: #1e293b; font-weight: 500;">-</div>
                             </div>
                         </div>
                     </div>
@@ -1317,51 +1526,60 @@
 
                 <!-- Professional Information -->
                 <div style="margin-bottom: 2rem;">
-                    <h3 style="font-size: 16px; font-weight: 600; color: #1e293b; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                    <h3
+                        style="font-size: 16px; font-weight: 600; color: #1e293b; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
                         <i class="fas fa-briefcase" style="color: #2563eb;"></i>
                         Professional Details
                     </h3>
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
                         <div style="padding: 0.75rem; background: #f8fafc; border-radius: 8px;">
                             <div style="font-size: 12px; color: #64748b; margin-bottom: 0.25rem;">Experience</div>
-                            <div id="modal-profile-experience" style="font-size: 16px; color: #1e293b; font-weight: 600;">-</div>
+                            <div id="modal-profile-experience"
+                                style="font-size: 16px; color: #1e293b; font-weight: 600;">-</div>
                         </div>
                         <div style="padding: 0.75rem; background: #f8fafc; border-radius: 8px;">
                             <div style="font-size: 12px; color: #64748b; margin-bottom: 0.25rem;">Hourly Rate</div>
-                            <div id="modal-profile-rate" style="font-size: 16px; color: #1e293b; font-weight: 600;">-</div>
+                            <div id="modal-profile-rate" style="font-size: 16px; color: #1e293b; font-weight: 600;">-
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Qualifications -->
                 <div id="qualifications-section" style="margin-bottom: 2rem; display: none;">
-                    <h3 style="font-size: 16px; font-weight: 600; color: #1e293b; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                    <h3
+                        style="font-size: 16px; font-weight: 600; color: #1e293b; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
                         <i class="fas fa-certificate" style="color: #2563eb;"></i>
                         Qualifications
                     </h3>
-                    <div id="modal-profile-qualifications" style="padding: 1rem; background: #f8fafc; border-radius: 8px; color: #475569; font-size: 14px; line-height: 1.6;">
+                    <div id="modal-profile-qualifications"
+                        style="padding: 1rem; background: #f8fafc; border-radius: 8px; color: #475569; font-size: 14px; line-height: 1.6;">
                         -
                     </div>
                 </div>
 
                 <!-- Bio -->
                 <div id="bio-section" style="margin-bottom: 1rem; display: none;">
-                    <h3 style="font-size: 16px; font-weight: 600; color: #1e293b; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                    <h3
+                        style="font-size: 16px; font-weight: 600; color: #1e293b; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
                         <i class="fas fa-user-circle" style="color: #2563eb;"></i>
                         About
                     </h3>
-                    <div id="modal-profile-bio" style="padding: 1rem; background: #f8fafc; border-radius: 8px; color: #475569; font-size: 14px; line-height: 1.6;">
+                    <div id="modal-profile-bio"
+                        style="padding: 1rem; background: #f8fafc; border-radius: 8px; color: #475569; font-size: 14px; line-height: 1.6;">
                         -
                     </div>
                 </div>
 
                 <!-- Action Buttons -->
                 <div style="display: flex; gap: 1rem; margin-top: 2rem;">
-                    <button onclick="openSettings()" class="btn btn-primary" style="flex: 1; padding: 0.75rem; background: #2563eb; color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                    <button onclick="openSettings()" class="btn btn-primary"
+                        style="flex: 1; padding: 0.75rem; background: #2563eb; color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
                         <i class="fas fa-edit"></i>
                         Edit Profile
                     </button>
-                    <button onclick="closeProfileModal()" class="btn btn-outline" style="flex: 1; padding: 0.75rem; background: white; color: #64748b; border: 1px solid #e2e8f0; border-radius: 8px; font-weight: 600; cursor: pointer;">
+                    <button onclick="closeProfileModal()" class="btn btn-outline"
+                        style="flex: 1; padding: 0.75rem; background: white; color: #64748b; border: 1px solid #e2e8f0; border-radius: 8px; font-weight: 600; cursor: pointer;">
                         Close
                     </button>
                 </div>
@@ -1381,7 +1599,7 @@
         };
 
         // Initialize dashboard - Optimized to reduce API calls
-        document.addEventListener('DOMContentLoaded', async function() {
+        document.addEventListener('DOMContentLoaded', async function () {
             try {
                 checkAuth();
                 // Load critical data in parallel for faster page load
@@ -1686,10 +1904,10 @@
         function formatDateTime(datetime) {
             const date = new Date(datetime);
             return date.toLocaleDateString('en-IN', {
-                    day: 'numeric',
-                    month: 'short',
-                    year: 'numeric'
-                }) +
+                day: 'numeric',
+                month: 'short',
+                year: 'numeric'
+            }) +
                 ' at ' + date.toLocaleTimeString('en-IN', {
                     hour: '2-digit',
                     minute: '2-digit'
@@ -1721,10 +1939,158 @@
             text.textContent = toggle.classList.contains('active') ? 'Online' : 'Offline';
         }
 
-        function navigate(page) {
-            console.log('Navigate to:', page);
-            document.querySelectorAll('.sidebar-item').forEach(item => item.classList.remove('active'));
-            event.target.classList.add('active');
+        function switchDashboardSection(page) {
+            console.log('Switching Section to:', page);
+
+            // Handle Section Switching
+            const dashboard = document.getElementById('dashboard-section');
+            const messages = document.getElementById('messages-section');
+            const helpSection = document.getElementById('help-section');
+
+            if (page === 'messages') {
+                dashboard.style.display = 'none';
+                messages.style.display = 'block';
+                helpSection.style.display = 'none';
+                loadConversations();
+            } else if (page === 'professional') {
+                dashboard.style.display = 'block';
+                messages.style.display = 'none';
+                helpSection.style.display = 'none';
+            } else if (page === 'help') {
+                dashboard.style.display = 'none';
+                messages.style.display = 'none';
+                helpSection.style.display = 'block';
+            }
+
+            document.querySelectorAll('.sidebar-item').forEach(item => {
+                item.classList.remove('active');
+                if (item.innerText.toLowerCase().includes(page)) {
+                    item.classList.add('active');
+                }
+            });
+        }
+
+        /* Message Logic */
+        let realConversations = [];
+        let activeChatPartnerId = null;
+
+        async function loadConversations() {
+            try {
+                const response = await fetch(`${API_BASE}/professional/messages`, {
+                    headers: authHeaders
+                });
+                if (!response.ok) throw new Error('Failed to load messages');
+
+                realConversations = await response.json();
+                renderConversationList();
+
+                if (realConversations.length > 0 && activeChatPartnerId === null) {
+                    selectChat(0);
+                } else if (activeChatPartnerId !== null) {
+                    const idx = realConversations.findIndex(c => c.id === activeChatPartnerId);
+                    if (idx !== -1) selectChat(idx, true);
+                }
+            } catch (error) {
+                console.error('Error loading conversations:', error);
+                document.getElementById('conversation-list-items').innerHTML = '<div style="padding: 20px; text-align: center; color: #ef4444;">Error loading messages</div>';
+            }
+        }
+
+        function renderConversationList() {
+            const container = document.getElementById('conversation-list-items');
+            if (realConversations.length === 0) {
+                container.innerHTML = '<div style="padding: 40px; text-align: center; color: #64748b;">No messages yet</div>';
+                return;
+            }
+
+            container.innerHTML = realConversations.map((conv, index) => `
+                <div class="conv-item ${activeChatPartnerId === conv.id ? 'active' : ''}" onclick="selectChat(${index})">
+                    <div class="conv-avatar" style="background: ${getAvatarColor(conv.client_name)}">${conv.client_name.substring(0, 2).toUpperCase()}</div>
+                    <div style="flex: 1;">
+                        <div style="display: flex; justify-content: space-between;">
+                            <strong>${conv.client_name}</strong>
+                            <span style="font-size: 11px; color: #94a3b8;">${conv.time}</span>
+                        </div>
+                        <div style="font-size: 13px; color: #64748b; margin-top: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 180px;">${conv.last_message}</div>
+                    </div>
+                    ${conv.unread > 0 ? `<div class="unread-badge" style="background: #2563eb; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 11px; display: flex; align-items: center; justify-content: center;">${conv.unread}</div>` : ''}
+                </div>
+            `).join('');
+        }
+
+        function getAvatarColor(name) {
+            const colors = ['#2563eb', '#a855f7', '#059669', '#db2777', '#f59e0b', '#64748b'];
+            let hash = 0;
+            for (let i = 0; i < name.length; i++) {
+                hash = name.charCodeAt(i) + ((hash << 5) - hash);
+            }
+            return colors[Math.abs(hash) % colors.length];
+        }
+
+        function selectChat(index, keepScroll = false) {
+            const chat = realConversations[index];
+            if (!chat) return;
+
+            activeChatPartnerId = chat.id;
+            document.getElementById('active-chat-name').innerText = chat.client_name;
+            document.getElementById('active-chat-avatar').innerText = chat.client_name.substring(0, 2).toUpperCase();
+            document.getElementById('active-chat-avatar').style.background = getAvatarColor(chat.client_name);
+            document.getElementById('active-chat-type').innerText = 'Client';
+
+            const display = document.getElementById('chat-messages-display');
+            const prevScroll = display.scrollTop;
+
+            // Reverse messages for display (original is desc)
+            const msgs = [...chat.messages].reverse();
+
+            display.innerHTML = msgs.map(m => `
+                <div class="msg-bubble ${m.t === 'sent' ? 'msg-sent' : 'msg-received'}">${m.b}</div>
+            `).join('');
+
+            // Highlight active conv
+            document.querySelectorAll('.conv-item').forEach((item, i) => {
+                item.classList.toggle('active', i === index);
+            });
+
+            if (!keepScroll) {
+                display.scrollTop = display.scrollHeight;
+            }
+        }
+
+        async function handleSendMessage() {
+            const input = document.getElementById('msg-input-field');
+            const val = input.value.trim();
+            if (!val || !activeChatPartnerId) return;
+
+            // Optimistic UI update
+            const display = document.getElementById('chat-messages-display');
+            const msg = document.createElement('div');
+            msg.className = 'msg-bubble msg-sent';
+            msg.innerText = val;
+            display.appendChild(msg);
+            display.scrollTop = display.scrollHeight;
+            input.value = '';
+
+            try {
+                const response = await fetch(`${API_BASE}/professional/messages`, {
+                    method: 'POST',
+                    headers: authHeaders,
+                    body: JSON.stringify({
+                        receiver_id: activeChatPartnerId,
+                        message: val
+                    })
+                });
+
+                if (response.ok) {
+                    loadConversations();
+                } else {
+                    console.error('Failed to send message');
+                    alert('Failed to send message');
+                }
+            } catch (error) {
+                console.error('Error sending message:', error);
+                alert('Connection error while sending message');
+            }
         }
 
         // Action Functions
@@ -2133,7 +2499,7 @@
         }
 
         // Close dropdowns when clicking outside
-        document.addEventListener('click', function(e) {
+        document.addEventListener('click', function (e) {
             if (!e.target.closest('.profile-dropdown')) {
                 document.getElementById('dropdown-menu').classList.remove('active');
             }

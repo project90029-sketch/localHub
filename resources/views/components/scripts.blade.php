@@ -122,6 +122,21 @@
         window.location.href = `/${route}`;
     }
 
+    function handleSidebarMessageClick() {
+        if (window.location.pathname.includes('/resident/dashboard')) {
+            if (typeof switchResidentSection === 'function') {
+                switchResidentSection('messages');
+            }
+        } else if (window.location.pathname.includes('/professional')) {
+            if (typeof switchDashboardSection === 'function') {
+                switchDashboardSection('messages');
+            }
+        } else {
+            // Default to resident dashboard if not on a specific dashboard
+            window.location.href = '/resident/dashboard?section=messages';
+        }
+    }
+
     // View Profile - Shows real-time data in modal
     async function viewProfile() {
         try {
@@ -288,7 +303,7 @@
 
 
     // Close dropdowns when clicking outside
-    document.addEventListener('click', function(e) {
+    document.addEventListener('click', function (e) {
         if (!e.target.closest('.profile-dropdown')) {
             document.getElementById('dropdown-menu').classList.remove('active');
         }
@@ -298,7 +313,7 @@
     });
 
     // Initialize on page load
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         loadUserAvatar();
         // Load notification count without opening panel
         fetchNotifications().then(notifications => {

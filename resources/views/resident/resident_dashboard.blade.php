@@ -372,6 +372,33 @@
         </div>
     </nav>
 
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <a href="/resident/dashboard" class="sidebar-item active">
+            <i class="fas fa-home"></i>
+            Dashboard
+        </a>
+        <a href="/resident/services" class="sidebar-item">
+            <i class="fas fa-search"></i>
+            Find Services
+        </a>
+        <a href="/resident/bookings" class="sidebar-item">
+            <i class="fas fa-calendar-check"></i>
+            My Bookings
+        </a>
+        <a href="/resident/messages" class="sidebar-item">
+            <i class="fas fa-comments"></i>
+            Messages
+        </a>
+        <a href="/resident/profile" class="sidebar-item">
+            <i class="fas fa-user"></i>
+            My Profile
+        </a>
+        <a href="/resident/help" class="sidebar-item">
+            <i class="fas fa-question-circle"></i>
+            Help & Support
+        </a>
+    </aside>
     @include('components.resident-sidebar')
 
     <!-- Main Content -->
@@ -565,7 +592,7 @@
                             <div class="appointment-avatar">${initials}</div>
                             <div class="appointment-details">
                                 <h4>${professional.name || 'Professional'}</h4>
-                                <p><i class="fas fa-calendar"></i> ${date.toLocaleDateString()} at ${date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</p>
+                                <p><i class="fas fa-calendar"></i> ${date.toLocaleDateString()} at ${date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
                             </div>
                         </div>
                         <span class="badge ${apt.status}">${apt.status}</span>
@@ -597,6 +624,9 @@
             if (!confirm('Are you sure you want to logout?')) return;
 
             fetch(`${API_BASE}/logout`, {
+                method: 'POST',
+                headers: authHeaders
+            })
                     method: 'POST',
                     headers: authHeaders
                 })
@@ -611,7 +641,7 @@
         }
 
         // Initialize
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             loadUserData();
             loadAppointments();
         });
