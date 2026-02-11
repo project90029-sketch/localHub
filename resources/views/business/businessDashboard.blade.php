@@ -842,7 +842,7 @@
 <body>
     <!-- Sidebar -->
     <aside class="sidebar" id="sidebar">
-        <div class="sidebar-logo">
+        <a href="/" class="sidebar-logo" style="text-decoration: none;">
             <div class="logo-icon">
                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
@@ -852,7 +852,7 @@
                 <div class="logo-text">LocalHub</div>
                 <div class="logo-badge">BUSINESS</div>
             </div>
-        </div>
+        </a>
 
         <ul class="nav-menu">
             <li class="nav-section-title">Main</li>
