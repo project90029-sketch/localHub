@@ -44,12 +44,12 @@ Route::post('/logout', function () {
     return redirect('/login');
 })->name('logout');
 
-// Route::get('/dashboard', function () {
-//     if (!session()->has('admin_id')) {
-//         return redirect('/admin_login');
-//     }
-//     return view('dashboardKoushik');
-// });
+ Route::get('/dashboard', function () {
+     if (!session()->has('admin_id')) {
+         return redirect('/admin_login');
+     }
+     return view('dashboardKoushik');
+ });
 Route::get('/register', function () {
     return view('user-register');
 })->name('register');
@@ -91,7 +91,7 @@ Route::get('/messages', function () {
 Route::get('/b2b-welcome', function () {
     return view('welcome'); // Your welcome.blade.php
 })->name('b2b.welcome');
-
+=======
 Route::get('/business/dashboard', [ProductController::class, 'dashboard'])
     ->name('business.businessDashboard');
 
@@ -115,6 +115,8 @@ Route::post('/b2b-login-action', function () {
 })->name('b2b.login.action');
 
 Route::post('/products/store', [ProductController::class, 'store']);
+
+>>>>>>> a6b729af6c40dbf57cf314414c58974e6aadfa31
 
 // B2B Registration Page (different from your existing /register)
 Route::get('/b2b-register', function () {
@@ -181,6 +183,7 @@ Route::get('/b2b-dashboard', function () {
     return view('index', compact('user')); // Your index.blade.php (dashboard)
 })->name('b2b.dashboard');
 
+<<<<<<< HEAD
 // B2B Profile Page (protected)
 Route::get('/b2b-profile', function () {
     // Check if B2B user is logged in
@@ -238,3 +241,4 @@ Route::get('/profile', function () {
 
 Route::get('/dashboard', [AdminController::class, 'dashboard'])
     ->middleware('admin.session');
+>>>>>>> a6b729af6c40dbf57cf314414c58974e6aadfa31
