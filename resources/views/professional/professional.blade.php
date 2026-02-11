@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Professional Dashboard - LocalConnect Pro</title>
+    <title>Professional Dashboard - LocalHub</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -1023,6 +1023,12 @@
 </head>
 
 <body>
+    @include('components.navbar', [
+    'searchPlaceholder' => 'Search appointments, services...'
+    ])
+
+    @include('components.professional-sidebar')
+
     <!-- Top Navigation -->
     <nav class="top-nav">
         <button class="mobile-menu-btn" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
