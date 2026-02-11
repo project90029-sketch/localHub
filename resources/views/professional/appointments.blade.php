@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Appointments - LocalConnect Pro</title>
+    <title>Appointments - LocalHub</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -162,17 +162,7 @@
     'userInitials' => 'JD'
     ])
 
-    @include('components.sidebar', [
-    'menuItems' => [
-    ['icon' => 'th-large', 'label' => 'Dashboard Overview', 'route' => 'professional', 'active' => false],
-    ['icon' => 'briefcase', 'label' => 'My Services', 'route' => 'my-services', 'active' => false],
-    ['icon' => 'calendar-check', 'label' => 'Appointments', 'route' => 'appointments', 'active' => true],
-    ['icon' => 'dollar-sign', 'label' => 'My Earnings', 'route' => 'earnings', 'active' => false],
-    ['icon' => 'star', 'label' => 'Reviews & Ratings', 'route' => 'reviews', 'active' => false],
-    ['icon' => 'comments', 'label' => 'Messages', 'route' => 'messages', 'active' => false],
-    ['icon' => 'sign-out-alt', 'label' => 'Logout', 'route' => 'logout', 'active' => false]
-    ]
-    ])
+    @include('components.professional-sidebar')
 
     <main class="main-content">
         <div>
@@ -328,21 +318,24 @@
 
             if (status === 'pending') {
                 buttons.push(`
-                    <button class="btn btn-primary" onclick="updateAppointmentStatus(${id}, 'confirmed')">
-                        <i class="fas fa-check"></i> Confirm
-                    </button>
-                    <button class="btn btn-danger" onclick="updateAppointmentStatus(${id}, 'cancelled')">
-                        <i class="fas fa-times"></i> Cancel
-                    </button>
-                `);
-            } else if (status === 'confirmed') {
+            <button class="btn btn-primary" onclick="acceptAppointment(${id})">
+                <i class="fas fa-check"></i> Accept
+            </button>
+            <button class="btn btn-danger" onclick="rejectAppointment(${id})">
+                <i class="fas fa-times"></i> Reject
+            </button>
+            `);
+        }else if (status === 'confirmed') {
                 buttons.push(`
                     <button class="btn btn-primary" onclick="updateAppointmentStatus(${id}, 'completed')">
                         <i class="fas fa-check-circle"></i> Mark Complete
                     </button>
+                    <button class="btn btn-outline" onclick="updateAppointmentStatus(${id}, 'cancelled')">
+                        <i class="fas fa-ban"></i> Cancel
+                    </button>
                 `);
-            }
-
+            } 
+            
             buttons.push(`
                 <button class="btn btn-outline" onclick="viewAppointmentDetails(${id})">
                     <i class="fas fa-eye"></i> View Details
@@ -351,6 +344,56 @@
 
             return buttons.join('');
         }
+        async function acceptAppointment(id) {
+    if (!confirm('Do you want to accept this appointment?')) {
+        return;
+    }
+
+    try {
+        const response = await fetch(`${API_BASE}/professional/appointments/${id}`, {
+            method: 'PUT',
+            headers: authHeaders,
+            body: JSON.stringify({
+                status: 'confirmed'
+            })
+        });
+
+        if (!response.ok) throw new Error('Failed to accept appointment');
+
+        alert('Appointment accepted successfully! ✅');
+        await loadAppointments();
+    } catch (error) {
+        console.error('Error accepting appointment:', error);
+        alert('Failed to accept appointment. Please try again.');
+    }
+    }
+
+    async function rejectAppointment(id) {
+    const reason = prompt('Please provide a reason for rejection (optional):');
+    
+    if (!confirm('Are you sure you want to reject this appointment?')) {
+        return;
+    }
+
+    try {
+        const response = await fetch(`${API_BASE}/professional/appointments/${id}`, {
+            method: 'PUT',
+            headers: authHeaders,
+            body: JSON.stringify({
+                status: 'cancelled',
+                notes: reason ? `Rejected: ${reason}` : 'Rejected by professional'
+            })
+        });
+
+        if (!response.ok) throw new Error('Failed to reject appointment');
+
+        alert('Appointment rejected');
+        await loadAppointments();
+    } catch (error) {
+        console.error('Error rejecting appointment:', error);
+        alert('Failed to reject appointment. Please try again.');
+    }
+    }
 
         // Filter appointments - Optimized
         function filterAppointments(status) {

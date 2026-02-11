@@ -38,12 +38,19 @@ Route::get('/login', function () {
 
 Route::post('/submit', [AdminController::class, 'login']);
 
-// Route::get('/dashboard', function () {
-//     if (!session()->has('admin_id')) {
-//         return redirect('/admin_login');
-//     }
-//     return view('dashboardKoushik');
-// });
+Route::post('/logout', function () {
+    auth()->logout();
+    request()->session()->invalidate();
+    request()->session()->regenerateToken();
+    return redirect('/login');
+})->name('logout');
+
+ Route::get('/dashboard', function () {
+     if (!session()->has('admin_id')) {
+         return redirect('/admin_login');
+     }
+     return view('dashboardKoushik');
+ });
 Route::get('/register', function () {
     return view('user-register');
 })->name('register');
@@ -52,31 +59,31 @@ Route::get('/register', function () {
 //professional
 Route::get('/professional', function () {
     return view('professional.professional');
-})->name('professional.dashboard');
+})->name('professional');
 
 Route::get('/professional-settings', function () {
     return view('professional.professional-settings');
-})->name('professional');
+})->name('professional-settings');
 
 Route::get('/my-services', function () {
     return view('professional.my-services');
-});
+})->name('my-services');
 
 Route::get('/appointments', function () {
     return view('professional.appointments');
-});
+})->name('appointments');
 
 Route::get('/earnings', function () {
     return view('professional.earnings');
-});
+})->name('earnings');
 
 Route::get('/reviews', function () {
     return view('professional.reviews');
-});
+})->name('reviews');
 
 Route::get('/messages', function () {
     return view('professional.messages');
-});
+})->name('messages');
 
 
 // ========== B2B COMMUNITY ROUTES (NEW - SEPARATE PREFIX) ==========
@@ -108,7 +115,6 @@ Route::post('/b2b-login-action', function () {
 })->name('b2b.login.action');
 
 Route::post('/products/store', [ProductController::class, 'store']);
-
 
 // B2B Registration Page (different from your existing /register)
 Route::get('/b2b-register', function () {
@@ -175,7 +181,6 @@ Route::get('/b2b-dashboard', function () {
     return view('index', compact('user')); // Your index.blade.php (dashboard)
 })->name('b2b.dashboard');
 
-
 // B2B Profile Page (protected)
 Route::get('/b2b-profile', function () {
     // Check if B2B user is logged in
@@ -231,6 +236,8 @@ Route::get('/profile', function () {
     return view('profile');
 })->name('profile');
 
+Route::get('/dashboard', [AdminController::class, 'dashboard'])
+    ->middleware('admin.session');
 
 
 
@@ -259,7 +266,6 @@ Route::prefix('resident')->group(function () {
     Route::get('/messages', function () {
         return view('resident.resident_messages');
     })->name('resident.messages');
-
 });
 
 Route::post('/contact-submit', [ContactController::class, 'submit'])->name('contact.submit');
