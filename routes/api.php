@@ -40,10 +40,10 @@ Route::middleware('auth:sanctum')->group(function () {
     
     Route::middleware(['role:professional'])->group(function () {
 
-    //Dashboard
+        //Dashboard
         Route::get('/professional/dashboard', [ProfessionalsController::class, 'getDashboard']);
 
-    //profile
+        //profile
         Route::get('/professional/profile', [ProfessionalsController::class, 'getProfile']);
 
         Route::put('/professional/profile', [ProfessionalsController::class, 'updateProfile']);
@@ -53,7 +53,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/professional/services', [ProfessionalsController::class, 'listService']);
 
         Route::post('/professional/services', [ProfessionalsController::class, 'addService']);
-  
+
         Route::get('/professional/services/{id}', [ProfessionalsController::class, 'getService']);
 
         Route::put('/professional/services/{id}', [ProfessionalsController::class, 'updateService']);
@@ -74,11 +74,14 @@ Route::middleware('auth:sanctum')->group(function () {
 
         Route::get('/professional/notifications', [ProfessionalsController::class, 'getNotifications']);
         Route::get('/professional/messages', [ProfessionalsController::class, 'getMessages']);
+        Route::post('/professional/messages', [ProfessionalsController::class, 'sendMessage']);
     });
 
     Route::get('/professional/services', [ProfessionalsController::class, 'getServicesForBooking']);
 
-    Route::middleware('role:resident')->group(function (){
+    Route::get('/professional/services', [ProfessionalsController::class, 'getServicesForBooking']);
+
+    Route::middleware('role:resident')->group(function () {
         Route::get('/resident/profile', [ResidentController::class, 'profile']);
         Route::put('/resident/profile', [ResidentController::class, 'updateProfile']);
 
