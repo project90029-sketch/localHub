@@ -1,33 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>My Profile - LocalConnect Pro</title>
+    <title>My Profile - LocalHub</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     @include('components.styles')
 </head>
+
 <body>
     @include('components.navbar', [
-        'title' => 'My Profile',
-        'searchPlaceholder' => 'Search...',
-        'userInitials' => 'JD'
+    'title' => 'My Profile',
+    'searchPlaceholder' => 'Search...',
+    'userInitials' => 'JD'
     ])
 
     @include('components.sidebar', [
-        'menuItems' => [
-            ['icon' => 'th-large', 'label' => 'Dashboard Overview', 'route' => 'professional', 'active' => false],
-            ['icon' => 'briefcase', 'label' => 'My Services', 'route' => 'my-services', 'active' => false],
-            ['icon' => 'calendar-check', 'label' => 'Appointments', 'route' => 'appointments', 'active' => false],
-            ['icon' => 'dollar-sign', 'label' => 'My Earnings', 'route' => 'earnings', 'active' => false],
-            ['icon' => 'star', 'label' => 'Reviews & Ratings', 'route' => 'reviews', 'active' => false],
-            ['icon' => 'comments', 'label' => 'Messages', 'route' => 'messages', 'active' => false],
-            ['icon' => 'cog', 'label' => 'Settings', 'route' => 'professional-settings', 'active' => false],
-            ['icon' => 'sign-out-alt', 'label' => 'Logout', 'route' => 'logout', 'active' => false]
-        ]
+    'menuItems' => [
+    ['icon' => 'th-large', 'label' => 'Dashboard Overview', 'route' => 'professional', 'active' => false],
+    ['icon' => 'briefcase', 'label' => 'My Services', 'route' => 'my-services', 'active' => false],
+    ['icon' => 'calendar-check', 'label' => 'Appointments', 'route' => 'appointments', 'active' => false],
+    ['icon' => 'dollar-sign', 'label' => 'My Earnings', 'route' => 'earnings', 'active' => false],
+    ['icon' => 'star', 'label' => 'Reviews & Ratings', 'route' => 'reviews', 'active' => false],
+    ['icon' => 'comments', 'label' => 'Messages', 'route' => 'messages', 'active' => false],
+    ['icon' => 'cog', 'label' => 'Settings', 'route' => 'professional-settings', 'active' => false],
+    ['icon' => 'sign-out-alt', 'label' => 'Logout', 'route' => 'logout', 'active' => false]
+    ]
     ])
 
     <main class="main-content">
@@ -91,7 +93,7 @@
             <!-- Professional Information -->
             <div id="professional-info" class="section" style="display: none;">
                 <h3 style="font-size: 20px; font-weight: 700; margin-bottom: 20px; color: #1e293b;">Professional Information</h3>
-                
+
                 <div style="display: grid; gap: 24px;">
                     <div>
                         <label style="display: block; font-weight: 600; color: #64748b; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;">Specialization</label>
@@ -219,7 +221,7 @@
 
                 if (response.ok) {
                     const profile = await response.json();
-                    
+
                     // Show professional section
                     document.getElementById('professional-info').style.display = 'block';
 
@@ -228,9 +230,9 @@
 
                     // Update professional fields
                     document.getElementById('display-specialization').textContent = profile.specialization || '-';
-                    document.getElementById('display-experience').textContent = profile.experience_years ? 
+                    document.getElementById('display-experience').textContent = profile.experience_years ?
                         `${profile.experience_years} years` : '-';
-                    document.getElementById('display-hourly-rate').textContent = profile.hourly_rate ? 
+                    document.getElementById('display-hourly-rate').textContent = profile.hourly_rate ?
                         `₹${profile.hourly_rate}/hour` : '-';
                     document.getElementById('display-qualifications').textContent = profile.qualifications || '-';
                     document.getElementById('display-bio').textContent = profile.bio || '-';
@@ -245,4 +247,5 @@
         }
     </script>
 </body>
+
 </html>

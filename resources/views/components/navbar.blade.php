@@ -3,7 +3,7 @@
     <button class="mobile-menu-btn" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
     <div class="logo-section">
         <i class="fas fa-network-wired"></i>
-        <span>{{ $title ?? 'LocalConnect Pro' }}</span>
+        <span>LocalHub</span>
     </div>
     <div class="nav-right">
         <div class="search-bar">

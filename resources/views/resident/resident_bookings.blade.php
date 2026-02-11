@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Bookings - LocalConnect Pro</title>
+    <title>My Bookings - LocalHub</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <style>
         * {
             margin: 0;
@@ -371,12 +372,13 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Navigation -->
     <nav class="top-nav">
         <div class="logo">
             <i class="fas fa-network-wired"></i>
-            <span>LocalConnect Pro</span>
+            <span>LocalHub</span>
         </div>
         <div class="nav-right">
             <div class="user-menu" onclick="logout()">
@@ -463,7 +465,7 @@
                 const user = data.user || data;
 
                 document.getElementById('user-name').textContent = user.name || 'Resident';
-                
+
                 const avatar = document.getElementById('user-avatar');
                 if (user.name) {
                     const initials = user.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
@@ -513,8 +515,8 @@
                 const professional = booking.professional || {};
                 const service = booking.service || {};
                 const date = new Date(booking.appointment_time);
-                const initials = professional.name ? 
-                    professional.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) : 
+                const initials = professional.name ?
+                    professional.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) :
                     'P';
 
                 const canCancel = booking.status === 'pending' || booking.status === 'confirmed';
@@ -581,7 +583,7 @@
 
             let filtered = [];
 
-            switch(filter) {
+            switch (filter) {
                 case 'all':
                     filtered = allBookings;
                     break;
@@ -648,19 +650,19 @@
         // Logout
         function logout() {
             if (!confirm('Are you sure you want to logout?')) return;
-            
+
             fetch(`${API_BASE}/logout`, {
-                method: 'POST',
-                headers: authHeaders
-            })
-            .then(() => {
-                localStorage.removeItem('auth_token');
-                window.location.href = '/login';
-            })
-            .catch(() => {
-                localStorage.removeItem('auth_token');
-                window.location.href = '/login';
-            });
+                    method: 'POST',
+                    headers: authHeaders
+                })
+                .then(() => {
+                    localStorage.removeItem('auth_token');
+                    window.location.href = '/login';
+                })
+                .catch(() => {
+                    localStorage.removeItem('auth_token');
+                    window.location.href = '/login';
+                });
         }
 
         // Initialize
@@ -670,4 +672,5 @@
         });
     </script>
 </body>
+
 </html>

@@ -51,31 +51,31 @@ Route::get('/register', function () {
 //professional
 Route::get('/professional', function () {
     return view('professional.professional');
-})->name('professional.dashboard');
+})->name('professional');
 
 Route::get('/professional-settings', function () {
     return view('professional.professional-settings');
-})->name('professional');
+})->name('professional-settings');
 
 Route::get('/my-services', function () {
     return view('professional.my-services');
-});
+})->name('my-services');
 
 Route::get('/appointments', function () {
     return view('professional.appointments');
-});
+})->name('appointments');
 
 Route::get('/earnings', function () {
     return view('professional.earnings');
-});
+})->name('earnings');
 
 Route::get('/reviews', function () {
     return view('professional.reviews');
-});
+})->name('reviews');
 
 Route::get('/messages', function () {
     return view('professional.messages');
-});
+})->name('messages');
 
 
 // ========== B2B COMMUNITY ROUTES (NEW - SEPARATE PREFIX) ==========
@@ -102,7 +102,7 @@ Route::post('/b2b-login-action', function () {
         'b2b_user_company' => 'Tech Solutions Inc.',
         'b2b_user_type' => 'business'
     ]);
-    
+
     return redirect('/b2b-dashboard')->with('success', 'Login successful!');
 })->name('b2b.login.action');
 
@@ -117,7 +117,7 @@ Route::get('/b2b-register', function () {
 // B2B Registration Action
 Route::post('/b2b-register-action', function () {
     $data = request()->all();
-    
+
     // Store user in session
     session([
         'b2b_user_id' => 1,
@@ -128,7 +128,7 @@ Route::post('/b2b-register-action', function () {
         'b2b_user_industry' => $data['industry'] ?? 'Technology',
         'b2b_user_type' => 'business'
     ]);
-    
+
     return redirect('/b2b-dashboard')->with('success', 'Registration successful!');
 })->name('b2b.register.action');
 
@@ -136,15 +136,15 @@ Route::post('/b2b-register-action', function () {
 Route::get('/b2b-logout', function () {
     // Clear only B2B session data
     session()->forget([
-        'b2b_user_id', 
-        'b2b_user_name', 
-        'b2b_user_email', 
+        'b2b_user_id',
+        'b2b_user_name',
+        'b2b_user_email',
         'b2b_user_company',
         'b2b_user_phone',
         'b2b_user_industry',
         'b2b_user_type'
     ]);
-    
+
     return redirect('/b2b-welcome')->with('success', 'Logged out successfully!');
 })->name('b2b.logout');
 
@@ -156,7 +156,7 @@ Route::get('/b2b-dashboard', function () {
     if (!session('b2b_user_id')) {
         return redirect('/b2b-login')->with('error', 'Please login to B2B platform!');
     }
-    
+
     // User data from session
     $user = (object) [
         'name' => session('b2b_user_name', 'Business Owner'),
@@ -170,7 +170,7 @@ Route::get('/b2b-dashboard', function () {
         'city' => 'New York',
         'country' => 'USA'
     ];
-    
+
     return view('index', compact('user')); // Your index.blade.php (dashboard)
 })->name('b2b.dashboard');
 
@@ -181,7 +181,7 @@ Route::get('/b2b-profile', function () {
     if (!session('b2b_user_id')) {
         return redirect('/b2b-login')->with('error', 'Please login to B2B platform!');
     }
-    
+
     // User data from session
     $user = (object) [
         'name' => session('b2b_user_name', 'Business Owner'),
@@ -200,7 +200,7 @@ Route::get('/b2b-profile', function () {
         'country' => 'USA',
         'zip_code' => '10001'
     ];
-    
+
     return view('profile', compact('user')); // Your profile.blade.php
 })->name('b2b.profile');
 
@@ -210,9 +210,9 @@ Route::post('/b2b-profile-update', function () {
     if (!session('b2b_user_id')) {
         return redirect('/b2b-login')->with('error', 'Please login to B2B platform!');
     }
-    
+
     $data = request()->all();
-    
+
     // Update session data
     session([
         'b2b_user_name' => $data['name'] ?? session('b2b_user_name'),
@@ -221,7 +221,7 @@ Route::post('/b2b-profile-update', function () {
         'b2b_user_phone' => $data['phone'] ?? session('b2b_user_phone'),
         'b2b_user_industry' => $data['industry'] ?? session('b2b_user_industry')
     ]);
-    
+
     return redirect('/b2b-profile')->with('success', 'Profile updated!');
 })->name('b2b.profile.update');
 
@@ -254,5 +254,4 @@ Route::prefix('resident')->group(function () {
     Route::get('/messages', function () {
         return view('resident.resident_messages');
     })->name('resident.messages');
-
 });

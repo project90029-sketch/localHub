@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Professional Settings - LocalConnect Pro</title>
+    <title>Professional Settings - LocalHub</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -259,17 +259,7 @@
     'userInitials' => 'JD'
     ])
 
-    @include('components.sidebar', [
-    'menuItems' => [
-    ['icon' => 'th-large', 'label' => 'Dashboard Overview', 'route' => 'professional', 'active' => false],
-    ['icon' => 'briefcase', 'label' => 'My Services', 'route' => 'my-services', 'active' => false],
-    ['icon' => 'calendar-check', 'label' => 'Appointments', 'route' => 'appointments', 'active' => false],
-    ['icon' => 'dollar-sign', 'label' => 'My Earnings', 'route' => 'earnings', 'active' => false],
-    ['icon' => 'star', 'label' => 'Reviews & Ratings', 'route' => 'reviews', 'active' => false],
-    ['icon' => 'comments', 'label' => 'Messages', 'route' => 'messages', 'active' => false],
-    ['icon' => 'sign-out-alt', 'label' => 'Logout', 'route' => 'logout', 'active' => false]
-    ]
-    ])
+    @include('components.professional-sidebar')
 
     <main class="main-content">
         <div class="settings-container">

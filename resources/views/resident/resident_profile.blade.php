@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Profile - LocalConnect Pro</title>
+    <title>My Profile - LocalHub</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <style>
         * {
             margin: 0;
@@ -301,12 +302,13 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Navigation -->
     <nav class="top-nav">
         <div class="logo">
             <i class="fas fa-network-wired"></i>
-            <span>LocalConnect Pro</span>
+            <span>LocalHub</span>
         </div>
         <div class="nav-right">
             <div class="user-menu" onclick="logout()">
@@ -494,7 +496,7 @@
             // Profile Header
             document.getElementById('profile-name').textContent = user.name || 'User';
             document.getElementById('profile-email').textContent = user.email || '';
-            
+
             const profileAvatar = document.getElementById('profile-avatar');
             if (user.name) {
                 const initials = user.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
@@ -508,7 +510,7 @@
             document.getElementById('view-phone').textContent = user.phone || '-';
             document.getElementById('view-city').textContent = user.city || '-';
             document.getElementById('view-state').textContent = user.state || '-';
-            
+
             if (user.created_at) {
                 const date = new Date(user.created_at);
                 document.getElementById('view-member-since').textContent = date.toLocaleDateString('en-US', {
@@ -546,7 +548,7 @@
             document.getElementById('view-mode').style.display = 'block';
             document.getElementById('edit-mode').style.display = 'none';
             document.getElementById('edit-btn').style.display = 'block';
-            
+
             // Reset form to original values
             updateUI(userData);
         }
@@ -573,7 +575,7 @@
 
                 const data = await response.json();
                 alert('Profile updated successfully!');
-                
+
                 // Reload user data
                 await loadUserData();
                 cancelEdit();
@@ -598,44 +600,44 @@
             }
 
             fetch(`${API_BASE}/user/change-password`, {
-                method: 'POST',
-                headers: authHeaders,
-                body: JSON.stringify({
-                    current_password: currentPassword,
-                    new_password: newPassword,
-                    new_password_confirmation: confirmPassword
+                    method: 'POST',
+                    headers: authHeaders,
+                    body: JSON.stringify({
+                        current_password: currentPassword,
+                        new_password: newPassword,
+                        new_password_confirmation: confirmPassword
+                    })
                 })
-            })
-            .then(response => response.json())
-            .then(data => {
-                alert(data.message);
-                if (data.message.includes('successfully')) {
-                    localStorage.removeItem('auth_token');
-                    window.location.href = '/login';
-                }
-            })
-            .catch(error => {
-                console.error('Error changing password:', error);
-                alert('Failed to change password');
-            });
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.message);
+                    if (data.message.includes('successfully')) {
+                        localStorage.removeItem('auth_token');
+                        window.location.href = '/login';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error changing password:', error);
+                    alert('Failed to change password');
+                });
         }
 
         // Logout
         function logout() {
             if (!confirm('Are you sure you want to logout?')) return;
-            
+
             fetch(`${API_BASE}/logout`, {
-                method: 'POST',
-                headers: authHeaders
-            })
-            .then(() => {
-                localStorage.removeItem('auth_token');
-                window.location.href = '/login';
-            })
-            .catch(() => {
-                localStorage.removeItem('auth_token');
-                window.location.href = '/login';
-            });
+                    method: 'POST',
+                    headers: authHeaders
+                })
+                .then(() => {
+                    localStorage.removeItem('auth_token');
+                    window.location.href = '/login';
+                })
+                .catch(() => {
+                    localStorage.removeItem('auth_token');
+                    window.location.href = '/login';
+                });
         }
 
         // Initialize
@@ -644,4 +646,5 @@
         });
     </script>
 </body>
+
 </html>

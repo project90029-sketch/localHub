@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - LocalConnect Pro</title>
+    <title>Dashboard - LocalHub</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <style>
         * {
             margin: 0;
@@ -354,12 +355,13 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Navigation -->
     <nav class="top-nav">
         <div class="logo">
             <i class="fas fa-network-wired"></i>
-            <span>LocalConnect Pro</span>
+            <span>LocalHub</span>
         </div>
         <div class="nav-right">
             <div class="user-menu" onclick="logout()">
@@ -370,29 +372,7 @@
         </div>
     </nav>
 
-    <!-- Sidebar -->
-    <aside class="sidebar">
-        <a href="/resident/dashboard" class="sidebar-item active">
-            <i class="fas fa-home"></i>
-            Dashboard
-        </a>
-        <a href="/resident/services" class="sidebar-item">
-            <i class="fas fa-search"></i>
-            Find Services
-        </a>
-        <a href="/resident/bookings" class="sidebar-item">
-            <i class="fas fa-calendar-check"></i>
-            My Bookings
-        </a>
-        <a href="/resident/messages" class="sidebar-item">
-            <i class="fas fa-comments"></i>
-            Messages
-        </a>
-        <a href="/resident/profile" class="sidebar-item">
-            <i class="fas fa-user"></i>
-            My Profile
-        </a>
-    </aside>
+    @include('components.resident-sidebar')
 
     <!-- Main Content -->
     <main class="main-content">
@@ -508,7 +488,7 @@
 
                 document.getElementById('user-name').textContent = user.name || 'Resident';
                 document.getElementById('welcome-name').textContent = user.name?.split(' ')[0] || 'Resident';
-                
+
                 // Update avatar
                 const avatar = document.getElementById('user-avatar');
                 if (user.name) {
@@ -578,7 +558,7 @@
                 const date = new Date(apt.appointment_time);
                 const professional = apt.professional || {};
                 const initials = professional.name ? professional.name.split(' ').map(n => n[0]).join('').toUpperCase() : 'P';
-                
+
                 return `
                     <div class="appointment-item">
                         <div class="appointment-info">
@@ -615,19 +595,19 @@
 
         function logout() {
             if (!confirm('Are you sure you want to logout?')) return;
-            
+
             fetch(`${API_BASE}/logout`, {
-                method: 'POST',
-                headers: authHeaders
-            })
-            .then(() => {
-                localStorage.removeItem('auth_token');
-                window.location.href = '/login';
-            })
-            .catch(() => {
-                localStorage.removeItem('auth_token');
-                window.location.href = '/login';
-            });
+                    method: 'POST',
+                    headers: authHeaders
+                })
+                .then(() => {
+                    localStorage.removeItem('auth_token');
+                    window.location.href = '/login';
+                })
+                .catch(() => {
+                    localStorage.removeItem('auth_token');
+                    window.location.href = '/login';
+                });
         }
 
         // Initialize
@@ -637,4 +617,5 @@
         });
     </script>
 </body>
+
 </html>
