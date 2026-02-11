@@ -220,6 +220,122 @@
             font-weight: 700;
         }
 
+        /* Notification Dropdown */
+        .notification-wrapper {
+            position: relative;
+        }
+
+        .notification-dropdown {
+            display: none;
+            position: absolute;
+            top: 120%;
+            right: 0;
+            width: 320px;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            z-index: 1000;
+            overflow: hidden;
+            animation: slideDown 0.2s ease-out;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .notification-dropdown.active {
+            display: block;
+        }
+
+        .notification-header {
+            padding: 1rem 1.25rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f8fafc;
+        }
+
+        .notification-header h4 {
+            font-weight: 800;
+            font-size: 1rem;
+            color: var(--dark);
+        }
+
+        .notification-list {
+            max-height: 350px;
+            overflow-y: auto;
+        }
+
+        .notification-item {
+            padding: 1rem 1.25rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            gap: 1rem;
+            transition: background 0.2s;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .notification-item:hover {
+            background: #f1f5f9;
+        }
+
+        .notification-item:last-child {
+            border-bottom: none;
+        }
+
+        .notification-icon-box {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .notification-content h5 {
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+            color: var(--dark);
+        }
+
+        .notification-content p {
+            font-size: 0.8rem;
+            color: var(--gray);
+            line-height: 1.4;
+        }
+
+        .notification-time {
+            font-size: 0.75rem;
+            color: #94a3b8;
+            margin-top: 0.25rem;
+            display: block;
+        }
+
+        .notification-footer {
+            padding: 1rem;
+            text-align: center;
+            border-top: 1px solid var(--border);
+            background: #f8fafc;
+        }
+
+        .notification-footer a {
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-decoration: none;
+        }
+
+        .notification-footer a:hover {
+            text-decoration: underline;
+        }
+
         .user-profile {
             display: flex;
             align-items: center;
@@ -957,12 +1073,60 @@
                 </div>
             </div>
             <div class="topbar-right">
-                <button class="notification-btn">
-                    <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
-                    </svg>
-                    <span class="notification-badge">3</span>
-                </button>
+                <div class="notification-wrapper">
+                    <button class="notification-btn" id="notificationBtn">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+                        </svg>
+                        <span class="notification-badge">3</span>
+                    </button>
+
+                    <!-- Dropdown -->
+                    <div class="notification-dropdown" id="notificationDropdown">
+                        <div class="notification-header">
+                            <h4>Notifications</h4>
+                            <span class="badge" style="background:var(--primary); color:white; font-size:0.75rem;">3 New</span>
+                        </div>
+                        <div class="notification-list">
+                            <!-- Item 1 -->
+                            <a href="#" class="notification-item">
+                                <div class="notification-icon-box" style="background: #dbeafe; color: #1e40af;">
+                                    📦
+                                </div>
+                                <div class="notification-content">
+                                    <h5>New Order #1234</h5>
+                                    <p>John Doe placed a new order of ₹1,250</p>
+                                    <span class="notification-time">2 mins ago</span>
+                                </div>
+                            </a>
+                            <!-- Item 2 -->
+                            <a href="#" class="notification-item">
+                                <div class="notification-icon-box" style="background: #fef3c7; color: #92400e;">
+                                    ⚠️
+                                </div>
+                                <div class="notification-content">
+                                    <h5>Low Stock Warning</h5>
+                                    <p>Fresh Apples stock is running low (5 left)</p>
+                                    <span class="notification-time">1 hour ago</span>
+                                </div>
+                            </a>
+                            <!-- Item 3 -->
+                            <a href="#" class="notification-item">
+                                <div class="notification-icon-box" style="background: #e9d5ff; color: #6b21a8;">
+                                    ⭐
+                                </div>
+                                <div class="notification-content">
+                                    <h5>New Review</h5>
+                                    <p>Sarah M. left a 5-star review</p>
+                                    <span class="notification-time">3 hours ago</span>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="notification-footer">
+                            <a href="#">View All Notifications</a>
+                        </div>
+                    </div>
+                </div>
                 <!--User profile-->
                 <label for="profileToggle" class="user-profile" style="cursor: pointer;">
                     <div class="user-avatar">
@@ -1907,6 +2071,25 @@
                     e.target.value = e.target.value.replace(/[^0-9]/g, '');
                 });
             });
+
+            /* =========================
+            NOTIFICATION DROPDOWN
+            ========================= */
+            const notifBtn = document.getElementById('notificationBtn');
+            const notifDrop = document.getElementById('notificationDropdown');
+
+            if(notifBtn && notifDrop) {
+                notifBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    notifDrop.classList.toggle('active');
+                });
+
+                document.addEventListener('click', (e) => {
+                    if(!notifDrop.contains(e.target) && !notifBtn.contains(e.target)) {
+                        notifDrop.classList.remove('active');
+                    }
+                });
+            }
     </script>
     <script>
         async function fetchEnterprise() 
