@@ -37,12 +37,12 @@ Route::get('/login', function () {
 
 Route::post('/submit', [AdminController::class, 'login']);
 
-// Route::get('/dashboard', function () {
-//     if (!session()->has('admin_id')) {
-//         return redirect('/admin_login');
-//     }
-//     return view('dashboardKoushik');
-// });
+ Route::get('/dashboard', function () {
+     if (!session()->has('admin_id')) {
+         return redirect('/admin_login');
+     }
+     return view('dashboardKoushik');
+ });
 Route::get('/register', function () {
     return view('user-register');
 })->name('register');

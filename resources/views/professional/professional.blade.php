@@ -1070,7 +1070,7 @@
     </nav>
 
     <!-- Sidebar -->
-    <aside class="sidebar" id="sidebar">
+    <!-- <aside class="sidebar" id="sidebar">
         <div class="sidebar-item active" onclick="navigate('professional')"><i class="fas fa-th-large"></i> Dashboard Overview</div>
         <div class="sidebar-item" onclick="navigate('my-services')"><i class="fas fa-briefcase"></i> My Services</div>
         <div class="sidebar-item" onclick="navigate('appointments')"><i class="fas fa-calendar-check"></i> Appointments</div>
@@ -1078,8 +1078,33 @@
         <div class="sidebar-item" onclick="navigate('reviews')"><i class="fas fa-star"></i> Reviews & Ratings</div>
         <div class="sidebar-item" onclick="navigate('messages')"><i class="fas fa-comments"></i> Messages</div>
         <div class="sidebar-item" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</div>
-    </aside>
-
+    </aside> -->
+   <aside class="sidebar" id="sidebar">
+    <a href="/professional" class="sidebar-item active">
+        <i class="fas fa-th-large"></i> Dashboard Overview
+    </a>
+    <a href="/my-services" class="sidebar-item">
+        <i class="fas fa-briefcase"></i> My Services
+    </a>
+    <a href="/appointments" class="sidebar-item">
+        <i class="fas fa-calendar-check"></i> Appointments
+    </a>
+    <a href="/earnings" class="sidebar-item">
+        <i class="fas fa-dollar-sign"></i> My Earnings
+    </a>
+    <a href="/reviews" class="sidebar-item">
+        <i class="fas fa-star"></i> Reviews & Ratings
+    </a>
+    <a href="/messages" class="sidebar-item">
+        <i class="fas fa-comments"></i> Messages
+    </a>
+    <a href="/professional-settings" class="sidebar-item">
+        <i class="fas fa-cog"></i> Settings
+    </a>
+    <a href="#" onclick="logout(); return false;" class="sidebar-item">
+        <i class="fas fa-sign-out-alt"></i> Logout
+    </a>
+</aside>
     <!-- Main Content -->
     <main class="main-content">
         <!-- Status Toggle -->
