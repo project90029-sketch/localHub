@@ -37,12 +37,19 @@ Route::get('/login', function () {
 
 Route::post('/submit', [AdminController::class, 'login']);
 
-// Route::get('/dashboard', function () {
-//     if (!session()->has('admin_id')) {
-//         return redirect('/admin_login');
-//     }
-//     return view('dashboardKoushik');
-// });
+Route::post('/logout', function () {
+    auth()->logout();
+    request()->session()->invalidate();
+    request()->session()->regenerateToken();
+    return redirect('/login');
+})->name('logout');
+
+ Route::get('/dashboard', function () {
+     if (!session()->has('admin_id')) {
+         return redirect('/admin_login');
+     }
+     return view('dashboardKoushik');
+ });
 Route::get('/register', function () {
     return view('user-register');
 })->name('register');
@@ -107,7 +114,6 @@ Route::post('/b2b-login-action', function () {
 })->name('b2b.login.action');
 
 Route::post('/products/store', [ProductController::class, 'store']);
-
 
 // B2B Registration Page (different from your existing /register)
 Route::get('/b2b-register', function () {
@@ -174,7 +180,6 @@ Route::get('/b2b-dashboard', function () {
     return view('index', compact('user')); // Your index.blade.php (dashboard)
 })->name('b2b.dashboard');
 
-
 // B2B Profile Page (protected)
 Route::get('/b2b-profile', function () {
     // Check if B2B user is logged in
@@ -230,6 +235,8 @@ Route::get('/profile', function () {
     return view('profile');
 })->name('profile');
 
+Route::get('/dashboard', [AdminController::class, 'dashboard'])
+    ->middleware('admin.session');
 
 
 

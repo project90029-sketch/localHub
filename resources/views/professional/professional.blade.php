@@ -1029,6 +1029,88 @@
 
     @include('components.professional-sidebar')
 
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+        <button class="mobile-menu-btn" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+        <div class="logo-section">
+            <i class="fas fa-network-wired"></i>
+            <span>LocalConnect Pro</span>
+        </div>
+        <div class="nav-right">
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search appointments, services...">
+            </div>
+            <div class="nav-icons">
+                <div class="notification-dropdown">
+                    <button class="icon-btn" onclick="toggleNotifications()">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge" id="notif-count" style="display: none;">0</span>
+                    </button>
+                    <div class="notification-panel" id="notification-panel">
+                        <div class="notification-header">
+                            <div class="notification-title">Notifications</div>
+                            <button class="mark-all-read" onclick="markAllRead()">Mark all as read</button>
+                        </div>
+                        <div class="notification-list" id="notification-list">
+                            <!-- Notifications will be loaded here -->
+                        </div>
+                        <div class="notification-footer">
+                            <a href="#" class="view-all-notifications" onclick="viewAllNotifications()">View All Notifications</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="profile-dropdown">
+                    <button class="profile-btn" onclick="toggleDropdown()">
+                        <div class="profile-avatar" id="profile-avatar"></div>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="dropdown-menu" id="dropdown-menu">
+                        <button class="dropdown-item" onclick="viewProfile()"><i class="fas fa-user"></i> View Profile</button>
+                        <button class="dropdown-item" onclick="openSettings()"><i class="fas fa-cog"></i> Settings</button>
+                        <button class="dropdown-item" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <!-- <aside class="sidebar" id="sidebar">
+        <div class="sidebar-item active" onclick="navigate('professional')"><i class="fas fa-th-large"></i> Dashboard Overview</div>
+        <div class="sidebar-item" onclick="navigate('my-services')"><i class="fas fa-briefcase"></i> My Services</div>
+        <div class="sidebar-item" onclick="navigate('appointments')"><i class="fas fa-calendar-check"></i> Appointments</div>
+        <div class="sidebar-item" onclick="navigate('earnings')"><i class="fas fa-dollar-sign"></i> My Earnings</div>
+        <div class="sidebar-item" onclick="navigate('reviews')"><i class="fas fa-star"></i> Reviews & Ratings</div>
+        <div class="sidebar-item" onclick="navigate('messages')"><i class="fas fa-comments"></i> Messages</div>
+        <div class="sidebar-item" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</div>
+    </aside> -->
+   <aside class="sidebar" id="sidebar">
+    <a href="/professional" class="sidebar-item active">
+        <i class="fas fa-th-large"></i> Dashboard Overview
+    </a>
+    <a href="/my-services" class="sidebar-item">
+        <i class="fas fa-briefcase"></i> My Services
+    </a>
+    <a href="/appointments" class="sidebar-item">
+        <i class="fas fa-calendar-check"></i> Appointments
+    </a>
+    <a href="/earnings" class="sidebar-item">
+        <i class="fas fa-dollar-sign"></i> My Earnings
+    </a>
+    <a href="/reviews" class="sidebar-item">
+        <i class="fas fa-star"></i> Reviews & Ratings
+    </a>
+    <a href="/messages" class="sidebar-item">
+        <i class="fas fa-comments"></i> Messages
+    </a>
+    <a href="/professional-settings" class="sidebar-item">
+        <i class="fas fa-cog"></i> Settings
+    </a>
+    <a href="#" onclick="logout(); return false;" class="sidebar-item">
+        <i class="fas fa-sign-out-alt"></i> Logout
+    </a>
+</aside>
     <!-- Main Content -->
     <main class="main-content">
         <!-- Status Toggle -->

@@ -1184,6 +1184,10 @@
     document.querySelector('input[name="aadhaar"]').addEventListener('input', e => {
         e.target.value = e.target.value.replace(/\D/g, '');
     });
+
+   // 🔥 ADD THIS LINE
+    updateSteps();
+
 </script>
 
 
