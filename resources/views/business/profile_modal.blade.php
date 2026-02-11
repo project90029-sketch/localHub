@@ -238,12 +238,12 @@
                     ✏️ Edit Profile
                 </a>
 
-                {{-- <form method="POST" action="{{ route('logout') }}">
+                <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <button type="submit" class="profile-action-btn profile-btn-logout">
                         🚪 Logout
                     </button>
-                </form> --}}
+                </form>
             </div>
         </div>
 

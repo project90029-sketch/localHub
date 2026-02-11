@@ -37,6 +37,13 @@ Route::get('/login', function () {
 
 Route::post('/submit', [AdminController::class, 'login']);
 
+Route::post('/logout', function () {
+    auth()->logout();
+    request()->session()->invalidate();
+    request()->session()->regenerateToken();
+    return redirect('/login');
+})->name('logout');
+
  Route::get('/dashboard', function () {
      if (!session()->has('admin_id')) {
          return redirect('/admin_login');
@@ -108,7 +115,6 @@ Route::post('/b2b-login-action', function () {
 
 Route::post('/products/store', [ProductController::class, 'store']);
 
-
 // B2B Registration Page (different from your existing /register)
 Route::get('/b2b-register', function () {
     return view('register'); // Your register.blade.php (B2B version)
@@ -174,7 +180,6 @@ Route::get('/b2b-dashboard', function () {
     return view('index', compact('user')); // Your index.blade.php (dashboard)
 })->name('b2b.dashboard');
 
-
 // B2B Profile Page (protected)
 Route::get('/b2b-profile', function () {
     // Check if B2B user is logged in
@@ -230,29 +235,6 @@ Route::get('/profile', function () {
     return view('profile');
 })->name('profile');
 
+Route::get('/dashboard', [AdminController::class, 'dashboard'])
+    ->middleware('admin.session');
 
-
-
-Route::prefix('resident')->group(function () {
-
-    Route::get('/dashboard', function () {
-        return view('resident.resident_dashboard');
-    })->name('resident.dashboard');
-
-    Route::get('/services', function () {
-        return view('resident.resident_services_with_booking');
-    })->name('resident.resident_services_with_booking');
-
-    Route::get('/bookings', function () {
-        return view('resident.resident_bookings');
-    })->name('resident.bookings');
-
-    Route::get('/profile', function () {
-        return view('resident.resident_profile');
-    })->name('resident.profile');
-
-    Route::get('/messages', function () {
-        return view('resident.resident_messages');
-    })->name('resident.messages');
-
-});
