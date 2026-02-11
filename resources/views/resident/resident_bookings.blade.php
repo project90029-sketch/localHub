@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Bookings - LocalConnect Pro</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <style>
         * {
             margin: 0;
@@ -371,6 +372,7 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Navigation -->
     <nav class="top-nav">
@@ -408,6 +410,10 @@
         <a href="/resident/profile" class="sidebar-item">
             <i class="fas fa-user"></i>
             My Profile
+        </a>
+        <a href="/resident/help" class="sidebar-item">
+            <i class="fas fa-question-circle"></i>
+            Help & Support
         </a>
     </aside>
 
@@ -463,7 +469,7 @@
                 const user = data.user || data;
 
                 document.getElementById('user-name').textContent = user.name || 'Resident';
-                
+
                 const avatar = document.getElementById('user-avatar');
                 if (user.name) {
                     const initials = user.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
@@ -513,8 +519,8 @@
                 const professional = booking.professional || {};
                 const service = booking.service || {};
                 const date = new Date(booking.appointment_time);
-                const initials = professional.name ? 
-                    professional.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) : 
+                const initials = professional.name ?
+                    professional.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) :
                     'P';
 
                 const canCancel = booking.status === 'pending' || booking.status === 'confirmed';
@@ -537,7 +543,7 @@
                             <div class="meta-item">
                                 <div class="meta-label">Date & Time</div>
                                 <div class="meta-value">
-                                    <i class="fas fa-calendar"></i> ${date.toLocaleDateString()} at ${date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
+                                    <i class="fas fa-calendar"></i> ${date.toLocaleDateString()} at ${date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                                 </div>
                             </div>
                             ${booking.total_price ? `
@@ -581,7 +587,7 @@
 
             let filtered = [];
 
-            switch(filter) {
+            switch (filter) {
                 case 'all':
                     filtered = allBookings;
                     break;
@@ -648,26 +654,27 @@
         // Logout
         function logout() {
             if (!confirm('Are you sure you want to logout?')) return;
-            
+
             fetch(`${API_BASE}/logout`, {
                 method: 'POST',
                 headers: authHeaders
             })
-            .then(() => {
-                localStorage.removeItem('auth_token');
-                window.location.href = '/login';
-            })
-            .catch(() => {
-                localStorage.removeItem('auth_token');
-                window.location.href = '/login';
-            });
+                .then(() => {
+                    localStorage.removeItem('auth_token');
+                    window.location.href = '/login';
+                })
+                .catch(() => {
+                    localStorage.removeItem('auth_token');
+                    window.location.href = '/login';
+                });
         }
 
         // Initialize
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             loadUserData();
             loadBookings();
         });
     </script>
 </body>
+
 </html>

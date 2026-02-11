@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - LocalConnect Pro</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <style>
         * {
             margin: 0;
@@ -354,6 +355,7 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Navigation -->
     <nav class="top-nav">
@@ -391,6 +393,10 @@
         <a href="/resident/profile" class="sidebar-item">
             <i class="fas fa-user"></i>
             My Profile
+        </a>
+        <a href="/resident/help" class="sidebar-item">
+            <i class="fas fa-question-circle"></i>
+            Help & Support
         </a>
     </aside>
 
@@ -508,7 +514,7 @@
 
                 document.getElementById('user-name').textContent = user.name || 'Resident';
                 document.getElementById('welcome-name').textContent = user.name?.split(' ')[0] || 'Resident';
-                
+
                 // Update avatar
                 const avatar = document.getElementById('user-avatar');
                 if (user.name) {
@@ -578,14 +584,14 @@
                 const date = new Date(apt.appointment_time);
                 const professional = apt.professional || {};
                 const initials = professional.name ? professional.name.split(' ').map(n => n[0]).join('').toUpperCase() : 'P';
-                
+
                 return `
                     <div class="appointment-item">
                         <div class="appointment-info">
                             <div class="appointment-avatar">${initials}</div>
                             <div class="appointment-details">
                                 <h4>${professional.name || 'Professional'}</h4>
-                                <p><i class="fas fa-calendar"></i> ${date.toLocaleDateString()} at ${date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</p>
+                                <p><i class="fas fa-calendar"></i> ${date.toLocaleDateString()} at ${date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
                             </div>
                         </div>
                         <span class="badge ${apt.status}">${apt.status}</span>
@@ -615,26 +621,27 @@
 
         function logout() {
             if (!confirm('Are you sure you want to logout?')) return;
-            
+
             fetch(`${API_BASE}/logout`, {
                 method: 'POST',
                 headers: authHeaders
             })
-            .then(() => {
-                localStorage.removeItem('auth_token');
-                window.location.href = '/login';
-            })
-            .catch(() => {
-                localStorage.removeItem('auth_token');
-                window.location.href = '/login';
-            });
+                .then(() => {
+                    localStorage.removeItem('auth_token');
+                    window.location.href = '/login';
+                })
+                .catch(() => {
+                    localStorage.removeItem('auth_token');
+                    window.location.href = '/login';
+                });
         }
 
         // Initialize
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             loadUserData();
             loadAppointments();
         });
     </script>
 </body>
+
 </html>

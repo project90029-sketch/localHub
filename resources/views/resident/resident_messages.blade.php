@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Messages - LocalConnect Pro</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <style>
         * {
             margin: 0;
@@ -430,6 +431,7 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Navigation -->
     <nav class="top-nav">
@@ -468,6 +470,10 @@
             <i class="fas fa-user"></i>
             My Profile
         </a>
+        <a href="/resident/help" class="sidebar-item">
+            <i class="fas fa-question-circle"></i>
+            Help & Support
+        </a>
     </aside>
 
     <!-- Main Content -->
@@ -481,7 +487,8 @@
             <!-- Conversations List -->
             <div class="conversations-panel">
                 <div class="conversations-header">
-                    <input type="text" class="conversations-search" placeholder="Search conversations..." id="search-input">
+                    <input type="text" class="conversations-search" placeholder="Search conversations..."
+                        id="search-input">
                 </div>
                 <div class="conversations-list" id="conversations-list">
                     <!-- Conversations will load here -->
@@ -526,7 +533,7 @@
                 const user = data.user || data;
 
                 document.getElementById('user-name').textContent = user.name || 'Resident';
-                
+
                 const avatar = document.getElementById('user-avatar');
                 if (user.name) {
                     const initials = user.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
@@ -540,7 +547,7 @@
         // Load conversations (mock data for now)
         function loadConversations() {
             const conversationsList = document.getElementById('conversations-list');
-            
+
             // TODO: Replace with actual API call when messaging backend is ready
             // For now, show empty state for messages from bookings
             conversationsList.innerHTML = `
@@ -589,7 +596,7 @@
         // Open chat (placeholder)
         function openChat(conversationId) {
             const chatPanel = document.getElementById('chat-panel');
-            
+
             // TODO: Load actual messages from API
             chatPanel.innerHTML = `
                 <div class="chat-header">
@@ -639,36 +646,37 @@
 
             // TODO: Send message via API
             console.log('Sending message:', message);
-            
+
             // Clear input
             input.value = '';
-            
+
             alert('Messaging feature coming soon!');
         }
 
         // Logout
         function logout() {
             if (!confirm('Are you sure you want to logout?')) return;
-            
+
             fetch(`${API_BASE}/logout`, {
                 method: 'POST',
                 headers: authHeaders
             })
-            .then(() => {
-                localStorage.removeItem('auth_token');
-                window.location.href = '/login';
-            })
-            .catch(() => {
-                localStorage.removeItem('auth_token');
-                window.location.href = '/login';
-            });
+                .then(() => {
+                    localStorage.removeItem('auth_token');
+                    window.location.href = '/login';
+                })
+                .catch(() => {
+                    localStorage.removeItem('auth_token');
+                    window.location.href = '/login';
+                });
         }
 
         // Initialize
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             loadUserData();
             loadConversations();
         });
     </script>
 </body>
+
 </html>

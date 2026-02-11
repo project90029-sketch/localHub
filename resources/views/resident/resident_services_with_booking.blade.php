@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Find Services - LocalConnect Pro</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <style>
         * {
             margin: 0;
@@ -338,6 +339,7 @@
                 transform: translateY(-50px);
                 opacity: 0;
             }
+
             to {
                 transform: translateY(0);
                 opacity: 1;
@@ -396,7 +398,9 @@
             margin-left: 4px;
         }
 
-        .form-input, .form-select, .form-textarea {
+        .form-input,
+        .form-select,
+        .form-textarea {
             width: 100%;
             padding: 12px 16px;
             border: 1px solid #e2e8f0;
@@ -405,7 +409,9 @@
             transition: all 0.2s;
         }
 
-        .form-input:focus, .form-select:focus, .form-textarea:focus {
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
             outline: none;
             border-color: #2563eb;
             box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
@@ -444,13 +450,15 @@
             justify-content: flex-end;
         }
 
-        .empty-state, .loading {
+        .empty-state,
+        .loading {
             text-align: center;
             padding: 64px 24px;
             color: #94a3b8;
         }
 
-        .empty-state i, .loading i {
+        .empty-state i,
+        .loading i {
             font-size: 64px;
             margin-bottom: 20px;
             opacity: 0.3;
@@ -474,7 +482,9 @@
         }
 
         @keyframes spin {
-            to { transform: rotate(360deg); }
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         @media (max-width: 768px) {
@@ -502,6 +512,7 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Navigation -->
     <nav class="top-nav">
@@ -540,6 +551,10 @@
             <i class="fas fa-user"></i>
             My Profile
         </a>
+        <a href="/resident/help" class="sidebar-item">
+            <i class="fas fa-question-circle"></i>
+            Help & Support
+        </a>
     </aside>
 
     <!-- Main Content -->
@@ -552,11 +567,9 @@
         <!-- Search Section -->
         <div class="search-section">
             <div class="search-box">
-                <input type="text" 
-                       id="searchInput" 
-                       class="search-input" 
-                       placeholder="Search for electrician, plumber, doctor, carpenter..."
-                       onkeypress="handleKeyPress(event)">
+                <input type="text" id="searchInput" class="search-input"
+                    placeholder="Search for electrician, plumber, doctor, carpenter..."
+                    onkeypress="handleKeyPress(event)">
                 <button onclick="searchProfessionals()" class="btn btn-primary">
                     <i class="fas fa-search"></i> Search
                 </button>
@@ -586,10 +599,13 @@
                     <!-- Professional Info -->
                     <div style="background: #f8fafc; padding: 16px; border-radius: 8px; margin-bottom: 24px;">
                         <div style="display: flex; align-items: center; gap: 12px;">
-                            <div style="width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, #2563eb, #7c3aed); display: flex; align-items: center; justify-content: center; color: white; font-weight: 600;" id="modal-pro-avatar">P</div>
+                            <div style="width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, #2563eb, #7c3aed); display: flex; align-items: center; justify-content: center; color: white; font-weight: 600;"
+                                id="modal-pro-avatar">P</div>
                             <div>
-                                <div style="font-weight: 600; margin-bottom: 2px;" id="modal-pro-name">Professional Name</div>
-                                <div style="font-size: 13px; color: #64748b;" id="modal-pro-specialization">Specialization</div>
+                                <div style="font-weight: 600; margin-bottom: 2px;" id="modal-pro-name">Professional Name
+                                </div>
+                                <div style="font-size: 13px; color: #64748b;" id="modal-pro-specialization">
+                                    Specialization</div>
                             </div>
                         </div>
                     </div>
@@ -616,7 +632,8 @@
                     <!-- Notes -->
                     <div class="form-group">
                         <label class="form-label">Additional Notes</label>
-                        <textarea class="form-textarea" id="notes" name="notes" placeholder="Any specific requirements or details..."></textarea>
+                        <textarea class="form-textarea" id="notes" name="notes"
+                            placeholder="Any specific requirements or details..."></textarea>
                     </div>
 
                     <!-- Price Display -->
@@ -670,7 +687,7 @@
                 const user = data.user || data;
 
                 document.getElementById('user-name').textContent = user.name || 'Resident';
-                
+
                 const avatar = document.getElementById('user-avatar');
                 if (user.name) {
                     const initials = user.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
@@ -692,7 +709,7 @@
             }
 
             const container = document.getElementById('results-container');
-            
+
             // Show loading state
             container.innerHTML = `
                 <div class="loading">
@@ -762,8 +779,8 @@
 
             professionals.forEach(professional => {
                 const profile = professional.professional_profile || {};
-                const initials = professional.name ? 
-                    professional.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) : 
+                const initials = professional.name ?
+                    professional.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) :
                     'P';
 
                 const card = document.createElement('div');
@@ -804,7 +821,7 @@
                         </button>
                     </div>
                 `;
-                
+
                 grid.appendChild(card);
             });
 
@@ -838,10 +855,10 @@
             const profile = professional.professional_profile || {};
 
             // Update modal info
-            const initials = professional.name ? 
-                professional.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) : 
+            const initials = professional.name ?
+                professional.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) :
                 'P';
-            
+
             document.getElementById('modal-pro-avatar').textContent = initials;
             document.getElementById('modal-pro-name').textContent = professional.name || 'Professional';
             document.getElementById('modal-pro-specialization').textContent = profile.specialization || 'Service Provider';
@@ -883,7 +900,7 @@
                     if (services.length > 0) {
                         const serviceSelect = document.getElementById('service_id');
                         serviceSelect.innerHTML = '<option value="">Choose a service...</option>';
-                        
+
                         services.forEach(service => {
                             const option = document.createElement('option');
                             option.value = service.id;
@@ -895,7 +912,7 @@
                         document.getElementById('service-group').style.display = 'block';
 
                         // Update price when service changes
-                        serviceSelect.addEventListener('change', function() {
+                        serviceSelect.addEventListener('change', function () {
                             const selectedOption = this.options[this.selectedIndex];
                             if (selectedOption.value) {
                                 const price = selectedOption.getAttribute('data-price');
@@ -956,14 +973,14 @@
                 // Success!
                 alert('Appointment booked successfully! 🎉');
                 closeBookingModal();
-                
+
                 // Redirect to bookings page
                 window.location.href = '/resident/bookings';
 
             } catch (error) {
                 console.error('❌ Booking error:', error);
                 alert('Failed to create booking: ' + error.message);
-                
+
                 submitBtn.disabled = false;
                 submitBtn.innerHTML = '<i class="fas fa-check"></i> Confirm Booking';
             }
@@ -977,28 +994,28 @@
         // Logout
         function logout() {
             if (!confirm('Are you sure you want to logout?')) return;
-            
+
             fetch(`${API_BASE}/logout`, {
                 method: 'POST',
                 headers: authHeaders
             })
-            .then(() => {
-                localStorage.removeItem('auth_token');
-                window.location.href = '/login';
-            })
-            .catch(() => {
-                localStorage.removeItem('auth_token');
-                window.location.href = '/login';
-            });
+                .then(() => {
+                    localStorage.removeItem('auth_token');
+                    window.location.href = '/login';
+                })
+                .catch(() => {
+                    localStorage.removeItem('auth_token');
+                    window.location.href = '/login';
+                });
         }
 
         // Initialize
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             loadUserData();
             resetSearch();
 
             // Close modal when clicking outside
-            document.getElementById('booking-modal').addEventListener('click', function(e) {
+            document.getElementById('booking-modal').addEventListener('click', function (e) {
                 if (e.target === this) {
                     closeBookingModal();
                 }
@@ -1006,4 +1023,5 @@
         });
     </script>
 </body>
+
 </html>

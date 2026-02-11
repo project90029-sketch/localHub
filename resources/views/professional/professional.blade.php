@@ -1181,8 +1181,8 @@
         </div>
         <div class="sidebar-item" onclick="navigate('earnings')"><i class="fas fa-dollar-sign"></i> My Earnings</div>
         <div class="sidebar-item" onclick="navigate('reviews')"><i class="fas fa-star"></i> Reviews & Ratings</div>
-        <div class="sidebar-item" onclick="switchDashboardSection('messages')"><i class="fas fa-comments"></i> Messages
-        </div>
+        <div class="sidebar-item" onclick="switchDashboardSection('messages')"><i class="fas fa-comments"></i> Messages</div>
+        <div class="sidebar-item" onclick="switchDashboardSection('help')"><i class="fas fa-question-circle"></i> Help & Support</div>
         <div class="sidebar-item" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</div>
     </aside>
 
@@ -1347,6 +1347,44 @@
                         <button class="btn btn-primary" onclick="handleSendMessage()"><i
                                 class="fas fa-paper-plane"></i></button>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Help & Support Section (Hidden by Default) -->
+        <div id="help-section" style="display: none;">
+            <div class="section-header">
+                <h2 class="section-title">Help & Support</h2>
+            </div>
+            
+            <div class="help-grid" style="display: grid; grid-template-columns: 1fr 350px; gap: 24px;">
+                <!-- Help Content (The "Help Bar") -->
+                <div class="help-content-panel">
+                    <div class="section" style="margin-bottom: 24px;">
+                        <h3 style="margin-bottom: 16px; font-size: 18px;">Common Questions</h3>
+                        <div class="faq-list">
+                            <details style="margin-bottom: 12px; padding: 12px; border: 1px solid #e2e8f0; border-radius: 8px; cursor: pointer;">
+                                <summary style="font-weight: 600; color: #1e293b;">How do I update my service rates?</summary>
+                                <p style="margin-top: 10px; color: #64748b; font-size: 14px;">You can update your rates in the Settings -> Profile section. Hourly rates are applied to new bookings.</p>
+                            </details>
+                            <details style="margin-bottom: 12px; padding: 12px; border: 1px solid #e2e8f0; border-radius: 8px; cursor: pointer;">
+                                <summary style="font-weight: 600; color: #1e293b;">When do I get paid?</summary>
+                                <p style="margin-top: 10px; color: #64748b; font-size: 14px;">Payments are typically processed within 3-5 business days after the appointment is marked as completed.</p>
+                            </details>
+                            <details style="margin-bottom: 12px; padding: 12px; border: 1px solid #e2e8f0; border-radius: 8px; cursor: pointer;">
+                                <summary style="font-weight: 600; color: #1e293b;">How to cancel an appointment?</summary>
+                                <p style="margin-top: 10px; color: #64748b; font-size: 14px;">Locate the appointment in your dashboard and click "Cancel". Please note our 24-hour cancellation policy.</p>
+                            </details>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Form Section -->
+                <div class="contact-panel">
+                    <div class="section-header" style="margin-bottom: 16px;">
+                        <h3 class="section-title">Contact Support</h3>
+                    </div>
+                    <x-contact-form />
                 </div>
             </div>
         </div>
@@ -1874,14 +1912,21 @@
             // Handle Section Switching
             const dashboard = document.getElementById('dashboard-section');
             const messages = document.getElementById('messages-section');
+            const helpSection = document.getElementById('help-section');
 
             if (page === 'messages') {
                 dashboard.style.display = 'none';
                 messages.style.display = 'block';
+                helpSection.style.display = 'none';
                 loadConversations();
             } else if (page === 'professional') {
                 dashboard.style.display = 'block';
                 messages.style.display = 'none';
+                helpSection.style.display = 'none';
+            } else if (page === 'help') {
+                dashboard.style.display = 'none';
+                messages.style.display = 'none';
+                helpSection.style.display = 'block';
             }
 
             document.querySelectorAll('.sidebar-item').forEach(item => {
