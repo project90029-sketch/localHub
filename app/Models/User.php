@@ -38,9 +38,9 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'password' => 'hashed',
+        'password' => 'hashed', 
     ];
-
+    
     protected $appends = ['profile_image_url'];
 
     public function residentProfile()
@@ -50,7 +50,7 @@ class User extends Authenticatable
 
     public function professionalProfile()
     {
-        return $this->hasOne(\App\Models\ProfessionalProfile::class);
+        return $this->hasOne (\App\Models\ProfessionalProfile::class);
     }
     // Services (as a professional)
     public function services()
@@ -68,18 +68,6 @@ class User extends Authenticatable
     public function professionalAppointments()
     {
         return $this->hasMany(Appointment::class, 'professional_id');
-    }
-
-    // Messages (sent)
-    public function sentMessages()
-    {
-        return $this->hasMany(Message::class, 'sender_id');
-    }
-
-    // Messages (received)
-    public function receivedMessages()
-    {
-        return $this->hasMany(Message::class, 'receiver_id');
     }
 
     /**

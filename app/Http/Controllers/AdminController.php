@@ -8,7 +8,6 @@ use App\Models\Admin;
 use App\Models\User;
 use App\Models\Enterprise;
 use App\Models\Product;
-use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
@@ -16,7 +15,7 @@ class AdminController extends Controller
     {
         // 1. Validate input
         $request->validate([
-            'email' => 'required|email',
+            'email'    => 'required|email',
             'password' => 'required'
         ]);
 
@@ -30,7 +29,7 @@ class AdminController extends Controller
 
         // 4. Store admin session
         session([
-            'admin_id' => $admin->id,
+            'admin_id'    => $admin->id,
             'admin_email' => $admin->email
         ]);
 
@@ -61,17 +60,13 @@ class AdminController extends Controller
             ->limit(10)
             ->get();
 
-        // Contact Messages
-        $contactMessages = DB::table('contact_messages')->latest()->get();
-
         return view('dashboardKoushik', compact(
             'totalUsers',
             'verifiedBusinesses',
             'totalProducts',
             'recentUsers',
             'businesses',
-            'products',
-            'contactMessages'
+            'products'
         ));
     }
 

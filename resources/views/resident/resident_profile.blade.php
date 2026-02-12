@@ -341,10 +341,6 @@
             <i class="fas fa-user"></i>
             My Profile
         </a>
-        <a href="/resident/help" class="sidebar-item">
-            <i class="fas fa-question-circle"></i>
-            Help & Support
-        </a>
     </aside>
 
     <!-- Main Content -->
@@ -612,7 +608,6 @@
                         new_password_confirmation: confirmPassword
                     })
                 })
-            })
                 .then(response => response.json())
                 .then(data => {
                     alert(data.message);
@@ -632,9 +627,6 @@
             if (!confirm('Are you sure you want to logout?')) return;
 
             fetch(`${API_BASE}/logout`, {
-                method: 'POST',
-                headers: authHeaders
-            })
                     method: 'POST',
                     headers: authHeaders
                 })
@@ -649,7 +641,7 @@
         }
 
         // Initialize
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             loadUserData();
         });
     </script>

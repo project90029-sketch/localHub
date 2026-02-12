@@ -3,7 +3,6 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Business\ProductController;
-use App\Http\Controllers\ContactController;
 
 /*
 |--------------------------------------------------------------------------
@@ -255,10 +254,6 @@ Route::prefix('resident')->group(function () {
         return view('resident.resident_bookings');
     })->name('resident.bookings');
 
-    Route::get('/help', function () {
-        return view('resident.resident_help');
-    })->name('resident.help');
-
     Route::get('/profile', function () {
         return view('resident.resident_profile');
     })->name('resident.profile');
@@ -267,5 +262,3 @@ Route::prefix('resident')->group(function () {
         return view('resident.resident_messages');
     })->name('resident.messages');
 });
-
-Route::post('/contact-submit', [ContactController::class, 'submit'])->name('contact.submit');

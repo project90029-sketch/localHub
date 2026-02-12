@@ -411,10 +411,6 @@
             <i class="fas fa-user"></i>
             My Profile
         </a>
-        <a href="/resident/help" class="sidebar-item">
-            <i class="fas fa-question-circle"></i>
-            Help & Support
-        </a>
     </aside>
 
     <!-- Main Content -->
@@ -543,7 +539,7 @@
                             <div class="meta-item">
                                 <div class="meta-label">Date & Time</div>
                                 <div class="meta-value">
-                                    <i class="fas fa-calendar"></i> ${date.toLocaleDateString()} at ${date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                    <i class="fas fa-calendar"></i> ${date.toLocaleDateString()} at ${date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
                                 </div>
                             </div>
                             ${booking.total_price ? `
@@ -656,9 +652,6 @@
             if (!confirm('Are you sure you want to logout?')) return;
 
             fetch(`${API_BASE}/logout`, {
-                method: 'POST',
-                headers: authHeaders
-            })
                     method: 'POST',
                     headers: authHeaders
                 })
@@ -673,7 +666,7 @@
         }
 
         // Initialize
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             loadUserData();
             loadBookings();
         });

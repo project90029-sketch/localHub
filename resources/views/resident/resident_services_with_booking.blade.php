@@ -551,10 +551,6 @@
             <i class="fas fa-user"></i>
             My Profile
         </a>
-        <a href="/resident/help" class="sidebar-item">
-            <i class="fas fa-question-circle"></i>
-            Help & Support
-        </a>
     </aside>
 
     <!-- Main Content -->
@@ -567,7 +563,6 @@
         <!-- Search Section -->
         <div class="search-section">
             <div class="search-box">
-                <input type="text" id="searchInput" class="search-input"
                 <input type="text"
                     id="searchInput"
                     class="search-input"
@@ -602,13 +597,10 @@
                     <!-- Professional Info -->
                     <div style="background: #f8fafc; padding: 16px; border-radius: 8px; margin-bottom: 24px;">
                         <div style="display: flex; align-items: center; gap: 12px;">
-                            <div style="width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, #2563eb, #7c3aed); display: flex; align-items: center; justify-content: center; color: white; font-weight: 600;"
-                                id="modal-pro-avatar">P</div>
+                            <div style="width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, #2563eb, #7c3aed); display: flex; align-items: center; justify-content: center; color: white; font-weight: 600;" id="modal-pro-avatar">P</div>
                             <div>
-                                <div style="font-weight: 600; margin-bottom: 2px;" id="modal-pro-name">Professional Name
-                                </div>
-                                <div style="font-size: 13px; color: #64748b;" id="modal-pro-specialization">
-                                    Specialization</div>
+                                <div style="font-weight: 600; margin-bottom: 2px;" id="modal-pro-name">Professional Name</div>
+                                <div style="font-size: 13px; color: #64748b;" id="modal-pro-specialization">Specialization</div>
                             </div>
                         </div>
                     </div>
@@ -635,8 +627,7 @@
                     <!-- Notes -->
                     <div class="form-group">
                         <label class="form-label">Additional Notes</label>
-                        <textarea class="form-textarea" id="notes" name="notes"
-                            placeholder="Any specific requirements or details..."></textarea>
+                        <textarea class="form-textarea" id="notes" name="notes" placeholder="Any specific requirements or details..."></textarea>
                     </div>
 
                     <!-- Price Display -->
@@ -915,7 +906,7 @@
                         document.getElementById('service-group').style.display = 'block';
 
                         // Update price when service changes
-                        serviceSelect.addEventListener('change', function () {
+                        serviceSelect.addEventListener('change', function() {
                             const selectedOption = this.options[this.selectedIndex];
                             if (selectedOption.value) {
                                 const price = selectedOption.getAttribute('data-price');
@@ -999,9 +990,6 @@
             if (!confirm('Are you sure you want to logout?')) return;
 
             fetch(`${API_BASE}/logout`, {
-                method: 'POST',
-                headers: authHeaders
-            })
                     method: 'POST',
                     headers: authHeaders
                 })
@@ -1016,12 +1004,12 @@
         }
 
         // Initialize
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             loadUserData();
             resetSearch();
 
             // Close modal when clicking outside
-            document.getElementById('booking-modal').addEventListener('click', function (e) {
+            document.getElementById('booking-modal').addEventListener('click', function(e) {
                 if (e.target === this) {
                     closeBookingModal();
                 }
