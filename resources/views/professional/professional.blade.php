@@ -2060,6 +2060,10 @@
             }
         });
     </script>
+
+    <!-- Global Chatbot -->
+    @include('components.chatbot')
+
 </body>
 
 </html>

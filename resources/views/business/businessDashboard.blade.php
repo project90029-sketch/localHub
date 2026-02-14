@@ -1,9 +1,10 @@
 @include('business.profile_modal')
 @php
-    $user = Auth::user();
+$user = Auth::user();
 @endphp
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -241,8 +242,15 @@
         }
 
         @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .notification-dropdown.active {
@@ -902,31 +910,132 @@
         }
     </style>
     <style>
-        #pm:checked~.mo{display:flex}
-        #pm{display:none}
-        .mo{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);align-items:center;justify-content:center;z-index:999}
-        .mc{background:#fff;padding:2rem;border-radius:20px;width:90%;max-width:480px;position:relative}
-        .mh{font-size:1.5rem;font-weight:800;margin-bottom:1.5rem}
-        .fg{margin-bottom:1rem}
-        label{display:block;font-weight:700;margin-bottom:.3rem}
-        input,select,textarea{width:100%;padding:.8rem;border:2px solid #e2e8f0;border-radius:10px;font-size:1rem;box-sizing:border-box}
-        input:focus,select:focus,textarea:focus{outline:none;border-color:#4f46e5;box-shadow:0 0 0 3px rgba(79,70,229,.1)}
-        .gr{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-        .bg{display:flex;gap:1rem;margin-top:1.5rem}
-        .bc,.bs{padding:.9rem;border-radius:10px;font-weight:700;cursor:pointer;text-align:center;flex:1;border:none}
-        .bc{background:#f1f5f9;color:#64748b}
-        .bs{background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff}
-        .ob{padding:.7rem 1.5rem;background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff;border:none;border-radius:10px;font-weight:700;cursor:pointer}
-        .cl{position:absolute;top:1rem;right:1rem;background:#f1f5f9;border:none;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:1.2rem}
+        #pm:checked~.mo {
+            display: flex
+        }
+
+        #pm {
+            display: none
+        }
+
+        .mo {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .6);
+            align-items: center;
+            justify-content: center;
+            z-index: 999
+        }
+
+        .mc {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 480px;
+            position: relative
+        }
+
+        .mh {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem
+        }
+
+        .fg {
+            margin-bottom: 1rem
+        }
+
+        label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: .3rem
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: .8rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 1rem;
+            box-sizing: border-box
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, .1)
+        }
+
+        .gr {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem
+        }
+
+        .bg {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem
+        }
+
+        .bc,
+        .bs {
+            padding: .9rem;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            text-align: center;
+            flex: 1;
+            border: none
+        }
+
+        .bc {
+            background: #f1f5f9;
+            color: #64748b
+        }
+
+        .bs {
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            color: #fff
+        }
+
+        .ob {
+            padding: .7rem 1.5rem;
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer
+        }
+
+        .cl {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: #f1f5f9;
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem
+        }
     </style>
     <style>
         .user-avatar {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        overflow: hidden;
-        background: #e5e7eb;
-        flex-shrink: 0;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            overflow: hidden;
+            background: #e5e7eb;
+            flex-shrink: 0;
         }
 
         .user-avatar img {
@@ -952,16 +1061,16 @@
             font-size: 0.75rem;
             color: #64748b;
         }
-
     </style>
 </head>
+
 <body>
     <!-- Sidebar -->
     <aside class="sidebar" id="sidebar">
         <a href="/" class="sidebar-logo" style="text-decoration: none;">
             <div class="logo-icon">
                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                 </svg>
             </div>
             <div>
@@ -975,7 +1084,7 @@
             <li class="nav-item">
                 <a href="#dashboard" class="nav-link active" onclick="switchTab('dashboard')">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                     </svg>
                     Dashboard
                 </a>
@@ -983,7 +1092,7 @@
             <li class="nav-item">
                 <a href="#orders" class="nav-link" onclick="switchTab('orders')">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                     </svg>
                     Orders
                     <span class="nav-badge">5</span>
@@ -992,7 +1101,7 @@
             <li class="nav-item">
                 <a href="#inventory" class="nav-link" onclick="switchTab('inventory')">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
                     </svg>
                     Inventory
                 </a>
@@ -1002,7 +1111,7 @@
             <li class="nav-item">
                 <a href="#profile" class="nav-link" onclick="switchTab('profile')">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                     </svg>
                     Profile
                 </a>
@@ -1010,7 +1119,7 @@
             <li class="nav-item">
                 <a href="#enterprise" class="nav-link" onclick="switchTab('enterprise')">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                     </svg>
                     Register Enterprise
                 </a>
@@ -1018,7 +1127,7 @@
             <li class="nav-item">
                 <a href="#revenue" class="nav-link" onclick="switchTab('revenue')">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                     Revenue
                 </a>
@@ -1026,7 +1135,7 @@
             <li class="nav-item">
                 <a href="#contact" class="nav-link" onclick="switchTab('contact')">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                     </svg>
                     Contact Us
                 </a>
@@ -1036,8 +1145,8 @@
             <li class="nav-item">
                 <a href="#settings" class="nav-link">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
                     Settings
                 </a>
@@ -1045,7 +1154,7 @@
             <li class="nav-item">
                 <a href="/logout" class="nav-link">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                     </svg>
                     Logout
                 </a>
@@ -1060,7 +1169,7 @@
             <div class="topbar-left">
                 <button class="mobile-toggle" id="mobileToggle">
                     <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                     </svg>
                 </button>
                 <div>
@@ -1076,7 +1185,7 @@
                 <div class="notification-wrapper">
                     <button class="notification-btn" id="notificationBtn">
                         <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
                         </svg>
                         <span class="notification-badge">3</span>
                     </button>
@@ -1130,10 +1239,9 @@
                 <!--User profile-->
                 <label for="profileToggle" class="user-profile" style="cursor: pointer;">
                     <div class="user-avatar">
-                        <img 
+                        <img
                             src="{{ asset('uploads/profiles/' . $user->profile_image) }}"
-                            alt="Profile"
-                        >
+                            alt="Profile">
                     </div>
 
                     <div class="user-info">
@@ -1155,7 +1263,7 @@
                             <div class="stat-icon revenue">💰</div>
                             <div class="stat-trend up">
                                 <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                                 </svg>
                                 12%
                             </div>
@@ -1169,7 +1277,7 @@
                             <div class="stat-icon orders">📦</div>
                             <div class="stat-trend up">
                                 <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                                 </svg>
                                 8%
                             </div>
@@ -1183,7 +1291,7 @@
                             <div class="stat-icon products">🛍️</div>
                             <div class="stat-trend up">
                                 <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                                 </svg>
                                 5%
                             </div>
@@ -1197,7 +1305,7 @@
                             <div class="stat-icon customers">👥</div>
                             <div class="stat-trend up">
                                 <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                                 </svg>
                                 15%
                             </div>
@@ -1272,7 +1380,7 @@
                             <div class="activity-item">
                                 <div class="activity-icon order">
                                     <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                                     </svg>
                                 </div>
                                 <div class="activity-content">
@@ -1283,7 +1391,7 @@
                             <div class="activity-item">
                                 <div class="activity-icon product">
                                     <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
                                     </svg>
                                 </div>
                                 <div class="activity-content">
@@ -1294,7 +1402,7 @@
                             <div class="activity-item">
                                 <div class="activity-icon review">
                                     <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
                                     </svg>
                                 </div>
                                 <div class="activity-content">
@@ -1338,8 +1446,8 @@
                                     <div class="action-btns">
                                         <button class="icon-btn edit">
                                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                                             </svg>
                                         </button>
                                     </div>
@@ -1355,8 +1463,8 @@
                                     <div class="action-btns">
                                         <button class="icon-btn edit">
                                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                                             </svg>
                                         </button>
                                     </div>
@@ -1372,8 +1480,8 @@
                                     <div class="action-btns">
                                         <button class="icon-btn edit">
                                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                                             </svg>
                                         </button>
                                     </div>
@@ -1406,54 +1514,54 @@
                         </thead>
                         <tbody>
                             @forelse ($products as $product)
-                                @php
-                                    if ($product->stock == 0) {
-                                        $status = 'Out of Stock';
-                                        $class  = 'out-of-stock';
-                                    } elseif ($product->stock <= 5) {
-                                        $status = 'Low Stock';
-                                        $class  = 'low-stock';
-                                    } else {
-                                        $status = 'In Stock';
-                                        $class  = 'in-stock';
-                                    }
+                            @php
+                            if ($product->stock == 0) {
+                            $status = 'Out of Stock';
+                            $class = 'out-of-stock';
+                            } elseif ($product->stock <= 5) {
+                                $status='Low Stock' ;
+                                $class='low-stock' ;
+                                } else {
+                                $status='In Stock' ;
+                                $class='in-stock' ;
+                                }
                                 @endphp
 
                                 <tr>
-                                    <td><strong>{{ $product->name }}</strong></td>
-                                    <td>{{ $product->category }}</td>
-                                    <td><strong>₹{{ number_format($product->price, 2) }}</strong></td>
-                                    <td>{{ $product->stock }} units</td>
-                                    <td>
-                                        <span class="badge {{ $class }}">
-                                            {{ $status }}
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <div class="action-btns">
-                                            <button class="icon-btn edit">
-                                                ✏️
-                                            </button>
-                                            <button class="icon-btn delete">
-                                                🗑️
-                                            </button>
-                                        </div>
-                                    </td>
+                                <td><strong>{{ $product->name }}</strong></td>
+                                <td>{{ $product->category }}</td>
+                                <td><strong>₹{{ number_format($product->price, 2) }}</strong></td>
+                                <td>{{ $product->stock }} units</td>
+                                <td>
+                                    <span class="badge {{ $class }}">
+                                        {{ $status }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="icon-btn edit">
+                                            ✏️
+                                        </button>
+                                        <button class="icon-btn delete">
+                                            🗑️
+                                        </button>
+                                    </div>
+                                </td>
                                 </tr>
-                            @empty
+                                @empty
                                 <tr>
                                     <td colspan="6" style="text-align:center;color:#888;">
                                         No products found
                                     </td>
                                 </tr>
-                            @endforelse
+                                @endforelse
                         </tbody>
                     </table>
                 </div>
             </div>
             <input type="checkbox" id="pm">
-        {{-- add product --}}
-           <input type="checkbox" id="pm">
+            {{-- add product --}}
+            <input type="checkbox" id="pm">
 
 
             <div class="mo">
@@ -1471,8 +1579,7 @@
                                 type="text"
                                 name="name"
                                 placeholder="e.g., Fresh Apples"
-                                required
-                            >
+                                required>
                         </div>
 
                         <div class="fg">
@@ -1497,8 +1604,7 @@
                                     step="0.01"
                                     name="price"
                                     placeholder="120"
-                                    required
-                                >
+                                    required>
                             </div>
 
                             <div class="fg">
@@ -1508,12 +1614,11 @@
                                     name="stock"
                                     placeholder="50"
                                     min="0"
-                                    required
-                                >
+                                    required>
                             </div>
                         </div>
 
-                        
+
 
                         <div class="fg">
                             <label>Product Photo *</label>
@@ -1526,8 +1631,7 @@
                                     type="file"
                                     name="photo"
                                     accept=".jpg,.jpeg,.png"
-                                    required
-                                >
+                                    required>
 
                                 <p class="pu-hint">JPG, PNG (Max 5MB)</p>
                             </div>
@@ -1541,14 +1645,14 @@
                 </div>
             </div>
 
-            
+
 
 
             <!-- Profile Tab -->
             <div class="tab-content" id="profile-content">
                 <div class="card">
                     <div class="card-header" style="display:flex; align-items:center; gap:1rem;">
-            
+
                         <!-- Enterprise Logo -->
                         <img
                             id="enterpriseLogo"
@@ -1561,8 +1665,7 @@
                                 object-fit:cover;
                                 border:1px solid var(--border);
                                 display:none;
-                            "
-                        />
+                            " />
 
                         <h3 class="card-title">Business Profile</h3>
 
@@ -1575,7 +1678,7 @@
 
                     <div style="padding:2rem;">
                         <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:2rem;">
-                            
+
                             <div>
                                 <h4>Business Name</h4>
                                 <p id="businessName" style="color:var(--gray);">—</p>
@@ -1659,15 +1762,15 @@
                         <!-- Enterprise Registration Form -->
                         <form id="enterpriseForm" enctype="multipart/form-data" style="max-width: 800px; margin: 0 auto;">
                             <h3 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 2rem; color: var(--dark);">Enterprise Registration Form</h3>
-                            
+
                             <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem;">
                                 <!-- Company Name -->
                                 <div style="grid-column: 1 / -1;">
                                     <label style="display: block; font-weight: 700; margin-bottom: 0.5rem; color: var(--dark);">
                                         Company Legal Name <span style="color: var(--danger);">*</span>
                                     </label>
-                                    <input 
-                                        type="text" 
+                                    <input
+                                        type="text"
                                         name="companyName"
                                         placeholder="Enter your company's legal name"
                                         required
@@ -1679,8 +1782,8 @@
                                     <label style="display: block; font-weight: 700; margin-bottom: 0.5rem; color: var(--dark);">
                                         Registration Number <span style="color: var(--danger);">*</span>
                                     </label>
-                                    <input 
-                                        type="text" 
+                                    <input
+                                        type="text"
                                         name="registrationNumber"
                                         placeholder="CIN/Registration No."
                                         required
@@ -1691,7 +1794,7 @@
                                     <label style="display: block; font-weight: 700; margin-bottom: 0.5rem; color: var(--dark);">
                                         Industry Type <span style="color: var(--danger);">*</span>
                                     </label>
-                                    <select 
+                                    <select
                                         name="industryType"
                                         required
                                         style="width: 100%; padding: 0.875rem; border: 2px solid var(--border); border-radius: 12px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1rem; cursor: pointer;">
@@ -1712,7 +1815,7 @@
                                     <label style="display: block; font-weight: 700; margin-bottom: 0.5rem; color: var(--dark);">
                                         Annual Revenue Range <span style="color: var(--danger);">*</span>
                                     </label>
-                                    <select 
+                                    <select
                                         name="revenue"
                                         required
                                         style="width: 100%; padding: 0.875rem; border: 2px solid var(--border); border-radius: 12px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1rem; cursor: pointer;">
@@ -1730,8 +1833,8 @@
                                     <label style="display: block; font-weight: 700; margin-bottom: 0.5rem; color: var(--dark);">
                                         Contact Person Name <span style="color: var(--danger);">*</span>
                                     </label>
-                                    <input 
-                                        type="text" 
+                                    <input
+                                        type="text"
                                         name="contactPerson"
                                         placeholder="Full name"
                                         required
@@ -1743,8 +1846,8 @@
                                     <label style="display: block; font-weight: 700; margin-bottom: 0.5rem; color: var(--dark);">
                                         Designation <span style="color: var(--danger);">*</span>
                                     </label>
-                                    <input 
-                                        type="text" 
+                                    <input
+                                        type="text"
                                         name="designation"
                                         placeholder="e.g., CEO, Director"
                                         required
@@ -1756,8 +1859,8 @@
                                     <label style="display: block; font-weight: 700; margin-bottom: 0.5rem; color: var(--dark);">
                                         Official Email <span style="color: var(--danger);">*</span>
                                     </label>
-                                    <input 
-                                        type="email" 
+                                    <input
+                                        type="email"
                                         name="email"
                                         placeholder="company@example.com"
                                         required
@@ -1769,8 +1872,8 @@
                                     <label style="display: block; font-weight: 700; margin-bottom: 0.5rem; color: var(--dark);">
                                         Contact Number <span style="color: var(--danger);">*</span>
                                     </label>
-                                    <input 
-                                        type="tel" 
+                                    <input
+                                        type="tel"
                                         name="phone"
                                         placeholder="10-digit number"
                                         pattern="[0-9]{10}"
@@ -1784,7 +1887,7 @@
                                     <label style="display: block; font-weight: 700; margin-bottom: 0.5rem; color: var(--dark);">
                                         Registered Office Address <span style="color: var(--danger);">*</span>
                                     </label>
-                                    <textarea 
+                                    <textarea
                                         name="address"
                                         rows="3"
                                         placeholder="Complete registered address"
@@ -1797,8 +1900,8 @@
                                     <label style="display: block; font-weight: 700; margin-bottom: 0.5rem; color: var(--dark);">
                                         City <span style="color: var(--danger);">*</span>
                                     </label>
-                                    <input 
-                                        type="text" 
+                                    <input
+                                        type="text"
                                         name="city"
                                         placeholder="City"
                                         required
@@ -1809,7 +1912,7 @@
                                     <label style="display: block; font-weight: 700; margin-bottom: 0.5rem; color: var(--dark);">
                                         Business Description <span style="color: var(--danger);">*</span>
                                     </label>
-                                    <textarea 
+                                    <textarea
                                         name="description"
                                         rows="4"
                                         placeholder="Describe your business, products/services, and why you need enterprise features"
@@ -1825,12 +1928,11 @@
                                     <div style="padding: 2rem; border: 2px dashed var(--border); border-radius: 12px; text-align: center; background: var(--light-gray);">
                                         <div style="font-size: 2.5rem; margin-bottom: 1rem;">📄</div>
                                         <p style="color: var(--gray); margin-bottom: 1rem;">Upload Enterprise Photo</p>
-                                        <input 
-                                        type="file"
-                                        name="photo"
-                                        accept=".jpg,.jpeg,.png"
-                                        required
-                                        >                                        
+                                        <input
+                                            type="file"
+                                            name="photo"
+                                            accept=".jpg,.jpeg,.png"
+                                            required>
                                         <p style="font-size: 0.85rem; color: var(--gray); margin-top: 0.5rem;"> JPG, PNG (Max 5MB each)</p>
                                     </div>
                                 </div>
@@ -1847,8 +1949,8 @@
 
                                 <!-- Submit Button -->
                                 <div style="grid-column: 1 / -1; margin-top: 1rem;">
-                                    <button 
-                                        type="submit" 
+                                    <button
+                                        type="submit"
                                         style="width: 100%; padding: 1.25rem; background: linear-gradient(135deg, #4f46e5, #7c3aed); color: white; border: none; border-radius: 12px; font-weight: 700; font-size: 1.1rem; cursor: pointer; transition: all 0.3s;">
                                         Submit Enterprise Application
                                     </button>
@@ -1914,71 +2016,71 @@
     </main>
 
     <script>
-    /* =========================
+        /* =========================
     SIDEBAR + TAB LOGIC
             ========================= */
 
-            // Mobile Sidebar Toggle
-            const mobileToggle = document.getElementById('mobileToggle');
-            const sidebar = document.getElementById('sidebar');
+        // Mobile Sidebar Toggle
+        const mobileToggle = document.getElementById('mobileToggle');
+        const sidebar = document.getElementById('sidebar');
 
-            if (mobileToggle) {
-                mobileToggle.addEventListener('click', () => {
-                    sidebar.classList.toggle('active');
-                });
-            }
+        if (mobileToggle) {
+            mobileToggle.addEventListener('click', () => {
+                sidebar.classList.toggle('active');
+            });
+        }
 
-            // Tab Switching
-            function switchTab(tabName) {
-                const titles = {
-                    dashboard: 'Dashboard',
-                    orders: 'Orders',
-                    inventory: 'Inventory',
-                    profile: 'Business Profile',
-                    enterprise: 'Register Enterprise',
-                    revenue: 'Revenue',
-                    contact: 'Contact Us'
+        // Tab Switching
+        function switchTab(tabName) {
+            const titles = {
+                dashboard: 'Dashboard',
+                orders: 'Orders',
+                inventory: 'Inventory',
+                profile: 'Business Profile',
+                enterprise: 'Register Enterprise',
+                revenue: 'Revenue',
+                contact: 'Contact Us'
+            };
+
+            document.getElementById('pageTitle').textContent = titles[tabName] || 'Dashboard';
+            document.getElementById('pageBreadcrumb').textContent = titles[tabName] || 'Dashboard';
+
+            document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+
+            const activeLink = document.querySelector(`a[href="#${tabName}"]`);
+            if (activeLink) activeLink.classList.add('active');
+
+            const activeTab = document.getElementById(`${tabName}-content`);
+            if (activeTab) activeTab.classList.add('active');
+        }
+
+        /* =========================
+        ENTERPRISE FORM LOGIC
+        ========================= */
+
+        const enterpriseForm = document.getElementById('enterpriseForm');
+
+        /* Disable Enterprise Tab + Form */
+        function lockEnterpriseTab(status = 'pending') {
+
+            // Disable sidebar link
+            const enterpriseLink = document.querySelector('a[href="#enterprise"]');
+            if (enterpriseLink) {
+                enterpriseLink.onclick = function(e) {
+                    e.preventDefault();
+                    alert(`Enterprise already registered\nStatus: ${status.toUpperCase()}`);
                 };
-
-                document.getElementById('pageTitle').textContent = titles[tabName] || 'Dashboard';
-                document.getElementById('pageBreadcrumb').textContent = titles[tabName] || 'Dashboard';
-
-                document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
-                document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-
-                const activeLink = document.querySelector(`a[href="#${tabName}"]`);
-                if (activeLink) activeLink.classList.add('active');
-
-                const activeTab = document.getElementById(`${tabName}-content`);
-                if (activeTab) activeTab.classList.add('active');
+                enterpriseLink.classList.add('disabled');
             }
 
-            /* =========================
-            ENTERPRISE FORM LOGIC
-            ========================= */
+            // Disable form
+            if (enterpriseForm) {
+                enterpriseForm.querySelectorAll('input, textarea, select, button')
+                    .forEach(el => el.disabled = true);
 
-            const enterpriseForm = document.getElementById('enterpriseForm');
-
-            /* Disable Enterprise Tab + Form */
-            function lockEnterpriseTab(status = 'pending') {
-
-                // Disable sidebar link
-                const enterpriseLink = document.querySelector('a[href="#enterprise"]');
-                if (enterpriseLink) {
-                    enterpriseLink.onclick = function (e) {
-                        e.preventDefault();
-                        alert(`Enterprise already registered\nStatus: ${status.toUpperCase()}`);
-                    };
-                    enterpriseLink.classList.add('disabled');
-                }
-
-                // Disable form
-                if (enterpriseForm) {
-                    enterpriseForm.querySelectorAll('input, textarea, select, button')
-                        .forEach(el => el.disabled = true);
-
-                    const banner = document.createElement('div');
-                    banner.innerHTML = `
+                const banner = document.createElement('div');
+                banner.innerHTML = `
                         <div style="
                             background:#e0f2fe;
                             border:1px solid #38bdf8;
@@ -1991,118 +2093,118 @@
                             Status: <strong>${status.toUpperCase()}</strong>
                         </div>
                     `;
-                    enterpriseForm.prepend(banner);
-                }
+                enterpriseForm.prepend(banner);
             }
+        }
 
-            /* Check enterprise status on page load */
-            async function checkEnterpriseStatus() {
+        /* Check enterprise status on page load */
+        async function checkEnterpriseStatus() {
+            try {
+                const res = await fetch('/api/user/profile', {
+                    headers: {
+                        'Accept': 'application/json'
+                        // Add Authorization header if using token auth
+                    }
+                });
+
+                if (!res.ok) return;
+
+                const user = await res.json();
+
+                if (user.enterprise_registered) {
+                    lockEnterpriseTab(user.enterprise_status);
+                }
+
+            } catch (err) {
+                console.error('Enterprise status check failed');
+            }
+        }
+
+        checkEnterpriseStatus();
+
+        /* Submit Enterprise Form */
+        if (enterpriseForm) {
+            enterpriseForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+
+                const formData = new FormData(enterpriseForm);
+                const submitBtn = enterpriseForm.querySelector('button[type="submit"]');
+
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Submitting...';
+
                 try {
-                    const res = await fetch('/api/user/profile', {
+                    const res = await fetch('/api/enterprise/register', {
+                        method: 'POST',
                         headers: {
                             'Accept': 'application/json'
-                            // Add Authorization header if using token auth
-                        }
+                            // Add Authorization header if required
+                        },
+                        body: formData
                     });
 
-                    if (!res.ok) return;
+                    const data = await res.json();
 
-                    const user = await res.json();
-
-                    if (user.enterprise_registered) {
-                        lockEnterpriseTab(user.enterprise_status);
-                    }
-
-                } catch (err) {
-                    console.error('Enterprise status check failed');
-                }
-            }
-
-            checkEnterpriseStatus();
-
-            /* Submit Enterprise Form */
-            if (enterpriseForm) {
-                enterpriseForm.addEventListener('submit', async function (e) {
-                    e.preventDefault();
-
-                    const formData = new FormData(enterpriseForm);
-                    const submitBtn = enterpriseForm.querySelector('button[type="submit"]');
-
-                    submitBtn.disabled = true;
-                    submitBtn.textContent = 'Submitting...';
-
-                    try {
-                        const res = await fetch('/api/enterprise/register', {
-                            method: 'POST',
-                            headers: {
-                                'Accept': 'application/json'
-                                // Add Authorization header if required
-                            },
-                            body: formData
-                        });
-
-                        const data = await res.json();
-
-                        if (!res.ok) {
-                            alert(data.message || 'Enterprise registration failed');
-                            submitBtn.disabled = false;
-                            submitBtn.textContent = 'Submit Enterprise Application';
-                            return;
-                        }
-
-                        alert('✅ Enterprise registered successfully');
-                        lockEnterpriseTab('pending');
-
-                    } catch (err) {
-                        console.error(err);
-                        alert('Network error');
+                    if (!res.ok) {
+                        alert(data.message || 'Enterprise registration failed');
                         submitBtn.disabled = false;
                         submitBtn.textContent = 'Submit Enterprise Application';
+                        return;
                     }
-                });
-            }
 
-            /* =========================
-            INPUT SANITIZATION
-            ========================= */
+                    alert('✅ Enterprise registered successfully');
+                    lockEnterpriseTab('pending');
 
-            document.querySelectorAll('input[type="tel"]').forEach(input => {
-                input.addEventListener('input', e => {
-                    e.target.value = e.target.value.replace(/[^0-9]/g, '');
-                });
+                } catch (err) {
+                    console.error(err);
+                    alert('Network error');
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Submit Enterprise Application';
+                }
+            });
+        }
+
+        /* =========================
+        INPUT SANITIZATION
+        ========================= */
+
+        document.querySelectorAll('input[type="tel"]').forEach(input => {
+            input.addEventListener('input', e => {
+                e.target.value = e.target.value.replace(/[^0-9]/g, '');
+            });
+        });
+
+        /* =========================
+        NOTIFICATION DROPDOWN
+        ========================= */
+        const notifBtn = document.getElementById('notificationBtn');
+        const notifDrop = document.getElementById('notificationDropdown');
+
+        if (notifBtn && notifDrop) {
+            notifBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                notifDrop.classList.toggle('active');
             });
 
-            /* =========================
-            NOTIFICATION DROPDOWN
-            ========================= */
-            const notifBtn = document.getElementById('notificationBtn');
-            const notifDrop = document.getElementById('notificationDropdown');
-
-            if(notifBtn && notifDrop) {
-                notifBtn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    notifDrop.classList.toggle('active');
-                });
-
-                document.addEventListener('click', (e) => {
-                    if(!notifDrop.contains(e.target) && !notifBtn.contains(e.target)) {
-                        notifDrop.classList.remove('active');
-                    }
-                });
-            }
+            document.addEventListener('click', (e) => {
+                if (!notifDrop.contains(e.target) && !notifBtn.contains(e.target)) {
+                    notifDrop.classList.remove('active');
+                }
+            });
+        }
     </script>
     <script>
-        async function fetchEnterprise() 
-        {
+        async function fetchEnterprise() {
             const res = await fetch('/api/enterprise', {
-                headers: { 'Accept': 'application/json' }
+                headers: {
+                    'Accept': 'application/json'
+                }
             });
 
             if (!res.ok) return null;
             return await res.json();
         }
-        async function showEnterpriseProfile() 
-        {
+        async function showEnterpriseProfile() {
             const ent = await fetchEnterprise();
             if (!ent) return;
 
@@ -2122,50 +2224,47 @@
         }
 
         showEnterpriseProfile();
-
-
     </script>
     <script>
-        
-            function openProductModal() {
-                document.getElementById('productModal').style.display = 'flex';
-            }
+        function openProductModal() {
+            document.getElementById('productModal').style.display = 'flex';
+        }
 
-            function closeProductModal() {
-                document.getElementById('productModal').style.display = 'none';
-            }
+        function closeProductModal() {
+            document.getElementById('productModal').style.display = 'none';
+        }
 
-            document.getElementById('productForm').addEventListener('submit', async function (e) {
-                e.preventDefault();
+        document.getElementById('productForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
 
-                const formData = new FormData(this);
+            const formData = new FormData(this);
 
-                const res = await fetch('/api/products', {
-                    method: 'POST',
-                    headers: {
-                        'Accept': 'application/json'
-                    },
-                    body: formData
-                });
-
-                if (!res.ok) {
-                    alert('Failed to add product');
-                    return;
-                }
-
-                closeProductModal();
-                this.reset();
-                alert('Product added successfully');
-
-                // later: refresh product table here
+            const res = await fetch('/api/products', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json'
+                },
+                body: formData
             });
+
+            if (!res.ok) {
+                alert('Failed to add product');
+                return;
+            }
+
+            closeProductModal();
+            this.reset();
+            alert('Product added successfully');
+
+            // later: refresh product table here
+        });
     </script>
     <script>
         const productForm = document.getElementById('productForm');
         const modalCheckbox = document.getElementById('pm');
 
         if (productForm) {
-            productForm.addEventListener('submit', function () {
+            productForm.addEventListener('submit', function() {
                 // Close modal
                 modalCheckbox.checked = false;
 
@@ -2174,5 +2273,10 @@
             });
         }
     </script>
+
+    <!-- Global Chatbot -->
+    @include('components.chatbot')
+
 </body>
+
 </html>
