@@ -43,13 +43,34 @@ class ProductController extends Controller
 
         return view('business.inventory', compact('products'));
     }
-    public function dashboard()
+/*     public function dashboard()
     {
+            $user = auth()->user();   // ADD THIS
+
         $products = Product::where('user_id', auth()->id())
             ->latest()
             ->get();
 
-        return view('business.businessDashboard', compact('products'));
+        return view('business.businessDashboard', compact('products', 'user'));
+    } */
+ 
+        public function dashboard()
+   {
+    if (!session('b2b_user_id')) {
+        return redirect('/b2b-login');
     }
+
+    $user = (object)[
+        'name' => session('b2b_user_name'),
+        'profile_image' => 'default.png',
+        'user_type' => session('b2b_user_type')
+    ];
+
+    $products = Product::where('user_id', session('b2b_user_id'))
+        ->latest()
+        ->get();
+
+    return view('business.businessDashboard', compact('products', 'user'));
+}
 
 }

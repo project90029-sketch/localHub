@@ -521,6 +521,15 @@
 
                 const canCancel = booking.status === 'pending' || booking.status === 'confirmed';
                 const isUpcoming = date > new Date();
+                
+                let statusMessage = '';
+                if (booking.status === 'pending') {
+                    statusMessage = '<div style="background: #fef3c7; padding: 8px; border-radius: 6px; margin-top: 12px; font-size: 13px; color: #92400e;"><i class="fas fa-clock"></i> Waiting for professional to accept</div>';
+                } else if (booking.status === 'confirmed') {
+                    statusMessage = '<div style="background: #d1fae5; padding: 8px; border-radius: 6px; margin-top: 12px; font-size: 13px; color: #065f46;"><i class="fas fa-check-circle"></i> Confirmed! Professional will contact you soon</div>';
+                } else if (booking.status === 'cancelled') {
+                    statusMessage = '<div style="background: #fee2e2; padding: 8px; border-radius: 6px; margin-top: 12px; font-size: 13px; color: #991b1b;"><i class="fas fa-times-circle"></i> This booking was cancelled</div>';
+                }
 
                 return `
                     <div class="booking-card">
@@ -555,6 +564,8 @@
                                 </div>
                             ` : ''}
                         </div>
+                              
+                         ${statusMessage}
 
                         <div class="booking-actions">
                             ${canCancel && isUpcoming ? `

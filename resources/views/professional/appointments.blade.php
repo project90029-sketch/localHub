@@ -312,23 +312,28 @@
             `;
         }
 
+         
+
         // Get action buttons based on status - Cleaner logic
         function getActionButtons(id, status) {
             const buttons = [];
 
             if (status === 'pending') {
                 buttons.push(`
-                    <button class="btn btn-primary" onclick="updateAppointmentStatus(${id}, 'confirmed')">
-                        <i class="fas fa-check"></i> Confirm
+                    <button class="btn btn-primary" onclick="acceptAppointment(${id})">
+                        <i class="fas fa-check"></i> Accept
                     </button>
-                    <button class="btn btn-danger" onclick="updateAppointmentStatus(${id}, 'cancelled')">
-                        <i class="fas fa-times"></i> Cancel
+                    <button class="btn btn-danger" onclick="rejectAppointment(${id})">
+                        <i class="fas fa-times"></i> Reject
                     </button>
                 `);
             } else if (status === 'confirmed') {
                 buttons.push(`
                     <button class="btn btn-primary" onclick="updateAppointmentStatus(${id}, 'completed')">
                         <i class="fas fa-check-circle"></i> Mark Complete
+                    </button>
+                    <button class="btn btn-outline" onclick="updateAppointmentStatus(${id}, 'cancelled')">
+                        <i class="fas fa-ban"></i> Cancel
                     </button>
                 `);
             }
@@ -389,6 +394,56 @@
             }
         }
 
+        async function acceptAppointment(id) {
+            if (!confirm('Do you want to accept this appointment?')) {
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/professional/appointments/${id}`, {
+                    method: 'PUT',
+                    headers: authHeaders,
+                    body: JSON.stringify({
+                        status: 'confirmed'
+                    })
+                });
+
+                if (!response.ok) throw new Error('Failed to accept appointment');
+
+                alert('Appointment accepted successfully! ✅');
+                await loadAppointments();
+            } catch (error) {
+                console.error('Error accepting appointment:', error);
+                alert('Failed to accept appointment. Please try again.');
+            }
+        }
+  
+        async function rejectAppointment(id) {
+            const reason = prompt('Please provide a reason for rejection (optional):');
+            
+            if (!confirm('Are you sure you want to reject this appointment?')) {
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/professional/appointments/${id}`, {
+                    method: 'PUT',
+                    headers: authHeaders,
+                    body: JSON.stringify({
+                        status: 'cancelled',
+                        notes: reason ? `Rejected: ${reason}` : 'Rejected by professional'
+                    })
+                });
+
+                if (!response.ok) throw new Error('Failed to reject appointment');
+
+                alert('Appointment rejected');
+                await loadAppointments();
+            } catch (error) {
+                console.error('Error rejecting appointment:', error);
+                alert('Failed to reject appointment. Please try again.');
+        }
+                }
         // View appointment details - Improved
         function viewAppointmentDetails(id) {
             try {
