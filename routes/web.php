@@ -1,8 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Http;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Business\ProductController;
+use App\Http\Controllers\ChatbotController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +21,9 @@ Route::get('/', function () {
 
     return view('landing');
 });
+
+// Chatbot API Endpoint
+Route::post('/chatbot', [ChatbotController::class, 'sendMessage'])->name('chatbot.send');
 
 // Route added for team section - commented out as requested
 Route::get('/about', function () {
@@ -44,12 +49,12 @@ Route::post('/logout', function () {
     return redirect('/login');
 })->name('logout');
 
- Route::get('/dashboard', function () {
-     if (!session()->has('admin_id')) {
-         return redirect('/admin_login');
-     }
-     return view('dashboardKoushik');
- });
+Route::get('/dashboard', function () {
+    if (!session()->has('admin_id')) {
+        return redirect('/admin_login');
+    }
+    return view('dashboardKoushik');
+});
 Route::get('/register', function () {
     return view('user-register');
 })->name('register');
