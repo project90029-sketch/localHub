@@ -423,15 +423,34 @@ class ProfessionalsController extends Controller
             ], 404);
         }
 
-        $appointment->status = $request->status;
+        $currentStatus = $appointment->status;
+        $newStatus = $request->status;
+
+        $allowedTransitions = [
+            'pending' => ['confirmed', 'cancelled'],
+            'confirmed' => ['completed', 'cancelled'],
+            'completed' => [], // Cannot change once completed
+            'cancelled' => []  // Cannot change once cancelled
+        ];
+
+        if(!in_array($newStatus, $allowedTransitions[$currentStatus] ?? [])){
+            return response()->json([
+                'message' => "Cannot change status from {$currentStatus} to {$newStatus}"
+            ], 400);
+        }
+
+        $appointment->status = $newStatus;
         if ($request->has('notes')) {
-            $appointment->notes = $request->notes;
+
+        $exitstingNotes = $appointment->notes ? $appointment->notes . "\n\n" : "";
+        $appointment->notes = $exitstingNotes . "[" . now()->format('Y-m-d H:i') . " ]" . $request->notes;
+            /* $appointment->notes = $request->notes; */
         }
         $appointment->save();
 
         return response()->json([
             'message' => 'Appointment updated successfully',
-            'appointment' => $appointment
+            'appointment' => $appointment->load(['user', 'service'])
         ]);
         } catch (\Exception $e) {
             return response()->json([
